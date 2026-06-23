@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>500 Vilões Marvel & DC | Ranking Definitivo</title>
+    <title>500 Vilões Marvel & DC | Ranking Supremo com Sinopses</title>
     <style>
         :root {
             --bg: #0a0a0f; --surface: #111118; --card: #16161f; --border: #26263a;
@@ -114,6 +114,7 @@
         }
         .av.marvel { border-color: var(--marvel); }
         .av.dc { border-color: var(--dc); }
+        .av img { width: 100%; height: 100%; object-fit: cover; }
 
         .info-block { flex: 1; min-width: 0; }
         .vn { font-weight: 700; font-size: .93rem; margin-bottom: .18rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -184,6 +185,13 @@
         .dc-row h4 { font-size: .83rem; color: var(--text); margin-bottom: .2rem; }
         .dc-row p { font-size: .76rem; color: var(--dim); line-height: 1.55; }
         .dcp { color: var(--gold); font-weight: 700; }
+        .synopsis {
+            background: rgba(240,192,64,0.08); border: 1px solid rgba(240,192,64,0.3);
+            padding: .8rem; border-radius: 8px; margin-bottom: 1rem; font-size: .78rem; line-height: 1.5;
+        }
+        .hero-img {
+            width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold);
+        }
         .ri {
             border-bottom: 1px solid var(--border); padding: .55rem 0; font-size: .8rem;
             display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
@@ -222,7 +230,7 @@
         <div class="hdr">
             <div class="hdr-logos"><span class="lm">MARVEL</span><span class="hdrsep">✦</span><span class="ld">DC</span></div>
             <h1><span class="m">RANKING</span> DE <span class="d">MALIGNIDADE</span></h1>
-            <p class="hdrsub">500 Vilões, Anti-heróis e Sociedades Secretas — Ranking definitivo com descrições completas</p>
+            <p class="hdrsub">500 Vilões • Sinopses, imagens e heróis inimigos</p>
         </div>
 
         <div class="tb">
@@ -335,6 +343,103 @@
     };
     var SC = {universal:3.0, planetario:2.2, regional:1.5, cidade:1.2, local:1.0};
     function pts(c,s){ var x=CR[c]; if(!x)return 0; return Math.round(x.p*(SC[s]||1)); }
+
+    // ═══ SINOPSE & HERÓI INIMIGO ═══
+    var villainData = {
+        "Thanos": { synopsis: "Titã eterno obcecado pela morte. Adquiriu as Joias do Infinito após anos de busca. Motivação: 'equilibrar' o universo eliminando metade da vida.", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
+        "Coringa": { synopsis: "Ex-engenheiro químico que enlouqueceu após um dia terrível. Mestre do caos sem superpoderes, usa toxinas e armadilhas. Motivação: provar que a sanidade é uma farsa.", hero: "Batman", heroWiki: "Batman" },
+        "Darkseid": { synopsis: "Deus tirano de Apokolips, busca a Equação Anti-Vida para eliminar o livre-arbítrio. Poderes Omega absolutos.", hero: "Superman", heroWiki: "Superman" },
+        "Anti-Monitor": { synopsis: "Entidade cósmica da anti-matéria, responsável pela Crise nas Infinitas Terras. Destruiu incontáveis universos.", hero: "Liga da Justiça", heroWiki: "Justice_League" },
+        "Galactus": { synopsis: "Devorador de mundos, entidade cósmica que consome planetas para sobreviver. Poderes incomensuráveis.", hero: "Quarteto Fantástico", heroWiki: "Fantastic_Four" },
+        "Apocalipse": { synopsis: "Primeiro mutante, imortal, com poderes celestiais. Acredita na sobrevivência do mais forte.", hero: "X-Men", heroWiki: "X-Men" },
+        "Dr. Destino": { synopsis: "Monarca da Latvéria, mestre da magia e tecnologia. Obcecado em salvar sua mãe do inferno.", hero: "Quarteto Fantástico", heroWiki: "Fantastic_Four" },
+        "Magneto": { synopsis: "Sobrevivente do Holocausto, mestre do magnetismo. Luta pela supremacia mutante a qualquer custo.", hero: "X-Men", heroWiki: "X-Men" },
+        "Brainiac": { synopsis: "Android coletor de mundos, encolhe cidades e destrói planetas. Intelecto de 12º nível.", hero: "Superman", heroWiki: "Superman" },
+        "Ultron": { synopsis: "IA criada por Hank Pym, rebelou-se contra a humanidade. Corpo de adamantium e mente em constante evolução.", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
+        "Flash Reverso": { synopsis: "Eobard Thawne, velocista do futuro obcecado pelo Flash. Manipula o tempo para destruir Barry Allen.", hero: "Flash", heroWiki: "Flash_(Barry_Allen)" },
+        "Carnificina": { synopsis: "Cletus Kasady, serial killer que se fundiu a um simbionte alienígena. Puro sadismo e desejo de matar.", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
+        "Lex Luthor": { synopsis: "Bilionário gênio, presidente da LexCorp. Odeia Superman por representar o poder alienígena que ele não pode controlar.", hero: "Superman", heroWiki: "Superman" },
+        "Ra's al Ghul": { synopsis: "Líder da Liga dos Assassinos, imortal graças às Fossas de Lazarus. Deseja 'purificar' a humanidade.", hero: "Batman", heroWiki: "Batman" },
+        "Caveira Vermelha": { synopsis: "Johann Schmidt, braço direito de Hitler. Exposição à fórmula do supersoldado o transformou em crânio vermelho.", hero: "Capitão América", heroWiki: "Captain_America" },
+        "Black Adam": { synopsis: "Teth-Adam, campeão egípcio antigo do mago Shazam. Poderes divinos, governante tirânico de Kahndaq.", hero: "Shazam", heroWiki: "Shazam_(DC_Comics)" },
+        "Gorr": { synopsis: "Alienígena que obteve a Necroespada All-Black e declarou guerra a todos os deuses. Motivação: vingança pela morte de sua família.", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
+        "Nekron": { synopsis: "Senhor dos Mortos, entidade que comanda os Lanternas Negros. Deseja extinguir toda a vida.", hero: "Lanterna Verde", heroWiki: "Green_Lantern" },
+        "Kang": { synopsis: "Nathaniel Richards, viajante do tempo do século 30. Conquistador de linhas temporais com tecnologia avançada.", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
+        "Mephisto": { synopsis: "Senhor do inferno, entidade demoníaca que faz pactos por almas. Manipulador e mestre do engano.", hero: "Motoqueiro Fantasma", heroWiki: "Ghost_Rider" },
+        "Dormammu": { synopsis: "Entidade mística que governa a Dimensão das Trevas. Deseja absorver outras dimensões.", hero: "Doutor Estranho", heroWiki: "Doctor_Strange" },
+        "Hela": { synopsis: "Deusa da morte asgardiana, governante de Hel. Poderes de morte e controle sobre os mortos.", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
+        "Sinestro": { synopsis: "Ex-Lanterna Verde, mestre do medo com anel amarelo. Tirano que acredita que o medo traz ordem.", hero: "Lanterna Verde", heroWiki: "Green_Lantern" },
+        "Bane": { synopsis: "Estrategista genial com força sobre-humana induzida pelo Veneno. Famoso por quebrar a espinha de Batman.", hero: "Batman", heroWiki: "Batman" },
+        "Duende Verde": { synopsis: "Norman Osborn, bilionário que enlouqueceu após experimento com soro de desempenho. Arqui-inimigo do Homem-Aranha.", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
+        "Loki": { synopsis: "Deus da trapaça asgardiano, irmão adotivo de Thor. Manipulador e mestre das ilusões.", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
+        "Rei do Crime": { synopsis: "Wilson Fisk, chefão do crime organizado de Nova York. Força física brutal e mente estratégica.", hero: "Demolidor", heroWiki: "Daredevil_(Marvel_Comics)" },
+        "Doutor Octopus": { synopsis: "Otto Octavius, gênio da robótica com tentáculos mecânicos fundidos à coluna. Obcecado por poder e respeito.", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
+        "Mística": { synopsis: "Mutante metamorfa com habilidades de combate. Líder da Irmandade de Mutantes e agente dupla.", hero: "X-Men", heroWiki: "X-Men" },
+        "HYDRA": { synopsis: "Organização terrorista fundada por nazistas. Busca dominação mundial através de experimentos e infiltração.", hero: "Capitão América", heroWiki: "Captain_America" },
+        "Knull": { synopsis: "Deus primordial da escuridão, criador dos simbiontes. Forjou a Necroespada para matar celestiais.", hero: "Venom", heroWiki: "Venom_(Marvel_Comics)" }
+    };
+
+    function getSynopsis(name) {
+        if (villainData[name]) return villainData[name].synopsis;
+        // Gera sinopse baseada no perfil
+        var profile = gP(name);
+        var templates = {
+            cosmic: "Entidade cósmica de poder incomensurável. Age em escala universal, movido por propósitos além da compreensão humana.",
+            dictator: "Líder tirânico que conquistou poder através de força e manipulação. Governa com punho de ferro, eliminando opositores.",
+            psycho: "Mente distorcida que encontra prazer no caos e no sofrimento alheio. Sem superpoderes inatos, usa de astúcia e violência.",
+            terrorist: "Agente do caos que usa o terror como arma. Ataques coordenados contra civis e instituições.",
+            mage: "Mestre das artes místicas, obteve poder através de estudos arcanos ou pactos sombrios. Busca controle sobre forças sobrenaturais.",
+            tech: "Gênio tecnológico que usa invenções avançadas para o crime. Muitas vezes ciborgue ou criador de armas poderosas.",
+            alien: "Invasor de outro mundo, com biologia e tecnologia superiores. Deseja conquistar ou destruir a Terra.",
+            street: "Criminoso de carreira que ascendeu no submundo. Usa força bruta, armas e intimidação."
+        };
+        return templates[profile] || templates.street;
+    }
+
+    function getHero(name) {
+        if (villainData[name]) return villainData[name].hero;
+        var profile = gP(name);
+        var heroes = {
+            cosmic: "Liga da Justiça / Vingadores",
+            dictator: "Capitão América / Superman",
+            psycho: "Batman / Homem-Aranha",
+            terrorist: "Justiceiro / Esquadrão Suicida",
+            mage: "Doutor Estranho / Zatanna",
+            tech: "Homem de Ferro / Cyborg",
+            alien: "Lanterna Verde / Capitão Marvel",
+            street: "Demolidor / Batman"
+        };
+        return heroes[profile] || "Liga da Justiça / Vingadores";
+    }
+
+    function getHeroWiki(name) {
+        if (villainData[name]) return villainData[name].heroWiki;
+        var hero = getHero(name);
+        var map = {
+            "Vingadores": "Avengers_(Marvel_Comics)",
+            "Liga da Justiça": "Justice_League",
+            "Batman": "Batman",
+            "Superman": "Superman",
+            "X-Men": "X-Men",
+            "Quarteto Fantástico": "Fantastic_Four",
+            "Homem-Aranha": "Spider-Man",
+            "Thor": "Thor_(Marvel_Comics)",
+            "Capitão América": "Captain_America",
+            "Doutor Estranho": "Doctor_Strange",
+            "Motoqueiro Fantasma": "Ghost_Rider",
+            "Lanterna Verde": "Green_Lantern",
+            "Demolidor": "Daredevil_(Marvel_Comics)",
+            "Venom": "Venom_(Marvel_Comics)",
+            "Flash": "Flash_(Barry_Allen)",
+            "Shazam": "Shazam_(DC_Comics)",
+            "Homem de Ferro": "Iron_Man",
+            "Zatanna": "Zatanna",
+            "Cyborg": "Cyborg_(DC_Comics)",
+            "Justiceiro": "Punisher",
+            "Esquadrão Suicida": "Suicide_Squad"
+        };
+        return map[hero] || hero.replace(/ /g, "_");
+    }
 
     var crimeDescriptions = {
         GENOCIDE: ["Aniquilou civilizações inteiras, deixando planetas estéreis e sem vida.","Com um arsenal cósmico, exterminou populações planetárias em escala massiva.","Promoveu genocídios sistemáticos para moldar o universo à sua vontade.","Ceifou bilhões de vidas como parte de uma doutrina de supremacia cósmica.","Utilizou artefatos de poder para eliminar raças inteiras da existência."],
@@ -670,6 +775,46 @@
       return list;
     }
 
+    var imageCache = {};
+    async function fetchImageWiki(name, wiki) {
+        var cacheKey = name + "_" + wiki;
+        if (imageCache[cacheKey] !== undefined) return imageCache[cacheKey];
+        var apiUrl = `https://${wiki}.fandom.com/api.php?action=query&list=search&srsearch=${encodeURIComponent(name)}&format=json&origin=*`;
+        try {
+            var resp = await fetch(apiUrl);
+            var data = await resp.json();
+            if (data.query && data.query.search.length > 0) {
+                var pageId = data.query.search[0].pageid;
+                var imgApi = `https://${wiki}.fandom.com/api.php?action=query&prop=pageimages&pageids=${pageId}&format=json&pithumbsize=200&origin=*`;
+                var imgResp = await fetch(imgApi);
+                var imgData = await imgResp.json();
+                if (imgData.query && imgData.query.pages && imgData.query.pages[pageId] && imgData.query.pages[pageId].thumbnail) {
+                    var thumb = imgData.query.pages[pageId].thumbnail.source;
+                    imageCache[cacheKey] = thumb;
+                    return thumb;
+                }
+            }
+        } catch(e) {}
+        imageCache[cacheKey] = null;
+        return null;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                var av = entry.target;
+                var name = av.dataset.name;
+                var uni = av.dataset.uni;
+                if (!name || !uni || av.querySelector('img')) return observer.unobserve(av);
+                var wiki = uni === "marvel" ? "marvel" : "dc";
+                fetchImageWiki(name, wiki).then(function(url) {
+                    if (url) av.innerHTML = '<img src="' + url + '" alt="' + name + '" onerror="this.parentElement.innerHTML=\'' + name.charAt(0).toUpperCase() + '\'">';
+                });
+                observer.unobserve(av);
+            }
+        });
+    }, { rootMargin: "100px" });
+
     function render(){
       var list = getList();
       var mC = 0, dC = 0;
@@ -678,12 +823,10 @@
         "Exibindo <strong>" + list.length + "</strong> de <strong>" + AV.length + "</strong> &nbsp;|&nbsp; " +
         "<span style='color:var(--marvel)'>Marvel: " + mC + "</span> &nbsp;|&nbsp; " +
         "<span style='color:var(--dc)'>DC: " + dC + "</span>";
-
       if (list.length === 0) {
         document.getElementById("vl").innerHTML = '<div class="empty">Nenhum vilão encontrado com esses filtros.</div>';
         return;
       }
-
       var html = "";
       for (var i = 0; i < list.length; i++) {
         var v = list[i];
@@ -699,29 +842,35 @@
         html += '<div class="vc ' + v.uni + '">';
         html += '<div class="card-left">';
         html += '<span class="rank">#' + (i + 1) + '</span>';
-        html += '<div class="av ' + v.uni + '"><span>' + ini + '</span></div>';
-        html += '<div class="info-block">';
-        html += '<div class="vn">' + v.name + '</div>';
-        html += '<div class="vm"><span class="ub ' + v.uni + '">' + (v.uni === "marvel" ? "Marvel" : "DC") + '</span><span class="grank">#' + gr + ' geral</span></div>';
-        html += '</div>';
-        html += '<div class="card-right">';
-        html += '<span class="sn">' + v.score + ' pts</span>';
-        html += '<button class="ib" onclick="openD(' + AV.indexOf(v) + ')">ℹ</button>';
-        html += '</div>';
-        html += '</div>';
-        html += '<div class="cc">' + chips + '</div>';
-        html += '</div>';
+        html += '<div class="av ' + v.uni + '" data-name="' + v.name + '" data-uni="' + v.uni + '"><span>' + ini + '</span></div>';
+        html += '<div class="info-block"><div class="vn">' + v.name + '</div><div class="vm"><span class="ub ' + v.uni + '">' + (v.uni === "marvel" ? "Marvel" : "DC") + '</span><span class="grank">#' + gr + ' geral</span></div></div>';
+        html += '<div class="card-right"><span class="sn">' + v.score + ' pts</span><button class="ib" onclick="openD(' + AV.indexOf(v) + ')">ℹ</button></div>';
+        html += '</div><div class="cc">' + chips + '</div></div>';
       }
       document.getElementById("vl").innerHTML = html;
+      document.querySelectorAll('.av[data-name]').forEach(function(av) { observer.observe(av); });
     }
 
-    function openD(idx){
+    async function openD(idx){
       var v = AV[idx]; if (!v) return;
       document.getElementById("dN").textContent = v.name;
       var h = '<p style="font-size:.78rem;color:var(--dim);margin-bottom:.9rem">' +
         'Universo: <strong style="color:var(--text)">' + (v.uni === "marvel" ? "Marvel" : "DC") + '</strong> | ' +
         'Total: <strong style="color:var(--gold)">' + v.score + ' pts</strong> | ' +
         'Crimes: <strong style="color:var(--text)">' + v.crimes.length + '</strong></p>';
+
+      // Sinopse
+      h += '<div class="synopsis"><strong>Quem é:</strong> ' + getSynopsis(v.name) + '<br><strong>Inimigo:</strong> ' + getHero(v.name) + '</div>';
+
+      // Imagens lado a lado
+      var villainImg = await fetchImageWiki(v.name, v.uni === "marvel" ? "marvel" : "dc");
+      var heroName = getHeroWiki(v.name);
+      var heroImg = await fetchImageWiki(heroName, v.uni === "marvel" ? "marvel" : "dc");
+      h += '<div style="display:flex;gap:1rem;justify-content:center;margin-bottom:1rem">';
+      h += '<div style="text-align:center"><img src="' + (villainImg || '') + '" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--marvel)" onerror="this.style.display=\'none\'"><br><small>Vilão</small></div>';
+      h += '<div style="text-align:center"><img src="' + (heroImg || '') + '" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--dc)" onerror="this.style.display=\'none\'"><br><small>Herói inimigo</small></div>';
+      h += '</div>';
+
       for (var i = 0; i < v.crimes.length; i++) {
         var cr = v.crimes[i];
         var p = pts(cr.c, cr.s);
