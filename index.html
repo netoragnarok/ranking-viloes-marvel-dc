@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>500 Vilões Marvel & DC | Ranking Definitivo</title>
     <style>
         :root {
@@ -93,14 +93,17 @@
 
         .vc {
             background: rgba(22,22,31,0.85); border: 1px solid var(--border); border-radius: var(--r);
-            padding: .65rem .85rem; display: grid;
-            grid-template-columns: 38px 54px 1fr auto; gap: .65rem; align-items: start;
-            transition: 0.2s; backdrop-filter: blur(4px);
+            padding: .65rem .85rem; display: flex; flex-wrap: wrap; align-items: flex-start;
+            gap: .65rem; transition: 0.2s; backdrop-filter: blur(4px);
         }
         .vc:hover { background: #1a1a28; }
         .vc.marvel { border-left: 3px solid var(--marvel); }
         .vc.dc { border-left: 3px solid var(--dc); }
-        .rank { font-weight: 900; font-size: 1.15rem; color: #444; text-align: center; padding-top: .2rem; line-height: 1; }
+
+        .card-left {
+            display: flex; align-items: center; gap: .65rem; flex: 1; min-width: 0;
+        }
+        .rank { font-weight: 900; font-size: 1.15rem; color: #444; min-width: 30px; text-align: center; flex-shrink: 0; }
         .vc:nth-child(1) .rank, .vc:nth-child(2) .rank, .vc:nth-child(3) .rank { color: var(--gold); }
         .av {
             width: 50px; height: 50px; border-radius: 50%; overflow: hidden;
@@ -111,7 +114,9 @@
         }
         .av.marvel { border-color: var(--marvel); }
         .av.dc { border-color: var(--dc); }
-        .vn { font-weight: 700; font-size: .93rem; margin-bottom: .18rem; }
+
+        .info-block { flex: 1; min-width: 0; }
+        .vn { font-weight: 700; font-size: .93rem; margin-bottom: .18rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .vm {
             display: flex; flex-wrap: wrap; gap: .28rem; align-items: center; margin-bottom: .28rem;
         }
@@ -122,7 +127,24 @@
         .ub.marvel { background: rgba(230,36,41,.12); color: #ff7070; border: 1px solid rgba(230,36,41,.3); }
         .ub.dc { background: rgba(4,118,242,.12); color: #70b5ff; border: 1px solid rgba(4,118,242,.3); }
         .grank { font-size: .66rem; color: var(--dim); }
-        .cc { display: flex; flex-wrap: wrap; gap: .22rem; }
+
+        .card-right {
+            display: flex; align-items: center; gap: .4rem; flex-shrink: 0;
+        }
+        .sn {
+            font-weight: 900; font-size: 1.05rem; color: var(--gold);
+            background: var(--goldbg); padding: .18rem .65rem; border-radius: 14px; white-space: nowrap;
+        }
+        .ib {
+            background: transparent; border: 1px solid var(--gold); color: var(--gold);
+            width: 24px; height: 24px; border-radius: 50%; font-size: .72rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0;
+        }
+        .ib:hover { background: var(--gold); color: #111; }
+
+        .cc {
+            display: flex; flex-wrap: wrap; gap: .22rem; width: 100%; margin-top: .3rem;
+        }
         .ch {
             background: #1c1c2a; border: 1px solid #282838; border-radius: 5px;
             padding: .1rem .35rem; font-size: .65rem; color: var(--dim); position: relative;
@@ -136,21 +158,6 @@
             z-index: 10; border: 1px solid var(--gold); max-width: 200px; word-wrap: break-word;
         }
         .ch:hover .tooltip, .ch:active .tooltip { display: block; }
-
-        .vs {
-            display: flex; flex-direction: column; align-items: flex-end; gap: .28rem;
-            flex-shrink: 0; padding-top: .15rem;
-        }
-        .sn {
-            font-weight: 900; font-size: 1.05rem; color: var(--gold);
-            background: var(--goldbg); padding: .18rem .65rem; border-radius: 14px; white-space: nowrap;
-        }
-        .ib {
-            background: transparent; border: 1px solid var(--gold); color: var(--gold);
-            width: 24px; height: 24px; border-radius: 50%; font-size: .72rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; transition: 0.2s;
-        }
-        .ib:hover { background: var(--gold); color: #111; }
 
         .empty { text-align: center; padding: 3rem 1rem; color: var(--dim); }
 
@@ -195,8 +202,17 @@
         .qr.ok { background: rgba(16,185,96,.15); color: #4ade80; display: block; }
         .qr.no { background: rgba(230,36,41,.15); color: #ff7070; display: block; }
 
-        @media (max-width: 700px) {
-            .vc { grid-template-columns: 30px 44px 1fr; } .vs { grid-row: 2; }
+        @media (max-width: 600px) {
+            .vc { padding: .5rem .6rem; gap: .4rem; }
+            .card-left { gap: .4rem; }
+            .rank { font-size: 1rem; min-width: 25px; }
+            .av { width: 42px; height: 42px; font-size: 1.1rem; }
+            .vn { font-size: .82rem; }
+            .sn { font-size: .9rem; padding: .15rem .5rem; }
+            .ib { width: 22px; height: 22px; font-size: .65rem; }
+            .ch { font-size: .6rem; padding: .08rem .3rem; }
+            .cfc { font-size: .62rem; padding: .15rem .45rem; }
+            .tb { gap: .3rem; padding: .5rem .7rem; }
         }
     </style>
 </head>
@@ -297,248 +313,70 @@
     <script>
     // ═══ CRIME DEFINITIONS ═══
     var CR = {
-        GENOCIDE:{l:"Genocídio/Extermínio em Massa",p:50},
-        ATT_GENOCIDE:{l:"Tentativa de Genocídio",p:20},
-        MURDER:{l:"Assassinato",p:40},
-        FAM_MURDER:{l:"Assassinato de Familiar",p:45},
-        CHILD_MURDER:{l:"Infanticídio",p:45},
-        ATT_MURDER:{l:"Tentativa de Assassinato",p:13},
-        ASSIST_MURDER:{l:"Cumplicidade em Assassinato",p:12},
-        DOMINATION:{l:"Dominação/Controle Forçado",p:20},
-        ATT_DOMINATION:{l:"Tentativa de Dominação em Massa",p:18},
-        MASS_ENSLAVE:{l:"Escravidão em Massa",p:16},
-        ENSLAVE:{l:"Escravidão/Doutrinação",p:12},
-        FORCED_TRANSF:{l:"Transformação Forçada",p:12},
-        TERRORISM:{l:"Terrorismo",p:15},
-        TORTURE:{l:"Tortura Física",p:15},
-        PSYCH_TORTURE:{l:"Tortura Psicológica",p:15},
-        TYRANNY:{l:"Tirania",p:15},
-        WAR_CRIMES:{l:"Crimes de Guerra",p:15},
-        CHILD_ABUSE:{l:"Abuso/Crueldade Infantil",p:15},
-        MASS_DAMAGE:{l:"Destruição em Massa",p:15},
-        KIDNAP:{l:"Sequestro",p:12},
-        PSYCH_ABUSE:{l:"Abuso Psicológico",p:12},
-        GRAND_THEFT_S:{l:"Roubo de Almas",p:12},
-        ASSAULT:{l:"Agressão",p:10},
-        HATE_CRIMES:{l:"Crimes de Ódio",p:10},
-        ANIMAL_CRUELTY:{l:"Crueldade Animal",p:10},
-        ARSON:{l:"Incêndio Criminoso",p:8},
-        MASS_ARSON:{l:"Incêndio em Massa",p:10},
-        STARVATION:{l:"Inanição Forçada",p:10},
-        ABUSE_POWER:{l:"Abuso de Poder",p:7},
-        THEFT:{l:"Roubo",p:7},
-        GRAND_THEFT:{l:"Grande Roubo",p:9},
-        BLACKMAIL:{l:"Chantagem",p:4},
-        PIRACY:{l:"Pirataria",p:7},
-        CONSPIRACY:{l:"Conspiração",p:3},
-        TREASON:{l:"Traição",p:5},
-        DECEPTION:{l:"Fraude/Engano",p:5},
-        VANDALISM:{l:"Vandalismo",p:5},
-        UNLAWFUL_IMP:{l:"Prisão Ilegal",p:6}
+        GENOCIDE:{l:"Genocídio/Extermínio em Massa",p:50}, ATT_GENOCIDE:{l:"Tentativa de Genocídio",p:20},
+        MURDER:{l:"Assassinato",p:40}, FAM_MURDER:{l:"Assassinato de Familiar",p:45},
+        CHILD_MURDER:{l:"Infanticídio",p:45}, ATT_MURDER:{l:"Tentativa de Assassinato",p:13},
+        ASSIST_MURDER:{l:"Cumplicidade em Assassinato",p:12}, DOMINATION:{l:"Dominação/Controle Forçado",p:20},
+        ATT_DOMINATION:{l:"Tentativa de Dominação em Massa",p:18}, MASS_ENSLAVE:{l:"Escravidão em Massa",p:16},
+        ENSLAVE:{l:"Escravidão/Doutrinação",p:12}, FORCED_TRANSF:{l:"Transformação Forçada",p:12},
+        TERRORISM:{l:"Terrorismo",p:15}, TORTURE:{l:"Tortura Física",p:15},
+        PSYCH_TORTURE:{l:"Tortura Psicológica",p:15}, TYRANNY:{l:"Tirania",p:15},
+        WAR_CRIMES:{l:"Crimes de Guerra",p:15}, CHILD_ABUSE:{l:"Abuso/Crueldade Infantil",p:15},
+        MASS_DAMAGE:{l:"Destruição em Massa",p:15}, KIDNAP:{l:"Sequestro",p:12},
+        PSYCH_ABUSE:{l:"Abuso Psicológico",p:12}, GRAND_THEFT_S:{l:"Roubo de Almas",p:12},
+        ASSAULT:{l:"Agressão",p:10}, HATE_CRIMES:{l:"Crimes de Ódio",p:10},
+        ANIMAL_CRUELTY:{l:"Crueldade Animal",p:10}, ARSON:{l:"Incêndio Criminoso",p:8},
+        MASS_ARSON:{l:"Incêndio em Massa",p:10}, STARVATION:{l:"Inanição Forçada",p:10},
+        ABUSE_POWER:{l:"Abuso de Poder",p:7}, THEFT:{l:"Roubo",p:7},
+        GRAND_THEFT:{l:"Grande Roubo",p:9}, BLACKMAIL:{l:"Chantagem",p:4},
+        PIRACY:{l:"Pirataria",p:7}, CONSPIRACY:{l:"Conspiração",p:3},
+        TREASON:{l:"Traição",p:5}, DECEPTION:{l:"Fraude/Engano",p:5},
+        VANDALISM:{l:"Vandalismo",p:5}, UNLAWFUL_IMP:{l:"Prisão Ilegal",p:6}
     };
     var SC = {universal:3.0, planetario:2.2, regional:1.5, cidade:1.2, local:1.0};
     function pts(c,s){ var x=CR[c]; if(!x)return 0; return Math.round(x.p*(SC[s]||1)); }
 
-    // ═══ DESCRIÇÕES EXPANDIDAS POR TIPO DE CRIME ═══
     var crimeDescriptions = {
-        GENOCIDE: [
-            "Aniquilou civilizações inteiras, deixando planetas estéreis e sem vida.",
-            "Com um arsenal cósmico, exterminou populações planetárias em escala massiva.",
-            "Promoveu genocídios sistemáticos para moldar o universo à sua vontade.",
-            "Ceifou bilhões de vidas como parte de uma doutrina de supremacia cósmica.",
-            "Utilizou artefatos de poder para eliminar raças inteiras da existência."
-        ],
-        ATT_GENOCIDE: [
-            "Planejou o extermínio de toda uma espécie, mas foi impedido por heróis.",
-            "Tentou erradicar uma população através de armas biológicas ou tecnológicas.",
-            "Conspirou para eliminar uma raça inteira, porém seus planos foram frustrados.",
-            "Esteve à beira de cometer genocídio, contido no último instante."
-        ],
-        MURDER: [
-            "Assassinou a sangue frio inúmeras vítimas ao longo de sua carreira criminosa.",
-            "Cometeu homicídios múltiplos, muitas vezes por motivos torpes ou vingança.",
-            "Eliminou rivais, heróis e civis sem hesitação, acumulando uma contagem letal.",
-            "Matou pessoalmente dezenas de pessoas, demonstrando total desprezo pela vida."
-        ],
-        FAM_MURDER: [
-            "Assassinou um membro da própria família, rompendo todos os laços de sangue.",
-            "Cometeu o crime hediondo de matar um parente próximo a sangue frio.",
-            "Tirou a vida de um familiar em um ato de fúria ou para obter poder.",
-            "Matou seu próprio irmão/pai/filho(a), carregando o estigma do pior dos crimes."
-        ],
-        CHILD_MURDER: [
-            "Assassinou crianças ou adolescentes sem demonstrar qualquer remorso.",
-            "Cometeu infanticídio em múltiplas ocasiões, chocando até mesmo outros vilões.",
-            "Tirou a vida de inocentes indefesos, cruzando a linha da crueldade absoluta."
-        ],
-        ATT_MURDER: [
-            "Tentou matar um oponente poderoso, falhando por pouco em seu intento.",
-            "Armou emboscadas e planejou assassinatos que felizmente foram evitados.",
-            "Por diversas vezes esteve próximo de cometer homicídio, sendo impedido no último instante."
-        ],
-        ASSIST_MURDER: [
-            "Foi cúmplice em assassinatos, ordenando ou facilitando a morte de outrem.",
-            "Ajudou a planejar e executar mortes, agindo como mandante ou facilitador.",
-            "Participou ativamente de conspirações que resultaram em homicídios."
-        ],
-        DOMINATION: [
-            "Subjugou completamente a vontade de outros, controlando mentes e corpos.",
-            "Usou poderes para dominar populações, impondo sua vontade de forma absoluta.",
-            "Estabeleceu um regime de controle mental sobre inocentes, roubando-lhes a autonomia."
-        ],
-        ATT_DOMINATION: [
-            "Tentou dominar o mundo ou o universo, mas foi detido por forças heroicas.",
-            "Planejou submeter toda a humanidade ao seu controle, quase conseguindo.",
-            "Buscou poder absoluto para reinar sobre tudo e todos, mas seus planos ruíram."
-        ],
-        MASS_ENSLAVE: [
-            "Escravizou multidões, forçando-as a trabalhos forçados ou à servidão eterna.",
-            "Transformou populações inteiras em servos sem vontade, destruindo sua liberdade.",
-            "Manteve povos cativos por gerações, tratando-os como propriedade descartável."
-        ],
-        ENSLAVE: [
-            "Privou indivíduos de sua liberdade, submetendo-os à escravidão forçada.",
-            "Manteve pessoas como escravas, usando-as para trabalho ou experimentos.",
-            "Controlou mentes e corpos de vítimas, negando-lhes qualquer direito."
-        ],
-        FORCED_TRANSF: [
-            "Alterou a forma física de alguém contra sua vontade, causando danos permanentes.",
-            "Usou magia ou tecnologia para transformar pessoas em criaturas ou objetos.",
-            "Realizou experimentos de metamorfose forçada em vítimas indefesas."
-        ],
-        TERRORISM: [
-            "Cometeu ataques terroristas coordenados, espalhando medo e destruição.",
-            "Usou o terror como arma, atacando civis e instituições para alcançar objetivos.",
-            "Planejou e executou atentados que causaram pânico generalizado na população."
-        ],
-        TORTURE: [
-            "Infligiu sofrimento físico extremo a prisioneiros ou desafetos.",
-            "Utilizou métodos de tortura brutais para extrair informações ou por puro sadismo.",
-            "Manteve vítimas em cativeiro, submetendo-as a dores inimagináveis."
-        ],
-        PSYCH_TORTURE: [
-            "Quebrou a mente de suas vítimas através de tortura psicológica prolongada.",
-            "Usou traumas, ilusões e manipulação mental para destruir a sanidade alheia.",
-            "Causou danos psicológicos permanentes, deixando marcas profundas em suas vítimas."
-        ],
-        TYRANNY: [
-            "Governou com mão de ferro, suprimindo qualquer oposição com violência.",
-            "Exerceu tirania absoluta sobre uma nação ou planeta, eliminando dissidentes.",
-            "Oprimiu populações inteiras sob um regime de medo e repressão."
-        ],
-        WAR_CRIMES: [
-            "Violou convenções de guerra, atacando civis e usando armas proibidas.",
-            "Cometeu atrocidades durante conflitos armados, desrespeitando tratados internacionais.",
-            "Liderou campanhas militares marcadas por execuções sumárias e destruição gratuita."
-        ],
-        CHILD_ABUSE: [
-            "Abusou física e psicologicamente de crianças, causando-lhes traumas duradouros.",
-            "Usou menores de idade como cobaias ou soldados em seus esquemas cruéis.",
-            "Maltratou crianças de forma sistemática, demonstrando a pior face da vilania."
-        ],
-        MASS_DAMAGE: [
-            "Causou destruição em larga escala, devastando cidades ou ecossistemas inteiros.",
-            "Provocou catástrofes ambientais e materiais que afetaram milhões de pessoas.",
-            "Usou seu poder para arrasar infraestruturas e lares, gerando caos e desolação."
-        ],
-        KIDNAP: [
-            "Sequestrou inúmeras vítimas, mantendo-as em cativeiro contra sua vontade.",
-            "Realizou sequestros de alto perfil para obter resgate ou vantagem política.",
-            "Privou pessoas de sua liberdade, usando-as como reféns ou cobaias."
-        ],
-        PSYCH_ABUSE: [
-            "Submeteu vítimas a abuso psicológico constante, minando sua autoestima e sanidade.",
-            "Manipulou emocionalmente pessoas próximas para controlá-las ou destruí-las.",
-            "Infligiu sofrimento mental através de jogos psicológicos cruéis e prolongados."
-        ],
-        GRAND_THEFT_S: [
-            "Roubou almas e essências vitais, aprisionando-as para seus propósitos sombrios.",
-            "Colecionou espíritos de inocentes, usando-os como moeda ou fonte de poder.",
-            "Capturou a energia vital de incontáveis seres, condenando-os ao vazio eterno."
-        ],
-        ASSAULT: [
-            "Cometeu agressões físicas brutais contra heróis e civis.",
-            "Atacou violentamente quem cruzava seu caminho, deixando um rastro de feridos.",
-            "Usou força excessiva em confrontos, causando lesões graves desnecessariamente."
-        ],
-        HATE_CRIMES: [
-            "Cometeu crimes motivados por ódio racial, religioso ou de gênero.",
-            "Atacou grupos específicos por preconceito, incitando violência sectária.",
-            "Promoveu discursos e ações de intolerância, gerando perseguições e mortes."
-        ],
-        ANIMAL_CRUELTY: [
-            "Maltratou e matou animais de forma cruel e desnecessária.",
-            "Usou criaturas inocentes em experimentos ou como alvo de sua fúria.",
-            "Demonstrou desprezo pela vida animal, torturando-os por prazer."
-        ],
-        ARSON: [
-            "Ateou fogo a propriedades, causando destruição e colocando vidas em risco.",
-            "Usou o fogo como arma para espalhar o caos e o medo.",
-            "Provocou incêndios criminosos que resultaram em perdas materiais e humanas."
-        ],
-        MASS_ARSON: [
-            "Provocou incêndios de grandes proporções, devastando áreas urbanas ou florestais.",
-            "Liderou ataques incendiários coordenados que destruíram bairros inteiros.",
-            "Usou o fogo em escala massiva como instrumento de terror e destruição."
-        ],
-        STARVATION: [
-            "Causou fome e inanição em populações como forma de punição ou controle.",
-            "Bloqueou suprimentos de comida, condenando milhares à morte por inanição.",
-            "Usou a fome como arma, forçando comunidades a se renderem pela miséria."
-        ],
-        ABUSE_POWER: [
-            "Usou sua posição de autoridade para oprimir e explorar os mais fracos.",
-            "Corrompeu instituições e abusou do poder para benefício próprio.",
-            "Violou a confiança pública, usando recursos do Estado para fins criminosos."
-        ],
-        THEFT: [
-            "Roubou bens e propriedades alheias em diversas ocasiões.",
-            "Subtraiu objetos de valor, desde joias até artefatos tecnológicos.",
-            "Praticou furtos e roubos como meio de financiar suas atividades."
-        ],
-        GRAND_THEFT: [
-            "Roubou itens de valor inestimável, incluindo tecnologia alienígena e armas.",
-            "Realizou grandes assaltos a instituições financeiras ou museus.",
-            "Desviou recursos milionários através de esquemas criminosos elaborados."
-        ],
-        BLACKMAIL: [
-            "Chantageou autoridades e civis, usando segredos para obter vantagens.",
-            "Ameaçou expor informações comprometedoras para manipular suas vítimas.",
-            "Usou a chantagem como ferramenta de controle e extorsão."
-        ],
-        PIRACY: [
-            "Cometeu atos de pirataria, saqueando navios e embarcações.",
-            "Realizou ataques piratas a transportes marítimos e aéreos.",
-            "Viveu à margem da lei, pilhando e contrabandeando mercadorias."
-        ],
-        CONSPIRACY: [
-            "Planejou conspirações para derrubar governos ou organizações heroicas.",
-            "Tramou nas sombras, tecendo planos que ameaçaram a ordem mundial.",
-            "Participou de complôs secretos visando o poder absoluto."
-        ],
-        TREASON: [
-            "Traiu seu próprio povo, aliando-se a inimigos em troca de poder.",
-            "Vendeu segredos de Estado, colocando em risco a segurança de sua nação.",
-            "Virou as costas para aliados e amigos, priorizando seus interesses pessoais."
-        ],
-        DECEPTION: [
-            "Enganou e fraudou inúmeras pessoas para alcançar seus objetivos.",
-            "Usou mentiras e manipulação para controlar eventos e pessoas.",
-            "Criou falsas narrativas e ilusões para confundir e dominar."
-        ],
-        VANDALISM: [
-            "Destruiu propriedades públicas e privadas por puro prazer ou protesto.",
-            "Cometeu atos de vandalismo que causaram prejuízos materiais significativos.",
-            "Depredou monumentos e infraestruturas, demonstrando desrespeito total."
-        ],
-        UNLAWFUL_IMP: [
-            "Manteve pessoas presas ilegalmente, sem julgamento ou direito à defesa.",
-            "Operou prisões clandestinas onde opositores eram mantidos em condições desumanas.",
-            "Encarcerou inocentes por capricho, violando todas as leis."
-        ]
+        GENOCIDE: ["Aniquilou civilizações inteiras, deixando planetas estéreis e sem vida.","Com um arsenal cósmico, exterminou populações planetárias em escala massiva.","Promoveu genocídios sistemáticos para moldar o universo à sua vontade.","Ceifou bilhões de vidas como parte de uma doutrina de supremacia cósmica.","Utilizou artefatos de poder para eliminar raças inteiras da existência."],
+        ATT_GENOCIDE: ["Planejou o extermínio de toda uma espécie, mas foi impedido por heróis.","Tentou erradicar uma população através de armas biológicas ou tecnológicas.","Conspirou para eliminar uma raça inteira, porém seus planos foram frustrados.","Esteve à beira de cometer genocídio, contido no último instante."],
+        MURDER: ["Assassinou a sangue frio inúmeras vítimas ao longo de sua carreira criminosa.","Cometeu homicídios múltiplos, muitas vezes por motivos torpes ou vingança.","Eliminou rivais, heróis e civis sem hesitação, acumulando uma contagem letal.","Matou pessoalmente dezenas de pessoas, demonstrando total desprezo pela vida."],
+        FAM_MURDER: ["Assassinou um membro da própria família, rompendo todos os laços de sangue.","Cometeu o crime hediondo de matar um parente próximo a sangue frio.","Tirou a vida de um familiar em um ato de fúria ou para obter poder.","Matou seu próprio irmão/pai/filho(a), carregando o estigma do pior dos crimes."],
+        CHILD_MURDER: ["Assassinou crianças ou adolescentes sem demonstrar qualquer remorso.","Cometeu infanticídio em múltiplas ocasiões, chocando até mesmo outros vilões.","Tirou a vida de inocentes indefesos, cruzando a linha da crueldade absoluta."],
+        ATT_MURDER: ["Tentou matar um oponente poderoso, falhando por pouco em seu intento.","Armou emboscadas e planejou assassinatos que felizmente foram evitados.","Por diversas vezes esteve próximo de cometer homicídio, sendo impedido no último instante."],
+        ASSIST_MURDER: ["Foi cúmplice em assassinatos, ordenando ou facilitando a morte de outrem.","Ajudou a planejar e executar mortes, agindo como mandante ou facilitador.","Participou ativamente de conspirações que resultaram em homicídios."],
+        DOMINATION: ["Subjugou completamente a vontade de outros, controlando mentes e corpos.","Usou poderes para dominar populações, impondo sua vontade de forma absoluta.","Estabeleceu um regime de controle mental sobre inocentes, roubando-lhes a autonomia."],
+        ATT_DOMINATION: ["Tentou dominar o mundo ou o universo, mas foi detido por forças heroicas.","Planejou submeter toda a humanidade ao seu controle, quase conseguindo.","Buscou poder absoluto para reinar sobre tudo e todos, mas seus planos ruíram."],
+        MASS_ENSLAVE: ["Escravizou multidões, forçando-as a trabalhos forçados ou à servidão eterna.","Transformou populações inteiras em servos sem vontade, destruindo sua liberdade.","Manteve povos cativos por gerações, tratando-os como propriedade descartável."],
+        ENSLAVE: ["Privou indivíduos de sua liberdade, submetendo-os à escravidão forçada.","Manteve pessoas como escravas, usando-as para trabalho ou experimentos.","Controlou mentes e corpos de vítimas, negando-lhes qualquer direito."],
+        FORCED_TRANSF: ["Alterou a forma física de alguém contra sua vontade, causando danos permanentes.","Usou magia ou tecnologia para transformar pessoas em criaturas ou objetos.","Realizou experimentos de metamorfose forçada em vítimas indefesas."],
+        TERRORISM: ["Cometeu ataques terroristas coordenados, espalhando medo e destruição.","Usou o terror como arma, atacando civis e instituições para alcançar objetivos.","Planejou e executou atentados que causaram pânico generalizado na população."],
+        TORTURE: ["Infligiu sofrimento físico extremo a prisioneiros ou desafetos.","Utilizou métodos de tortura brutais para extrair informações ou por puro sadismo.","Manteve vítimas em cativeiro, submetendo-as a dores inimagináveis."],
+        PSYCH_TORTURE: ["Quebrou a mente de suas vítimas através de tortura psicológica prolongada.","Usou traumas, ilusões e manipulação mental para destruir a sanidade alheia.","Causou danos psicológicos permanentes, deixando marcas profundas em suas vítimas."],
+        TYRANNY: ["Governou com mão de ferro, suprimindo qualquer oposição com violência.","Exerceu tirania absoluta sobre uma nação ou planeta, eliminando dissidentes.","Oprimiu populações inteiras sob um regime de medo e repressão."],
+        WAR_CRIMES: ["Violou convenções de guerra, atacando civis e usando armas proibidas.","Cometeu atrocidades durante conflitos armados, desrespeitando tratados internacionais.","Liderou campanhas militares marcadas por execuções sumárias e destruição gratuita."],
+        CHILD_ABUSE: ["Abusou física e psicologicamente de crianças, causando-lhes traumas duradouros.","Usou menores de idade como cobaias ou soldados em seus esquemas cruéis.","Maltratou crianças de forma sistemática, demonstrando a pior face da vilania."],
+        MASS_DAMAGE: ["Causou destruição em larga escala, devastando cidades ou ecossistemas inteiros.","Provocou catástrofes ambientais e materiais que afetaram milhões de pessoas.","Usou seu poder para arrasar infraestruturas e lares, gerando caos e desolação."],
+        KIDNAP: ["Sequestrou inúmeras vítimas, mantendo-as em cativeiro contra sua vontade.","Realizou sequestros de alto perfil para obter resgate ou vantagem política.","Privou pessoas de sua liberdade, usando-as como reféns ou cobaias."],
+        PSYCH_ABUSE: ["Submeteu vítimas a abuso psicológico constante, minando sua autoestima e sanidade.","Manipulou emocionalmente pessoas próximas para controlá-las ou destruí-las.","Infligiu sofrimento mental através de jogos psicológicos cruéis e prolongados."],
+        GRAND_THEFT_S: ["Roubou almas e essências vitais, aprisionando-as para seus propósitos sombrios.","Colecionou espíritos de inocentes, usando-os como moeda ou fonte de poder.","Capturou a energia vital de incontáveis seres, condenando-os ao vazio eterno."],
+        ASSAULT: ["Cometeu agressões físicas brutais contra heróis e civis.","Atacou violentamente quem cruzava seu caminho, deixando um rastro de feridos.","Usou força excessiva em confrontos, causando lesões graves desnecessariamente."],
+        HATE_CRIMES: ["Cometeu crimes motivados por ódio racial, religioso ou de gênero.","Atacou grupos específicos por preconceito, incitando violência sectária.","Promoveu discursos e ações de intolerância, gerando perseguições e mortes."],
+        ANIMAL_CRUELTY: ["Maltratou e matou animais de forma cruel e desnecessária.","Usou criaturas inocentes em experimentos ou como alvo de sua fúria.","Demonstrou desprezo pela vida animal, torturando-os por prazer."],
+        ARSON: ["Ateou fogo a propriedades, causando destruição e colocando vidas em risco.","Usou o fogo como arma para espalhar o caos e o medo.","Provocou incêndios criminosos que resultaram em perdas materiais e humanas."],
+        MASS_ARSON: ["Provocou incêndios de grandes proporções, devastando áreas urbanas ou florestais.","Liderou ataques incendiários coordenados que destruíram bairros inteiros.","Usou o fogo em escala massiva como instrumento de terror e destruição."],
+        STARVATION: ["Causou fome e inanição em populações como forma de punição ou controle.","Bloqueou suprimentos de comida, condenando milhares à morte por inanição.","Usou a fome como arma, forçando comunidades a se renderem pela miséria."],
+        ABUSE_POWER: ["Usou sua posição de autoridade para oprimir e explorar os mais fracos.","Corrompeu instituições e abusou do poder para benefício próprio.","Violou a confiança pública, usando recursos do Estado para fins criminosos."],
+        THEFT: ["Roubou bens e propriedades alheias em diversas ocasiões.","Subtraiu objetos de valor, desde joias até artefatos tecnológicos.","Praticou furtos e roubos como meio de financiar suas atividades."],
+        GRAND_THEFT: ["Roubou itens de valor inestimável, incluindo tecnologia alienígena e armas.","Realizou grandes assaltos a instituições financeiras ou museus.","Desviou recursos milionários através de esquemas criminosos elaborados."],
+        BLACKMAIL: ["Chantageou autoridades e civis, usando segredos para obter vantagens.","Ameaçou expor informações comprometedoras para manipular suas vítimas.","Usou a chantagem como ferramenta de controle e extorsão."],
+        PIRACY: ["Cometeu atos de pirataria, saqueando navios e embarcações.","Realizou ataques piratas a transportes marítimos e aéreos.","Viveu à margem da lei, pilhando e contrabandeando mercadorias."],
+        CONSPIRACY: ["Planejou conspirações para derrubar governos ou organizações heroicas.","Tramou nas sombras, tecendo planos que ameaçaram a ordem mundial.","Participou de complôs secretos visando o poder absoluto."],
+        TREASON: ["Traiu seu próprio povo, aliando-se a inimigos em troca de poder.","Vendeu segredos de Estado, colocando em risco a segurança de sua nação.","Virou as costas para aliados e amigos, priorizando seus interesses pessoais."],
+        DECEPTION: ["Enganou e fraudou inúmeras pessoas para alcançar seus objetivos.","Usou mentiras e manipulação para controlar eventos e pessoas.","Criou falsas narrativas e ilusões para confundir e dominar."],
+        VANDALISM: ["Destruiu propriedades públicas e privadas por puro prazer ou protesto.","Cometeu atos de vandalismo que causaram prejuízos materiais significativos.","Depredou monumentos e infraestruturas, demonstrando desrespeito total."],
+        UNLAWFUL_IMP: ["Manteve pessoas presas ilegalmente, sem julgamento ou direito à defesa.","Operou prisões clandestinas onde opositores eram mantidos em condições desumanas.","Encarcerou inocentes por capricho, violando todas as leis."]
     };
 
-    // ═══ MAIN VILLAINS (31 com crimes detalhados) ═══
     var HD = [
     {name:"Thanos",uni:"marvel", crimes:[
      {c:"GENOCIDE",s:"universal",d:"Com as Joias do Infinito, eliminou metade de toda a vida no universo com um estalar de dedos."},
@@ -710,7 +548,6 @@
     ]}
     ];
 
-    // ═══ EXTRA NAME POOLS ═══
     var EM = "Abominável,Homem-Areia,Shocker,Bastion,Omega Vermelho,Surtur,Malekith,Corruptor,Escorpião,Abutre,Morlun,Ronan,Mandarim,Arnim Zola,Super-Adaptoid,Mordo,Kaecilius,Pesadelo,Blackheart,Umar,Laufey,Fênix Negra,Exodus,Vulcan,Sebastian Shaw,Azazel,Satana,Morbius,Typhoid Mary,Arcade,Mestre dos Bonecos,Sentinela,Crusher Creel,Titânia,Enxame,Demolidor Amarelo,Flagelo,Blob,Fanático,Sapo,Ego,Korvac,Kro,Líder,Living Laser,Nébula,Nimrod,Nitro,Attuma,Blastaar,Diablo,Fin Fang Foom,Graviton,Gorgon,Mr. Hyde,Onslaught,Overmind,Super-Skrull,Terrax,Tyrannus,Whiplash,Whirlwind,Wizard,Xemnu,Zaladane,Zzzax,Supremor,Speed Demon,Stilt-Man,Homem-Absorvente,Jigsaw,Lady Deathstrike,Massacre,Silvermane,Tombstone,Hobgoblin,Jackal,Trapster,Boomerang,Hydro-Man,Molten Man,Beetle,Demogoblin,Carrion,Vermin,Calypso,Puma,Hammerhead,Tarantula,Jack O'Lantern,Constrictor,Crossbones,Death Adder,Firebrand,Mongoose,Rattler,Bushmaster,Cottonmouth,Blizzard,Spymaster,Warlord,Mentallo,Fixer,Shocker II,Ronan II,Skrull Comandante,Grandmaster,Korvac II,Onslaught II,Xorn,Sauron,Shadow King,Amora,Lorelei,Executioner,Skurge,Tyr,Ulik,Kurse,Algrim,Anti-Venom,Toxin,Scream,Hybrid,Lasher,Phage,Riot,Agony,Sleeper,Mania,Cyttorak,Shuma-Gorath,D'Spayre,Satannish,Nightmare,N'Astirh,S'ym,Belasco,Mephista,Daimon Hellstrom,Hellcat,Moonstone,Karla Sofen,Viper,Yellowjacket,Wonder Man Vilão".split(",");
     var ED = "Bizarro,Parallax,Amazo,Atrocitus,Professor Zoom,Doutor Luz,Mordru,Ultra-Humanite,Rei Tubarão,Ocean Master,Larfleeze,Krona,Kalibak,Desaad,Mongul,Imperiex,Capitão Frio,Onda Térmica,Mestre dos Espelhos,General Zod,Ursa,Non,Faora,Jax-Ur,Mister Mxyzptlk,Silêncio,Vagalume,Anarquia,Máscara Negra,Grande Tubarão Branco,Conde Vertigo,Relógio,Calendário,Polka-Dot Man,Ventríloquo,Exterminador,Sr. Frio,Lobo,Solomon Grundy,Cara de Barro,Crocodilo,Deadshot,Capitão Bumerangue,Mirror Master,Weather Wizard,Abra Kadabra,Amanda Waller,Kobra,Metallo,Parasite,Livewire,Silver Banshee,Cyborg Superman,Mongul II,Ravager,Blockbuster,Brother Blood,Monsieur Mallah,General Immortus,Black Mask,Victor Zsasz,Cornelius Stirk,Firefly,Killer Moth,Orca,Ratcatcher,Cluemaster,Film Freak,Magpie,Dr. Phosphorus,Tweedledee,Tweedledum,Amygdala,Abbatoir,Killer Frost,Heat Wave,Golden Glider,Top,Trickster,Rainbow Raider,Turtle,Murmur,Girder,Tar Pit,Fallback,Blacksmith,Cicada,Savitar,Cobalt Blue,Rival,Chunk,Atomic Skull,Riot DC,Shrapnel,Multiplex,Firestorm Vilão,Killer Frost II,Captain Cold II,Pied Piper,Trickster II,The Top II,Golden Glider II,Brother Grimm,Effigy,Sun Grater,Blacksmith II,Peekaboo,Double Down,Tar Pit II,Girder II,Magenta,Spin".split(",");
 
@@ -737,7 +574,6 @@
       return"street";
     }
 
-    // ═══ GERAÇÃO DETERMINÍSTICA COM DESCRIÇÕES ═══
     function hash(str) {
         var h = 0;
         for (var i=0; i<str.length; i++) { h = ((h<<5)-h) + str.charCodeAt(i); h |= 0; }
@@ -771,7 +607,6 @@
       return {name: name, uni: uni, crimes: crimes};
     }
 
-    // ═══ BUILD FULL LIST ═══
     var AV = [];
     var seen = new Set();
     for (var i = 0; i < HD.length; i++) {
@@ -790,24 +625,18 @@
     }
     AV.length = 500;
 
-    // ═══ SCORE ═══
     for (var i = 0; i < AV.length; i++) {
       var sc = 0;
-      for (var j = 0; j < AV[i].crimes.length; j++) {
-        sc += pts(AV[i].crimes[j].c, AV[i].crimes[j].s);
-      }
+      for (var j = 0; j < AV[i].crimes.length; j++) sc += pts(AV[i].crimes[j].c, AV[i].crimes[j].s);
       AV[i].score = sc;
     }
     AV.sort(function(a,b){ return b.score - a.score; });
 
-    // ═══ GLOBAL RANK ═══
     var gRank = {};
     for (var i = 0; i < AV.length; i++) gRank[AV[i].name] = i + 1;
 
-    // ═══ STATE ═══
     var fUni = "all", fSrch = "", fMin = 0, fCR = new Set(), fSort = "score";
 
-    // ═══ CRIME FILTER CHIPS ═══
     var cfEl = document.getElementById("cf");
     Object.keys(CR).forEach(function(k){
       var b = document.createElement("button");
@@ -821,7 +650,6 @@
       cfEl.appendChild(b);
     });
 
-    // ═══ RENDER ═══
     function getList(){
       var list = [];
       for (var i = 0; i < AV.length; i++) {
@@ -869,20 +697,24 @@
         }
         var gr = gRank[v.name] || "?";
         html += '<div class="vc ' + v.uni + '">';
-        html += '<div class="rank">#' + (i + 1) + '</div>';
+        html += '<div class="card-left">';
+        html += '<span class="rank">#' + (i + 1) + '</span>';
         html += '<div class="av ' + v.uni + '"><span>' + ini + '</span></div>';
-        html += '<div>';
+        html += '<div class="info-block">';
         html += '<div class="vn">' + v.name + '</div>';
         html += '<div class="vm"><span class="ub ' + v.uni + '">' + (v.uni === "marvel" ? "Marvel" : "DC") + '</span><span class="grank">#' + gr + ' geral</span></div>';
-        html += '<div class="cc">' + chips + '</div>';
         html += '</div>';
-        html += '<div class="vs"><span class="sn">' + v.score + ' pts</span><button class="ib" onclick="openD(' + AV.indexOf(v) + ')">ℹ</button></div>';
+        html += '<div class="card-right">';
+        html += '<span class="sn">' + v.score + ' pts</span>';
+        html += '<button class="ib" onclick="openD(' + AV.indexOf(v) + ')">ℹ</button>';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="cc">' + chips + '</div>';
         html += '</div>';
       }
       document.getElementById("vl").innerHTML = html;
     }
 
-    // ═══ DETAIL MODAL ═══
     function openD(idx){
       var v = AV[idx]; if (!v) return;
       document.getElementById("dN").textContent = v.name;
@@ -900,14 +732,12 @@
       open_("ovD");
     }
 
-    // ═══ MODAL HELPERS ═══
     function open_(id){ document.getElementById(id).classList.add("open"); }
     function close_(id){ document.getElementById(id).classList.remove("open"); }
     document.querySelectorAll(".ov").forEach(function(el){
       el.addEventListener("click",function(e){ if (e.target === el) el.classList.remove("open"); });
     });
 
-    // ═══ TOOLBAR ═══
     document.getElementById("srch").addEventListener("input",function(){ fSrch = this.value.toLowerCase(); render(); });
     document.querySelectorAll("[data-uni]").forEach(function(btn){
       btn.addEventListener("click",function(){
@@ -926,7 +756,6 @@
       localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
     });
 
-    // ═══ RUBRIC ═══
     document.getElementById("btnR").addEventListener("click",function(){
       var h = "";
       Object.keys(CR).forEach(function(k){ h += '<div class="ri"><strong>' + CR[k].l + '</strong><span>' + CR[k].p + ' pts</span></div>'; });
@@ -934,7 +763,6 @@
       open_("ovR");
     });
 
-    // ═══ QUIZ ═══
     function loadQ(){
       var i1 = Math.floor(Math.random()*AV.length), i2;
       do { i2 = Math.floor(Math.random()*AV.length); } while (i2 === i1);
@@ -959,7 +787,6 @@
     document.getElementById("btnQ").addEventListener("click",function(){ loadQ(); open_("ovQ"); });
     document.getElementById("qN").addEventListener("click",loadQ);
 
-    // ═══ COMPARE ═══
     var cIdx1 = 0, cIdx2 = 1;
     function loadC(){
       var v1 = AV[cIdx1], v2 = AV[cIdx2];
@@ -973,7 +800,6 @@
       var tmp = cIdx1; cIdx1 = cIdx2; cIdx2 = tmp; loadC();
     });
 
-    // ═══ CSV ═══
     document.getElementById("btnE").addEventListener("click",function(){
       var csv = "\uFEFFNome,Universo,Pontuação,Crimes\n";
       for (var i = 0; i < AV.length; i++) {
@@ -986,7 +812,6 @@
       a.download = "ranking_viloes_500.csv"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
     });
 
-    // ═══ INIT ═══
     if (localStorage.getItem("theme") === "light") document.body.classList.add("light");
     render();
     </script>
