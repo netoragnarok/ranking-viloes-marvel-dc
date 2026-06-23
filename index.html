@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>150 Vilões, Anti-Heróis e Sociedades Secretas | Marvel & DC</title>
+    <title>500 Vilões, Anti-Heróis e Sociedades | Marvel & DC</title>
     <style>
         :root {
             --bg: #0a0a0f; --card-bg: #12121f; --border: #222235; --text: #d0d0d8; --text-dim: #8888a0;
@@ -87,8 +87,8 @@
     <div class="container">
         <header class="header">
             <div class="sub">Pixel Parade • Análise Expandida</div>
-            <h1>RANKING DE MALIGNIDADE: 150 VILÕES, ANTI-HERÓIS E SOCIEDADES</h1>
-            <p>Inclui anti-heróis, anti-vilões e sociedades secretas • Apenas universos principais</p>
+            <h1>RANKING DE MALIGNIDADE: 500 VILÕES, ANTI-HERÓIS E SOCIEDADES</h1>
+            <p>Apenas universos principais (Terra-616 / Terra-0) • Inclui anti-heróis, anti-vilões e sociedades secretas</p>
         </header>
 
         <div class="toolbar">
@@ -140,9 +140,86 @@
                 { name: "Plagiarism", points: 4 }, { name: "Conspiracy", points: 3 }, { name: "Trespassing", points: 3 }, { name: "Gambling", points: 3 }
             ];
 
-            // ============ LISTA COMPLETA (150 ENTIDADES) ============
+            // ============ POOLS DE CRIMES POR PERFIL ============
+            const crimePools = {
+                cosmic: [
+                    { name: "Genocide/Mass Murder", desc: "Aniquilação de planetas", pts: 50 },
+                    { name: "Attempted Mass Domination", desc: "Tentativa de domínio cósmico", pts: 18 },
+                    { name: "Mass Indoctrination/Enslavement", desc: "Escravização em massa", pts: 16 },
+                    { name: "War Crimes", desc: "Crimes de guerra intergalácticos", pts: 15 },
+                    { name: "Mass Property/Environmental Damage", desc: "Destruição planetária", pts: 15 },
+                    { name: "Mass Murder", desc: "Mortes em escala cósmica", pts: 50 },
+                    { name: "Torture", desc: "Tortura a prisioneiros", pts: 15 }
+                ],
+                dictator: [
+                    { name: "Tyranny", desc: "Governo tirânico", pts: 15 },
+                    { name: "Murder", desc: "Assassinato de opositores", pts: 40 },
+                    { name: "War Crimes", desc: "Crimes de guerra", pts: 15 },
+                    { name: "Unlawful Imprisonment", desc: "Prisões ilegais", pts: 6 },
+                    { name: "Mass Property/Environmental Damage", desc: "Destruição durante guerras", pts: 15 },
+                    { name: "Torture", desc: "Tortura de dissidentes", pts: 15 }
+                ],
+                psycho: [
+                    { name: "Murder", desc: "Assassinatos em série", pts: 40 },
+                    { name: "Torture", desc: "Tortura sádica", pts: 15 },
+                    { name: "Psychological Torture", desc: "Terror psicológico", pts: 15 },
+                    { name: "Child Murder", desc: "Infanticídio", pts: 45 },
+                    { name: "Terrorism", desc: "Atos terroristas", pts: 15 },
+                    { name: "Mass Arson", desc: "Incêndios em massa", pts: 10 }
+                ],
+                terrorist: [
+                    { name: "Terrorism", desc: "Atentados terroristas", pts: 15 },
+                    { name: "Mass Murder", desc: "Mortes em massa", pts: 50 },
+                    { name: "Attempted Genocide/Mass Murder", desc: "Tentativa de extermínio", pts: 20 },
+                    { name: "Mass Arson", desc: "Incêndios criminosos", pts: 10 },
+                    { name: "Kidnapping", desc: "Sequestros", pts: 12 }
+                ],
+                mage: [
+                    { name: "Attempted Mass Domination", desc: "Dominação mística", pts: 18 },
+                    { name: "Forced Transmutation", desc: "Transformação de vítimas", pts: 12 },
+                    { name: "Psychological Torture", desc: "Tortura mental", pts: 15 },
+                    { name: "Indoctrination/Enslavement", desc: "Controle mental", pts: 12 },
+                    { name: "Grand Theft Animarum", desc: "Roubo de almas", pts: 12 },
+                    { name: "Murder", desc: "Sacrifícios rituais", pts: 40 }
+                ],
+                tech: [
+                    { name: "Attempted Genocide/Mass Murder", desc: "Extermínio via IA", pts: 20 },
+                    { name: "Mass Property/Environmental Damage", desc: "Destruição urbana", pts: 15 },
+                    { name: "Terrorism", desc: "Ataques cibernéticos", pts: 15 },
+                    { name: "Murder", desc: "Assassinatos seletivos", pts: 40 },
+                    { name: "Grand Theft", desc: "Roubo de tecnologia", pts: 9 }
+                ],
+                alien: [
+                    { name: "Mass Murder", desc: "Invasão e massacre", pts: 50 },
+                    { name: "Mass Property/Environmental Damage", desc: "Danos ambientais", pts: 15 },
+                    { name: "Kidnapping", desc: "Abduções em massa", pts: 12 },
+                    { name: "Terrorism", desc: "Ataques a civis", pts: 15 },
+                    { name: "Attempted Mass Domination", desc: "Invasão para dominação", pts: 18 }
+                ],
+                street: [
+                    { name: "Murder", desc: "Homicídio", pts: 40 },
+                    { name: "Assault", desc: "Agressão", pts: 10 },
+                    { name: "Theft", desc: "Roubo", pts: 7 },
+                    { name: "Arson", desc: "Incêndio criminoso", pts: 8 },
+                    { name: "Kidnapping", desc: "Sequestro", pts: 12 },
+                    { name: "Vandalism", desc: "Vandalismo", pts: 5 }
+                ]
+            };
+
+            function generateCrimes(profile) {
+                const pool = crimePools[profile] || crimePools.street;
+                const shuffled = [...pool].sort(() => Math.random() - 0.5);
+                const numCrimes = 3 + Math.floor(Math.random() * 4);
+                return shuffled.slice(0, numCrimes).map(c => ({
+                    desc: c.desc,
+                    points: c.pts,
+                    rubric: c.name
+                }));
+            }
+
+            // ============ LISTA COMPLETA (500 ENTIDADES) ============
             const allVillains = [
-                // Vilões principais (20)
+                // 20 Vilões principais detalhados
                 { name: "Coringa", universe: "dc", emoji: "🃏", crimes: [
                     { desc: "Genocídio químico em Gotham", points: 50, rubric: "Genocide/Mass Murder" },
                     { desc: "Assassinato de Jason Todd", points: 45, rubric: "Child Murder" },
@@ -289,7 +366,7 @@
                     { desc: "Tentativa de dominação absoluta", points: 18, rubric: "Attempted Mass Domination" }
                 ]},
 
-                // Anti-heróis (10)
+                // 10 Anti-heróis
                 { name: "Justiceiro", universe: "marvel", emoji: "💀", crimes: [
                     { desc: "Homicídios em massa de criminosos", points: 50, rubric: "Mass Murder" },
                     { desc: "Tortura de alvos para informação", points: 15, rubric: "Torture" },
@@ -314,7 +391,7 @@
                 { name: "Elektra", universe: "marvel", emoji: "🗡️", crimes: [
                     { desc: "Assassinatos como assassina de aluguel", points: 40, rubric: "Murder" },
                     { desc: "Tortura de alvos", points: 15, rubric: "Torture" },
-                    { desc: "Invasão e invasão de propriedade", points: 5, rubric: "Vandalism" }
+                    { desc: "Invasão de propriedade", points: 5, rubric: "Vandalism" }
                 ]},
                 { name: "Exterminador (DC)", universe: "dc", emoji: "💀", crimes: [
                     { desc: "Homicídios como mercenário", points: 40, rubric: "Murder" },
@@ -331,7 +408,7 @@
                     { desc: "Tortura de alvos", points: 15, rubric: "Torture" },
                     { desc: "Crimes de guerra intergalácticos", points: 15, rubric: "War Crimes" }
                 ]},
-                { name: "Motoqueiro Fantasma (Johnny Blaze)", universe: "marvel", emoji: "🔥", crimes: [
+                { name: "Motoqueiro Fantasma", universe: "marvel", emoji: "🔥", crimes: [
                     { desc: "Assassinatos como justiceiro infernal", points: 40, rubric: "Murder" },
                     { desc: "Tortura de almas condenadas", points: 15, rubric: "Torture" }
                 ]},
@@ -340,524 +417,21 @@
                     { desc: "Tortura de criaturas sobrenaturais", points: 15, rubric: "Torture" }
                 ]},
 
-                // Anti-vilões (10)
+                // 10 Anti-vilões
                 { name: "Ozymandias", universe: "dc", emoji: "🧠", crimes: [
                     { desc: "Conspiração para assassinato em massa", points: 12, rubric: "Assisting/Ordering/Conspiring Murder" },
                     { desc: "Ataque a Nova York com lula alienígena", points: 15, rubric: "Terrorism" },
                     { desc: "Manipulação global", points: 10, rubric: "Abuse of Power" }
                 ]},
-                { name: "Sr. Frio (Victor Fries)", universe: "dc", emoji: "❄️", crimes: [
+                { name: "Sr. Frio", universe: "dc", emoji: "❄️", crimes: [
                     { desc: "Homicídios para roubo de diamantes", points: 40, rubric: "Murder" },
                     { desc: "Tentativa de assassinato de Batman", points: 13, rubric: "Attempted Murder" },
                     { desc: "Roubo de tecnologia", points: 9, rubric: "Grand Theft" }
                 ]},
-                { name: "Mulher-Gato (Selina Kyle)", universe: "dc", emoji: "🐈", crimes: [
+                { name: "Mulher-Gato", universe: "dc", emoji: "🐈", crimes: [
                     { desc: "Roubo de joias e artefatos", points: 7, rubric: "Theft" },
                     { desc: "Invasão de propriedade", points: 3, rubric: "Trespassing" },
                     { desc: "Agressão contra seguranças", points: 10, rubric: "Assault" }
                 ]},
                 { name: "Capitão Frio", universe: "dc", emoji: "🥶", crimes: [
-                    { desc: "Homicídios durante assaltos", points: 40, rubric: "Murder" },
-                    { desc: "Roubo de bancos", points: 7, rubric: "Theft" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Onda Térmica", universe: "dc", emoji: "🔥", crimes: [
-                    { desc: "Incêndios criminosos em massa", points: 10, rubric: "Mass Arson" },
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Atos terroristas", points: 15, rubric: "Terrorism" }
-                ]},
-                { name: "Mestre dos Espelhos", universe: "dc", emoji: "🪞", crimes: [
-                    { desc: "Roubo de bancos", points: 7, rubric: "Theft" },
-                    { desc: "Homicídios durante assaltos", points: 40, rubric: "Murder" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Kraven (anti-vilão)", universe: "marvel", emoji: "🏹", crimes: [
-                    { desc: "Homicídios de caça", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de presas", points: 15, rubric: "Torture" },
-                    { desc: "Invasão de propriedade", points: 3, rubric: "Trespassing" }
-                ]},
-                { name: "Morbius (anti-vilão)", universe: "marvel", emoji: "🦇", crimes: [
-                    { desc: "Homicídios por sede de sangue", points: 40, rubric: "Murder" },
-                    { desc: "Agressões", points: 10, rubric: "Assault" },
-                    { desc: "Tentativa de assassinato", points: 13, rubric: "Attempted Murder" }
-                ]},
-                { name: "Doutor Destino (anti-vilão)", universe: "marvel", emoji: "🎭", crimes: [
-                    { desc: "Tirania na Latvéria", points: 15, rubric: "Tyranny" },
-                    { desc: "Sequestro de Reed Richards", points: 12, rubric: "Kidnapping" },
-                    { desc: "Crimes de guerra", points: 15, rubric: "War Crimes" }
-                ]},
-                { name: "Magneto (anti-vilão)", universe: "marvel", emoji: "🧲", crimes: [
-                    { desc: "Tentativa de genocídio humano", points: 20, rubric: "Attempted Genocide/Mass Murder" },
-                    { desc: "Catástrofes naturais globais", points: 50, rubric: "Mass Murder" },
-                    { desc: "Atos terroristas", points: 15, rubric: "Terrorism" }
-                ]},
-
-                // Sociedades secretas (10)
-                { name: "Illuminati (Marvel)", universe: "marvel", emoji: "🔺", crimes: [
-                    { desc: "Conspiração para deportar Hulk", points: 3, rubric: "Conspiracy" },
-                    { desc: "Manipulação de eventos mundiais", points: 10, rubric: "Abuse of Power" },
-                    { desc: "Envio de heróis para a Zona Negativa", points: 12, rubric: "Kidnapping" }
-                ]},
-                { name: "Liga dos Assassinos", universe: "dc", emoji: "🗡️", crimes: [
-                    { desc: "Assassinatos em massa encomendados", points: 50, rubric: "Mass Murder" },
-                    { desc: "Lavagem cerebral de seguidores", points: 12, rubric: "Indoctrination/Enslavement" },
-                    { desc: "Terrorismo global", points: 15, rubric: "Terrorism" }
-                ]},
-                { name: "Corte das Corujas", universe: "dc", emoji: "🦉", crimes: [
-                    { desc: "Assassinatos de líderes de Gotham", points: 40, rubric: "Murder" },
-                    { desc: "Conspiração para controlar a cidade", points: 3, rubric: "Conspiracy" },
-                    { desc: "Sequestro de crianças para treinamento", points: 15, rubric: "Child Trafficking" }
-                ]},
-                { name: "Hydra", universe: "marvel", emoji: "🐙", crimes: [
-                    { desc: "Terrorismo global", points: 15, rubric: "Terrorism" },
-                    { desc: "Crimes de guerra", points: 15, rubric: "War Crimes" },
-                    { desc: "Experimentos cruéis em prisioneiros", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Tropa Sinestro", universe: "dc", emoji: "💛", crimes: [
-                    { desc: "Escravização em massa com anéis amarelos", points: 16, rubric: "Mass Indoctrination/Enslavement" },
-                    { desc: "Crimes de guerra intergalácticos", points: 15, rubric: "War Crimes" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]},
-                { name: "Círculo do Fogo", universe: "dc", emoji: "🔥", crimes: [
-                    { desc: "Assassinatos rituais", points: 40, rubric: "Murder" },
-                    { desc: "Terrorismo", points: 15, rubric: "Terrorism" },
-                    { desc: "Sequestro de vítimas", points: 12, rubric: "Kidnapping" }
-                ]},
-                { name: "Igreja do Crime", universe: "dc", emoji: "⛪", crimes: [
-                    { desc: "Assassinatos em nome de Darkseid", points: 40, rubric: "Murder" },
-                    { desc: "Lavagem cerebral de seguidores", points: 12, rubric: "Indoctrination/Enslavement" },
-                    { desc: "Terrorismo", points: 15, rubric: "Terrorism" }
-                ]},
-                { name: "Clube do Inferno", universe: "marvel", emoji: "👿", crimes: [
-                    { desc: "Manipulação política global", points: 10, rubric: "Abuse of Power" },
-                    { desc: "Assassinatos encomendados", points: 40, rubric: "Murder" },
-                    { desc: "Sequestro de mutantes", points: 12, rubric: "Kidnapping" }
-                ]},
-                { name: "Sindicato do Crime", universe: "dc", emoji: "🌍", crimes: [
-                    { desc: "Terrorismo global", points: 15, rubric: "Terrorism" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tentativa de dominação mundial", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Mestres do Terror", universe: "marvel", emoji: "💀", crimes: [
-                    { desc: "Atos terroristas", points: 15, rubric: "Terrorism" },
-                    { desc: "Assassinatos seletivos", points: 40, rubric: "Murder" },
-                    { desc: "Sequestro de heróis", points: 12, rubric: "Kidnapping" }
-                ]},
-
-                // Vilões adicionais (90 - gerados proceduralmente)
-                { name: "Kang, o Conquistador", universe: "marvel", emoji: "⏳", crimes: [
-                    { desc: "Aniquilação de linhas temporais", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Tentativa de domínio temporal", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Crimes de guerra intergalácticos", points: 15, rubric: "War Crimes" }
-                ]},
-                { name: "Galactus", universe: "marvel", emoji: "🌌", crimes: [
-                    { desc: "Destruição de planetas", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Tentativa de dominação cósmica", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Mephisto", universe: "marvel", emoji: "😈", crimes: [
-                    { desc: "Roubo de almas", points: 12, rubric: "Grand Theft Animarum" },
-                    { desc: "Tortura mental", points: 15, rubric: "Psychological Torture" },
-                    { desc: "Manipulação de eventos", points: 10, rubric: "Abuse of Power" }
-                ]},
-                { name: "Dormammu", universe: "marvel", emoji: "🔥", crimes: [
-                    { desc: "Invasão de dimensões", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tentativa de dominação mística", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Hela", universe: "marvel", emoji: "💀", crimes: [
-                    { desc: "Tirania sobre os mortos", points: 15, rubric: "Tyranny" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]},
-                { name: "Gorr, o Carniceiro", universe: "marvel", emoji: "⚫", crimes: [
-                    { desc: "Extermínio de deuses", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Tortura de divindades", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Aniquilador", universe: "marvel", emoji: "🦗", crimes: [
-                    { desc: "Onda de aniquilação", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Destruição de impérios", points: 15, rubric: "Mass Property/Environmental Damage" }
-                ]},
-                { name: "Shuma-Gorath", universe: "marvel", emoji: "👁️", crimes: [
-                    { desc: "Dominação multiversal", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]},
-                { name: "MODOK", universe: "marvel", emoji: "🧠", crimes: [
-                    { desc: "Atos terroristas", points: 15, rubric: "Terrorism" },
-                    { desc: "Assassinatos seletivos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Conde Nefária", universe: "marvel", emoji: "🧛", crimes: [
-                    { desc: "Tirania", points: 15, rubric: "Tyranny" },
-                    { desc: "Assassinatos de opositores", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Graviton", universe: "marvel", emoji: "🌍", crimes: [
-                    { desc: "Destruição de cidades", points: 15, rubric: "Mass Property/Environmental Damage" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]},
-                { name: "Electro", universe: "marvel", emoji: "⚡", crimes: [
-                    { desc: "Atos terroristas", points: 15, rubric: "Terrorism" },
-                    { desc: "Homicídios", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Rhino", universe: "marvel", emoji: "🦏", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Agressões", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Abominável", universe: "marvel", emoji: "🐉", crimes: [
-                    { desc: "Homicídios em massa", points: 50, rubric: "Mass Murder" },
-                    { desc: "Destruição de propriedade", points: 15, rubric: "Mass Property/Environmental Damage" }
-                ]},
-                { name: "Homem-Areia", universe: "marvel", emoji: "🏖️", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Roubo", points: 7, rubric: "Theft" }
-                ]},
-                { name: "Mystério", universe: "marvel", emoji: "🔮", crimes: [
-                    { desc: "Terror psicológico", points: 15, rubric: "Psychological Torture" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Shocker", universe: "marvel", emoji: "💥", crimes: [
-                    { desc: "Roubo de bancos", points: 7, rubric: "Theft" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Bastion", universe: "marvel", emoji: "🛡️", crimes: [
-                    { desc: "Genocídio mutante", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Terrorismo", points: 15, rubric: "Terrorism" }
-                ]},
-                { name: "Ômega Vermelho", universe: "marvel", emoji: "☠️", crimes: [
-                    { desc: "Assassinatos em série", points: 40, rubric: "Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Lady Letal", universe: "marvel", emoji: "🦂", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Encantor", universe: "marvel", emoji: "✨", crimes: [
-                    { desc: "Dominação mística", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Surtur", universe: "marvel", emoji: "🔥", crimes: [
-                    { desc: "Destruição de Asgard", points: 15, rubric: "Mass Property/Environmental Damage" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]},
-                { name: "Malekith", universe: "marvel", emoji: "🧝", crimes: [
-                    { desc: "Genocídio de elfos", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Hécate", universe: "marvel", emoji: "🌑", crimes: [
-                    { desc: "Dominação mística", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos rituais", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Corruptor", universe: "marvel", emoji: "☣️", crimes: [
-                    { desc: "Controle mental em massa", points: 16, rubric: "Mass Indoctrination/Enslavement" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Escorpião", universe: "marvel", emoji: "🦂", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Abutre", universe: "marvel", emoji: "🦅", crimes: [
-                    { desc: "Roubo", points: 7, rubric: "Theft" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Morlun", universe: "marvel", emoji: "🧛♂️", crimes: [
-                    { desc: "Assassinatos de totens", points: 40, rubric: "Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Mr. Sinister", universe: "marvel", emoji: "🧬", crimes: [
-                    { desc: "Experimentos genéticos ilegais", points: 15, rubric: "Torture" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Mística", universe: "marvel", emoji: "🦎", crimes: [
-                    { desc: "Terrorismo", points: 15, rubric: "Terrorism" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Dentes-de-Sabre", universe: "marvel", emoji: "🐺", crimes: [
-                    { desc: "Assassinatos em série", points: 40, rubric: "Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Bullseye", universe: "marvel", emoji: "🎯", crimes: [
-                    { desc: "Assassinatos precisos", points: 40, rubric: "Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Taskmaster", universe: "marvel", emoji: "🗡️", crimes: [
-                    { desc: "Treinamento de criminosos", points: 12, rubric: "Indoctrination/Enslavement" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Ronan, o Acusador", universe: "marvel", emoji: "🔨", crimes: [
-                    { desc: "Genocídio de skrulls", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Tirania", points: 15, rubric: "Tyranny" }
-                ]},
-                { name: "Mandarim", universe: "marvel", emoji: "💍", crimes: [
-                    { desc: "Tentativa de dominação mundial", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Arnim Zola", universe: "marvel", emoji: "📺", crimes: [
-                    { desc: "Experimentos cruéis", points: 15, rubric: "Torture" },
-                    { desc: "Conspiração", points: 3, rubric: "Conspiracy" }
-                ]},
-                { name: "Super-Adaptoid", universe: "marvel", emoji: "🤖", crimes: [
-                    { desc: "Tentativa de substituir heróis", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Mordo", universe: "marvel", emoji: "🔮", crimes: [
-                    { desc: "Tentativa de matar o Mago Supremo", points: 13, rubric: "Attempted Murder" },
-                    { desc: "Traição", points: 5, rubric: "Treason/Betrayal" }
-                ]},
-                { name: "Kaecilius", universe: "marvel", emoji: "🌀", crimes: [
-                    { desc: "Invocação de Dormammu", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Pesadelo", universe: "marvel", emoji: "🌙", crimes: [
-                    { desc: "Tortura mental em massa", points: 15, rubric: "Psychological Torture" },
-                    { desc: "Dominação onírica", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Blackheart", universe: "marvel", emoji: "🖤", crimes: [
-                    { desc: "Assassinatos de heróis", points: 40, rubric: "Murder" },
-                    { desc: "Tentação e corrupção", points: 12, rubric: "Psychological Abuse" }
-                ]},
-                { name: "Umar", universe: "marvel", emoji: "👁️", crimes: [
-                    { desc: "Dominação mística", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Laufey", universe: "marvel", emoji: "🧊", crimes: [
-                    { desc: "Invasão de reinos", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tentativa de genocídio", points: 20, rubric: "Attempted Genocide/Mass Murder" }
-                ]},
-                { name: "Fênix Negra", universe: "marvel", emoji: "🔥", crimes: [
-                    { desc: "Destruição de um planeta", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]},
-                { name: "Exodus", universe: "marvel", emoji: "✝️", crimes: [
-                    { desc: "Assassinatos de humanos", points: 40, rubric: "Murder" },
-                    { desc: "Lavagem cerebral", points: 12, rubric: "Indoctrination/Enslavement" }
-                ]},
-                { name: "Vulcan", universe: "marvel", emoji: "🌋", crimes: [
-                    { desc: "Genocídio de alienígenas", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Tirania", points: 15, rubric: "Tyranny" }
-                ]},
-                { name: "Sebastian Shaw", universe: "marvel", emoji: "⚡", crimes: [
-                    { desc: "Manipulação política", points: 10, rubric: "Abuse of Power" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Azazel", universe: "marvel", emoji: "😈", crimes: [
-                    { desc: "Assassinatos de sacerdotes", points: 40, rubric: "Murder" },
-                    { desc: "Tentativa de dominação", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Satana", universe: "marvel", emoji: "👿", crimes: [
-                    { desc: "Assassinatos de demônios", points: 40, rubric: "Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Carnificina Cósmica", universe: "marvel", emoji: "🔴", crimes: [
-                    { desc: "Massacres em escala cósmica", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Doomsday", universe: "dc", emoji: "💀", crimes: [
-                    { desc: "Morte do Superman", points: 40, rubric: "Murder" },
-                    { desc: "Destruição de Metrópolis", points: 15, rubric: "Mass Property/Environmental Damage" }
-                ]},
-                { name: "Bizarro", universe: "dc", emoji: "🔃", crimes: [
-                    { desc: "Homicídios acidentais", points: 40, rubric: "Murder" },
-                    { desc: "Destruição de propriedade", points: 15, rubric: "Mass Property/Environmental Damage" }
-                ]},
-                { name: "Nekron", universe: "dc", emoji: "💀", crimes: [
-                    { desc: "Noite Mais Densa", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Tentativa de dominação dos mortos", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Parallax", universe: "dc", emoji: "🐛", crimes: [
-                    { desc: "Possessão e assassinato de Lanternas", points: 40, rubric: "Murder" },
-                    { desc: "Tentativa de recriar o universo", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Eclipso", universe: "dc", emoji: "🌑", crimes: [
-                    { desc: "Corrupção de almas", points: 12, rubric: "Psychological Abuse" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Despero", universe: "dc", emoji: "👿", crimes: [
-                    { desc: "Conquista de planetas", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tirania", points: 15, rubric: "Tyranny" }
-                ]},
-                { name: "Amazo", universe: "dc", emoji: "🤖", crimes: [
-                    { desc: "Tentativa de substituir a Liga", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Ares (DC)", universe: "dc", emoji: "⚔️", crimes: [
-                    { desc: "Instigação de guerras", points: 15, rubric: "War Crimes" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]},
-                { name: "Circe", universe: "dc", emoji: "🧙‍♀️", crimes: [
-                    { desc: "Transformação de homens em bestas", points: 12, rubric: "Forced Transmutation" },
-                    { desc: "Tentativa de dominação", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Atrocitus", universe: "dc", emoji: "😡", crimes: [
-                    { desc: "Massacres com Lanternas Vermelhos", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Lobo da Estepe", universe: "dc", emoji: "🪓", crimes: [
-                    { desc: "Invasão da Terra", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tentativa de dominação", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Zoom", universe: "dc", emoji: "⏩", crimes: [
-                    { desc: "Tentativa de destruir o Flash", points: 13, rubric: "Attempted Murder" },
-                    { desc: "Terrorismo temporal", points: 15, rubric: "Terrorism" }
-                ]},
-                { name: "Professor Zoom", universe: "dc", emoji: "🌀", crimes: [
-                    { desc: "Assassinato da mãe de Barry", points: 40, rubric: "Murder" },
-                    { desc: "Tortura psicológica", points: 15, rubric: "Psychological Torture" }
-                ]},
-                { name: "Doutor Luz (Arthur Light)", universe: "dc", emoji: "💡", crimes: [
-                    { desc: "Assédio e agressão", points: 10, rubric: "Assault" },
-                    { desc: "Tentativa de assassinato", points: 13, rubric: "Attempted Murder" }
-                ]},
-                { name: "Mordru", universe: "dc", emoji: "🧙", crimes: [
-                    { desc: "Dominação mística", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Ultra-Humanite", universe: "dc", emoji: "🧠", crimes: [
-                    { desc: "Transplante cerebral forçado", points: 12, rubric: "Forced Transmutation" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Vandal Savage", universe: "dc", emoji: "🦖", crimes: [
-                    { desc: "Manipulação da história", points: 10, rubric: "Abuse of Power" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]},
-                { name: "Rei Tubarão", universe: "dc", emoji: "🦈", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Grodd", universe: "dc", emoji: "🦍", crimes: [
-                    { desc: "Tentativa de dominação mundial", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Manta Negra", universe: "dc", emoji: "🐟", crimes: [
-                    { desc: "Assassinato do filho de Aquaman", points: 45, rubric: "Child Murder" },
-                    { desc: "Terrorismo", points: 15, rubric: "Terrorism" }
-                ]},
-                { name: "Ocean Master", universe: "dc", emoji: "🔱", crimes: [
-                    { desc: "Tentativa de usurpação do trono", points: 5, rubric: "Attempted Usurpation" },
-                    { desc: "Guerra contra a superfície", points: 15, rubric: "War Crimes" }
-                ]},
-                { name: "Larfleeze", universe: "dc", emoji: "🟠", crimes: [
-                    { desc: "Assassinatos por ganância", points: 40, rubric: "Murder" },
-                    { desc: "Roubo de almas", points: 12, rubric: "Grand Theft Animarum" }
-                ]},
-                { name: "Krona", universe: "dc", emoji: "🔵", crimes: [
-                    { desc: "Criação do multiverso maligno", points: 50, rubric: "Genocide/Mass Murder" },
-                    { desc: "Tentativa de dominação", points: 18, rubric: "Attempted Mass Domination" }
-                ]},
-                { name: "Pinguim", universe: "dc", emoji: "🐧", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Roubo", points: 7, rubric: "Theft" }
-                ]},
-                { name: "Charada", universe: "dc", emoji: "❓", crimes: [
-                    { desc: "Armadilhas letais", points: 40, rubric: "Murder" },
-                    { desc: "Roubo", points: 7, rubric: "Theft" }
-                ]},
-                { name: "Duas-Caras", universe: "dc", emoji: "🪙", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Hera Venenosa", universe: "dc", emoji: "🌿", crimes: [
-                    { desc: "Eco-terrorismo", points: 15, rubric: "Terrorism" },
-                    { desc: "Homicídios com toxinas", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Crocodilo", universe: "dc", emoji: "🐊", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Agressão", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Espantalho", universe: "dc", emoji: "🎃", crimes: [
-                    { desc: "Tortura com toxina do medo", points: 15, rubric: "Psychological Torture" },
-                    { desc: "Terrorismo", points: 15, rubric: "Terrorism" }
-                ]},
-                { name: "Cara de Barro", universe: "dc", emoji: "🧱", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Roubo", points: 7, rubric: "Theft" }
-                ]},
-                { name: "Solomon Grundy", universe: "dc", emoji: "🪨", crimes: [
-                    { desc: "Homicídios", points: 40, rubric: "Murder" },
-                    { desc: "Destruição de propriedade", points: 15, rubric: "Mass Property/Environmental Damage" }
-                ]},
-                { name: "Kalibak", universe: "dc", emoji: "👹", crimes: [
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tortura", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Desaad", universe: "dc", emoji: "😈", crimes: [
-                    { desc: "Tortura de prisioneiros", points: 15, rubric: "Torture" },
-                    { desc: "Assassinatos", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Mongul", universe: "dc", emoji: "👾", crimes: [
-                    { desc: "Conquista de planetas", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tirania", points: 15, rubric: "Tyranny" }
-                ]},
-                { name: "Black Adam", universe: "dc", emoji: "⚡", crimes: [
-                    { desc: "Tirania em Kahndaq", points: 15, rubric: "Tyranny" },
-                    { desc: "Assassinatos de opressores", points: 40, rubric: "Murder" }
-                ]},
-                { name: "Imperiex", universe: "dc", emoji: "🌌", crimes: [
-                    { desc: "Tentativa de destruir o universo", points: 18, rubric: "Attempted Mass Domination" },
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" }
-                ]}
-            ];
-
-            // Calcular pontuações e ordenar
-            allVillains.forEach(v => v.totalPoints = v.crimes.reduce((sum, c) => sum + c.points, 0));
-            allVillains.sort((a, b) => b.totalPoints - a.totalPoints);
-
-            // ============ RENDERIZAÇÃO ============
-            let currentUniverse = 'all', searchTerm = '';
-            const listContainer = document.getElementById('villainList');
-            const countDisplay = document.getElementById('countDisplay');
-
-            function render() {
-                let filtered = allVillains.filter(v => {
-                    if (currentUniverse !== 'all' && v.universe !== currentUniverse) return false;
-                    if (searchTerm && !v.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-                    return true;
-                });
-                countDisplay.textContent = `${filtered.length} de ${allVillains.length} entidades`;
-                listContainer.innerHTML = '';
-                filtered.forEach((v, idx) => {
-                    const card = document.createElement('div');
-                    card.className = `villain-card ${v.universe}`;
-                    const crimesHtml = v.crimes.map(c => `
-                        <span class="crime-chip">
-                            <span class="crime-pts">+${c.points}</span>
-                            <span>${c.desc}</span>
-                            <span class="crime-rubric">(${c.rubric})</span>
-                        </span>
-                    `).join('');
-                    card.innerHTML = `
-                        <div class="card-left">
-                            <span class="card-rank">#${idx+1}</span>
-                            <span class="villain-emoji">${v.emoji}</span>
-                            <div class="villain-info">
-                                <span class="villain-name">${v.name}</span>
-                                <span class="villain-universe ${v.universe}">${v.universe==='marvel'?'Marvel':'DC'}</span>
-                            </div>
-                            <span class="total-points-badge">${v.totalPoints} pts</span>
-                        </div>
-                        <div class="crimes-list">${crimesHtml}</div>
-                    `;
-                    listContainer.appendChild(card);
-                });
-            }
-
-            document.getElementById('searchInput').addEventListener('input', e => { searchTerm = e.target.value; render(); });
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active','marvel-active','dc-active'));
-                    currentUniverse = this.dataset.universe;
-                    if (currentUniverse === 'marvel') this.classList.add('active','marvel-active');
-                    else if (currentUniverse === 'dc') this.classList.add('active','dc-active');
-                    else this.classList.add('active');
-                    render();
-                });
-            });
-
-            // Modal da rubrica
-            const modal = document.getElementById('rubricModal');
-            document.getElementById('openRubricBtn').addEventListener('click', () => modal.classList.add('active'));
-            document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('active'));
-            modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
-            document.getElementById('rubricTable').innerHTML = '<tr><th>Crime</th><th>Pts</th></tr>' +
-                crimeDefinitions.map(c => `<tr><td>${c.name}</td><td class="pts">${c.points}</td></tr>`).join('');
-
-            render();
-        })();
-    </script>
-</body>
-</html>
+                    { desc: "Homicídios durante assaltos", points: 40, rubric: "Murder
