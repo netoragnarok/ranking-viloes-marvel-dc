@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>500 Vilões Marvel & DC | Ranking Supremo com Sinopses</title>
     <style>
+        /* (mesmo CSS do código anterior, mantido inalterado) */
         :root {
             --bg: #0a0a0f; --surface: #111118; --card: #16161f; --border: #26263a;
             --text: #d8d8e8; --dim: #7777a0; --marvel: #e62429; --dc: #0476f2;
@@ -381,7 +382,6 @@
 
     function getSynopsis(name) {
         if (villainData[name]) return villainData[name].synopsis;
-        // Gera sinopse baseada no perfil
         var profile = gP(name);
         var templates = {
             cosmic: "Entidade cósmica de poder incomensurável. Age em escala universal, movido por propósitos além da compreensão humana.",
@@ -723,12 +723,79 @@
     for (var i = 0; i < ED.length && AV.length < 500; i++) {
       if (!seen.has(ED[i])) { seen.add(ED[i]); AV.push(mkV(ED[i], "dc")); }
     }
+
+    // ═══ LISTAS EXTRAS DIVIDIDAS POR EDITORA ═══
+    var EXTRA_MARVEL = [
+        "Ares","Absorbing Man","Attuma","Baron Mordo","Bullseye","Chameleon",
+        "Count Nefaria","Crimson Dynamo","Crossbones","Daken","Deathbird","Electro",
+        "Emma Frost","Ghost","Grey Gargoyle","Grim Reaper","High Evolutionary",
+        "Hobgoblin","Hydro-Man","Hyperion","Immortus","Juggernaut","Killmonger",
+        "Klaw","Kraven","Lizard","Living Monolith","Mad Thinker","Maestro","Mandarin",
+        "Man-Wolf","Maximus","Mesmero","Mole Man","Mister Sinister","Mysterio","Nuke",
+        "Radioactive Man","Rhino","Sabretooth","Scorpion","Silver Samurai","Stryfe",
+        "Taskmaster","The Hood","Tinkerer","Vulture","Annihilus","Black Heart",
+        "Black Swan","Bloodaxe","Brood","Corvus Glaive","Devos","Dracula","Dragon Man",
+        "Graviton","Griffin","Ironclad","Korath","Lady Mastermind","Lash","Lyja",
+        "Madame Hydra","Miek","Mindless Ones","Mojo","Overlord","Paladin","Piledriver",
+        "Plantman","Porcupine","Prowler","Puppet Master","Sentinels","Shadow King",
+        "Sienna Blaze","Slayback","Slyde","Spiral","Stained Glass Scarlet","Swordsman",
+        "Unicorn","Vapor","Wendigo","X-Cutioner","Zaal","Zaran",
+        "Ahab","Barracuda","Blackout","Bloodscream","Brothers Grimm","Chthon",
+        "Crimson Cowl","Ghaur","Madcap","Maelstrom","Morg","Moses Magnum",
+        "Prodigy","Red Ghost","Saturnyne","Scalphunter","Selene","Sersi","Sin",
+        "Superia"
+    ];
+    var EXTRA_DC = [
+        "Abra Kadabra","Amos Fortune","Agent Orange","Atomic Skull","Atlas",
+        "Baron Blitzkrieg","Black Hand","Black Manta","Black Spider","Bronze Tiger",
+        "Brother Eye","Calculator","Cheetah","Cheshire","Chronos","Copperhead",
+        "Crazy Quilt","Cythonna","Doctor Destiny","Doctor Polaris","Doctor Sivana",
+        "Doomsday","Eclipso","Epoch","Eradicator","Evil Star","Felix Faust",
+        "General Glory","Gentleman Ghost","Giganta","Gorilla Grodd","Granny Goodness",
+        "Graft","H.I.V.E. Master","Hugo Strange","Human Flame","Hyena","Indigo",
+        "Joker's Daughter","Jonah Hex","Knockout","Kryptonite Man","Lady Shiva",
+        "Manchester Black","Mammoth","Man-Bat","Matter Master","Maxwell Lord","Merlyn",
+        "Night Owl","Ogre","Omega","Onomatopoeia","Orion","Per Degaton","Psimon",
+        "Psycho-Pirate","Queen Bee","Riddler","Roxy Rocket","Rustam","Shadow Thief",
+        "Shaggy Man","Signalman","Sportsmaster","Star Sapphire","Steppenwolf","Tala",
+        "Terminus","The Eraser","The Monocle","Thinker","Toyman","Vandal Savage",
+        "Vigilante","Volcana","Warp","Wraith","Yellow Peril",
+        "Blacksmith","Double Down","Girder","Murmur","Peekaboo","Shrapnel",
+        "Tar Pit","Thermal","Golden Glider","Heat Wave","Killer Frost","Trickster",
+        "Harley Quinn","Poison Ivy","Clayface","Ratcatcher","Magpie","Cluemaster",
+        "Film Freak","Ventriloquist","Scarecrow","Kobra","Multiplex","Fallback",
+        "Spy Smasher","Brainwave","Despero","Fatal Five","Persuader","Tharok",
+        "Validus","Man-Eater","Starro","The Trench","Mr. Bloom","The Judge",
+        "Great White Shark","Silver Banshee","Time Trapper"
+    ];
+
+    // Adiciona os extras da Marvel
+    var idxM = 0;
+    while (AV.length < 500 && idxM < EXTRA_MARVEL.length) {
+        var name = EXTRA_MARVEL[idxM++];
+        if (!seen.has(name)) {
+            seen.add(name);
+            AV.push(mkV(name, "marvel"));
+        }
+    }
+    // Adiciona os extras da DC
+    var idxD = 0;
+    while (AV.length < 500 && idxD < EXTRA_DC.length) {
+        var name = EXTRA_DC[idxD++];
+        if (!seen.has(name)) {
+            seen.add(name);
+            AV.push(mkV(name, "dc"));
+        }
+    }
+    // Fallback (caso ainda falte, o que é improvável)
     var pad = 1;
     while (AV.length < 500) {
-      var name = "Vilão " + pad++;
-      AV.push(mkV(name, AV.length % 2 === 0 ? "marvel" : "dc"));
+        var name = "Vilão " + pad++;
+        if (!seen.has(name)) {
+            seen.add(name);
+            AV.push(mkV(name, AV.length % 2 === 0 ? "marvel" : "dc"));
+        }
     }
-    AV.length = 500;
 
     for (var i = 0; i < AV.length; i++) {
       var sc = 0;
@@ -859,10 +926,8 @@
         'Total: <strong style="color:var(--gold)">' + v.score + ' pts</strong> | ' +
         'Crimes: <strong style="color:var(--text)">' + v.crimes.length + '</strong></p>';
 
-      // Sinopse
       h += '<div class="synopsis"><strong>Quem é:</strong> ' + getSynopsis(v.name) + '<br><strong>Inimigo:</strong> ' + getHero(v.name) + '</div>';
 
-      // Imagens lado a lado
       var villainImg = await fetchImageWiki(v.name, v.uni === "marvel" ? "marvel" : "dc");
       var heroName = getHeroWiki(v.name);
       var heroImg = await fetchImageWiki(heroName, v.uni === "marvel" ? "marvel" : "dc");
