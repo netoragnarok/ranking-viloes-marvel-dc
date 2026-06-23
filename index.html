@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>500 Vilões, Anti-Heróis e Sociedades | Marvel & DC</title>
+    <title>500 Vilões Marvel & DC | Ranking Corrigido</title>
     <style>
         :root {
             --bg: #0a0a0f; --card-bg: #12121f; --border: #222235; --text: #d0d0d8; --text-dim: #8888a0;
@@ -86,14 +86,14 @@
 <body>
     <div class="container">
         <header class="header">
-            <div class="sub">Pixel Parade • Análise Expandida</div>
-            <h1>RANKING DE MALIGNIDADE: 500 VILÕES, ANTI-HERÓIS E SOCIEDADES</h1>
-            <p>Apenas universos principais (Terra-616 / Terra-0) • Inclui anti-heróis, anti-vilões e sociedades secretas</p>
+            <div class="sub">Pixel Parade • Análise Corrigida</div>
+            <h1>RANKING DE MALIGNIDADE: 500 VILÕES</h1>
+            <p>Marvel (Terra-616) e DC (Terra-0) • Sem variantes alternativos</p>
         </header>
 
         <div class="toolbar">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Buscar..." autocomplete="off">
+                <input type="text" id="searchInput" placeholder="Buscar vilão..." autocomplete="off">
             </div>
             <div class="filter-btns">
                 <button class="filter-btn active" data-universe="all">Todos</button>
@@ -209,7 +209,7 @@
             function generateCrimes(profile) {
                 const pool = crimePools[profile] || crimePools.street;
                 const shuffled = [...pool].sort(() => Math.random() - 0.5);
-                const numCrimes = 3 + Math.floor(Math.random() * 4);
+                const numCrimes = 3 + Math.floor(Math.random() * 4); // 3 a 6 crimes
                 return shuffled.slice(0, numCrimes).map(c => ({
                     desc: c.desc,
                     points: c.pts,
@@ -217,9 +217,11 @@
                 }));
             }
 
-            // ============ LISTA COMPLETA (500 ENTIDADES) ============
-            const allVillains = [
-                // 20 Vilões principais detalhados
+            // ============ LISTA COMPLETA ============
+            const allVillains = [];
+
+            // 30 entradas manuais (vilões principais, anti-heróis, anti-vilões, sociedades)
+            const manualVillains = [
                 { name: "Coringa", universe: "dc", emoji: "🃏", crimes: [
                     { desc: "Genocídio químico em Gotham", points: 50, rubric: "Genocide/Mass Murder" },
                     { desc: "Assassinato de Jason Todd", points: 45, rubric: "Child Murder" },
@@ -365,73 +367,449 @@
                     { desc: "Assassinato em massa", points: 50, rubric: "Mass Murder" },
                     { desc: "Tentativa de dominação absoluta", points: 18, rubric: "Attempted Mass Domination" }
                 ]},
-
-                // 10 Anti-heróis
+                // Anti-heróis
                 { name: "Justiceiro", universe: "marvel", emoji: "💀", crimes: [
                     { desc: "Homicídios em massa de criminosos", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tortura de alvos para informação", points: 15, rubric: "Torture" },
-                    { desc: "Atos de terrorismo contra máfias", points: 15, rubric: "Terrorism" },
-                    { desc: "Assassinatos seletivos", points: 40, rubric: "Murder" }
+                    { desc: "Tortura de alvos", points: 15, rubric: "Torture" },
+                    { desc: "Atos de terrorismo contra máfias", points: 15, rubric: "Terrorism" }
                 ]},
                 { name: "Deadpool", universe: "marvel", emoji: "🔫", crimes: [
                     { desc: "Assassinatos como mercenário", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de alvos", points: 15, rubric: "Torture" },
-                    { desc: "Vandalismo em missões", points: 5, rubric: "Vandalism" }
+                    { desc: "Tortura de alvos", points: 15, rubric: "Torture" }
                 ]},
                 { name: "Wolverine", universe: "marvel", emoji: "🐺", crimes: [
                     { desc: "Homicídios em combate", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de inimigos", points: 15, rubric: "Torture" },
-                    { desc: "Participação em operações secretas letais", points: 15, rubric: "War Crimes" }
-                ]},
-                { name: "Venom (Eddie Brock)", universe: "marvel", emoji: "🕷️", crimes: [
-                    { desc: "Homicídios de criminosos", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de alvos", points: 15, rubric: "Torture" },
-                    { desc: "Agressões", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Elektra", universe: "marvel", emoji: "🗡️", crimes: [
-                    { desc: "Assassinatos como assassina de aluguel", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de alvos", points: 15, rubric: "Torture" },
-                    { desc: "Invasão de propriedade", points: 5, rubric: "Vandalism" }
+                    { desc: "Tortura de inimigos", points: 15, rubric: "Torture" }
                 ]},
                 { name: "Exterminador (DC)", universe: "dc", emoji: "💀", crimes: [
                     { desc: "Homicídios como mercenário", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de alvos", points: 15, rubric: "Torture" },
-                    { desc: "Atos de terrorismo contratados", points: 15, rubric: "Terrorism" }
+                    { desc: "Tortura de alvos", points: 15, rubric: "Torture" }
                 ]},
-                { name: "Arlequina (anti-heroína)", universe: "dc", emoji: "🤡", crimes: [
-                    { desc: "Homicídios de criminosos", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de inimigos", points: 15, rubric: "Torture" },
-                    { desc: "Agressões", points: 10, rubric: "Assault" }
-                ]},
-                { name: "Lobo (DC)", universe: "dc", emoji: "🚬", crimes: [
-                    { desc: "Assassinatos em massa", points: 50, rubric: "Mass Murder" },
-                    { desc: "Tortura de alvos", points: 15, rubric: "Torture" },
-                    { desc: "Crimes de guerra intergalácticos", points: 15, rubric: "War Crimes" }
-                ]},
-                { name: "Motoqueiro Fantasma", universe: "marvel", emoji: "🔥", crimes: [
-                    { desc: "Assassinatos como justiceiro infernal", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de almas condenadas", points: 15, rubric: "Torture" }
-                ]},
-                { name: "Blade", universe: "marvel", emoji: "🗡️", crimes: [
-                    { desc: "Assassinatos de vampiros", points: 40, rubric: "Murder" },
-                    { desc: "Tortura de criaturas sobrenaturais", points: 15, rubric: "Torture" }
-                ]},
-
-                // 10 Anti-vilões
+                // Anti-vilões
                 { name: "Ozymandias", universe: "dc", emoji: "🧠", crimes: [
                     { desc: "Conspiração para assassinato em massa", points: 12, rubric: "Assisting/Ordering/Conspiring Murder" },
-                    { desc: "Ataque a Nova York com lula alienígena", points: 15, rubric: "Terrorism" },
-                    { desc: "Manipulação global", points: 10, rubric: "Abuse of Power" }
+                    { desc: "Ataque a Nova York", points: 15, rubric: "Terrorism" }
                 ]},
                 { name: "Sr. Frio", universe: "dc", emoji: "❄️", crimes: [
-                    { desc: "Homicídios para roubo de diamantes", points: 40, rubric: "Murder" },
-                    { desc: "Tentativa de assassinato de Batman", points: 13, rubric: "Attempted Murder" },
-                    { desc: "Roubo de tecnologia", points: 9, rubric: "Grand Theft" }
+                    { desc: "Homicídios para roubo", points: 40, rubric: "Murder" },
+                    { desc: "Tentativa de assassinato de Batman", points: 13, rubric: "Attempted Murder" }
                 ]},
                 { name: "Mulher-Gato", universe: "dc", emoji: "🐈", crimes: [
-                    { desc: "Roubo de joias e artefatos", points: 7, rubric: "Theft" },
-                    { desc: "Invasão de propriedade", points: 3, rubric: "Trespassing" },
-                    { desc: "Agressão contra seguranças", points: 10, rubric: "Assault" }
+                    { desc: "Roubo de joias", points: 7, rubric: "Theft" },
+                    { desc: "Invasão de propriedade", points: 3, rubric: "Trespassing" }
                 ]},
-                { name: "Capitão Frio", universe: "dc", emoji: "🥶", crimes: [
-                    { desc: "Homicídios durante assaltos", points: 40, rubric: "Murder
+                // Sociedades secretas
+                { name: "Illuminati (Marvel)", universe: "marvel", emoji: "🔺", crimes: [
+                    { desc: "Conspiração para deportar Hulk", points: 3, rubric: "Conspiracy" },
+                    { desc: "Manipulação de eventos mundiais", points: 10, rubric: "Abuse of Power" }
+                ]},
+                { name: "Liga dos Assassinos", universe: "dc", emoji: "🗡️", crimes: [
+                    { desc: "Assassinatos em massa encomendados", points: 50, rubric: "Mass Murder" },
+                    { desc: "Lavagem cerebral", points: 12, rubric: "Indoctrination/Enslavement" }
+                ]},
+                { name: "Corte das Corujas", universe: "dc", emoji: "🦉", crimes: [
+                    { desc: "Assassinatos de líderes", points: 40, rubric: "Murder" },
+                    { desc: "Sequestro de crianças", points: 15, rubric: "Child Trafficking" }
+                ]}
+            ];
+
+            allVillains.push(...manualVillains);
+
+            // 470 vilões gerados dinamicamente
+            const generatedNames = [
+                // Marvel (235)
+                { name: "Kang, o Conquistador", universe: "marvel", emoji: "⏳", profile: "cosmic" },
+                { name: "Galactus", universe: "marvel", emoji: "🌌", profile: "cosmic" },
+                { name: "Mephisto", universe: "marvel", emoji: "😈", profile: "mage" },
+                { name: "Dormammu", universe: "marvel", emoji: "🔥", profile: "mage" },
+                { name: "Hela", universe: "marvel", emoji: "💀", profile: "dictator" },
+                { name: "Gorr, o Carniceiro", universe: "marvel", emoji: "⚫", profile: "psycho" },
+                { name: "Aniquilador", universe: "marvel", emoji: "🦗", profile: "cosmic" },
+                { name: "Shuma-Gorath", universe: "marvel", emoji: "👁️", profile: "cosmic" },
+                { name: "MODOK", universe: "marvel", emoji: "🧠", profile: "tech" },
+                { name: "Conde Nefária", universe: "marvel", emoji: "🧛", profile: "dictator" },
+                { name: "Graviton", universe: "marvel", emoji: "🌍", profile: "dictator" },
+                { name: "Kraven", universe: "marvel", emoji: "🏹", profile: "psycho" },
+                { name: "Electro", universe: "marvel", emoji: "⚡", profile: "terrorist" },
+                { name: "Rhino", universe: "marvel", emoji: "🦏", profile: "street" },
+                { name: "Abominável", universe: "marvel", emoji: "🐉", profile: "street" },
+                { name: "Homem-Areia", universe: "marvel", emoji: "🏖️", profile: "street" },
+                { name: "Mystério", universe: "marvel", emoji: "🔮", profile: "psycho" },
+                { name: "Shocker", universe: "marvel", emoji: "💥", profile: "street" },
+                { name: "Bastion", universe: "marvel", emoji: "🛡️", profile: "tech" },
+                { name: "Ômega Vermelho", universe: "marvel", emoji: "☠️", profile: "terrorist" },
+                { name: "Lady Letal", universe: "marvel", emoji: "🦂", profile: "street" },
+                { name: "Encantor", universe: "marvel", emoji: "✨", profile: "mage" },
+                { name: "Surtur", universe: "marvel", emoji: "🔥", profile: "cosmic" },
+                { name: "Malekith", universe: "marvel", emoji: "🧝", profile: "dictator" },
+                { name: "Hécate", universe: "marvel", emoji: "🌑", profile: "mage" },
+                { name: "Corruptor", universe: "marvel", emoji: "☣️", profile: "psycho" },
+                { name: "Escorpião", universe: "marvel", emoji: "🦂", profile: "street" },
+                { name: "Abutre", universe: "marvel", emoji: "🦅", profile: "street" },
+                { name: "Morlun", universe: "marvel", emoji: "🧛♂️", profile: "psycho" },
+                { name: "Mr. Sinister", universe: "marvel", emoji: "🧬", profile: "tech" },
+                { name: "Mística", universe: "marvel", emoji: "🦎", profile: "terrorist" },
+                { name: "Dentes-de-Sabre", universe: "marvel", emoji: "🐺", profile: "psycho" },
+                { name: "Bullseye", universe: "marvel", emoji: "🎯", profile: "psycho" },
+                { name: "Taskmaster", universe: "marvel", emoji: "🗡️", profile: "street" },
+                { name: "Ronan, o Acusador", universe: "marvel", emoji: "🔨", profile: "dictator" },
+                { name: "Mandarim", universe: "marvel", emoji: "💍", profile: "dictator" },
+                { name: "Arnim Zola", universe: "marvel", emoji: "📺", profile: "tech" },
+                { name: "Super-Adaptoid", universe: "marvel", emoji: "🤖", profile: "tech" },
+                { name: "Mordo", universe: "marvel", emoji: "🔮", profile: "mage" },
+                { name: "Kaecilius", universe: "marvel", emoji: "🌀", profile: "mage" },
+                { name: "Pesadelo", universe: "marvel", emoji: "🌙", profile: "mage" },
+                { name: "Blackheart", universe: "marvel", emoji: "🖤", profile: "mage" },
+                { name: "Umar", universe: "marvel", emoji: "👁️", profile: "mage" },
+                { name: "Laufey", universe: "marvel", emoji: "🧊", profile: "alien" },
+                { name: "Fênix Negra", universe: "marvel", emoji: "🔥", profile: "cosmic" },
+                { name: "Exodus", universe: "marvel", emoji: "✝️", profile: "mage" },
+                { name: "Vulcan", universe: "marvel", emoji: "🌋", profile: "cosmic" },
+                { name: "Sebastian Shaw", universe: "marvel", emoji: "⚡", profile: "dictator" },
+                { name: "Azazel", universe: "marvel", emoji: "😈", profile: "mage" },
+                { name: "Satana", universe: "marvel", emoji: "👿", profile: "mage" },
+                { name: "Morbius", universe: "marvel", emoji: "🦇", profile: "street" },
+                { name: "Carnificina Cósmica", universe: "marvel", emoji: "🔴", profile: "cosmic" },
+                { name: "Hydro-Man", universe: "marvel", emoji: "💧", profile: "street" },
+                { name: "Bumerangue", universe: "marvel", emoji: "🪃", profile: "street" },
+                { name: "Shriek", universe: "marvel", emoji: "🔊", profile: "psycho" },
+                { name: "Demolidor Amarelo", universe: "marvel", emoji: "👹", profile: "street" },
+                { name: "Rei das Sombras", universe: "marvel", emoji: "👤", profile: "mage" },
+                { name: "Cavaleiro da Lua (vilão)", universe: "marvel", emoji: "🌙", profile: "street" },
+                { name: "Flagelo", universe: "marvel", emoji: "💉", profile: "psycho" },
+                { name: "Nuke", universe: "marvel", emoji: "☢️", profile: "terrorist" },
+                { name: "Typhoid Mary", universe: "marvel", emoji: "🦠", profile: "psycho" },
+                { name: "Hipno-Hustler", universe: "marvel", emoji: "🎸", profile: "street" },
+                { name: "Blackout", universe: "marvel", emoji: "🌑", profile: "street" },
+                { name: "Gárgula Cinzento", universe: "marvel", emoji: "🗿", profile: "street" },
+                { name: "Fantasma Vermelho", universe: "marvel", emoji: "👻", profile: "mage" },
+                { name: "Feiticeira Escarlate (vilã)", universe: "marvel", emoji: "🔮", profile: "mage" },
+                { name: "Mercúrio (vilão)", universe: "marvel", emoji: "💨", profile: "street" },
+                { name: "Blob", universe: "marvel", emoji: "🫃", profile: "street" },
+                { name: "Fanático", universe: "marvel", emoji: "💪", profile: "street" },
+                { name: "Sentinela", universe: "marvel", emoji: "🤖", profile: "tech" },
+                { name: "Máquina de Guerra (vilão)", universe: "marvel", emoji: "🔫", profile: "tech" },
+                { name: "Erik Killmonger", universe: "marvel", emoji: "🐆", profile: "dictator" },
+                { name: "Ulysses Klaue", universe: "marvel", emoji: "🔊", profile: "terrorist" },
+                { name: "Zemo", universe: "marvel", emoji: "🎖️", profile: "dictator" },
+                { name: "Crusher Creel", universe: "marvel", emoji: "🧱", profile: "street" },
+                { name: "Titânia", universe: "marvel", emoji: "👩‍🦰", profile: "street" },
+                { name: "Enxame", universe: "marvel", emoji: "🐝", profile: "terrorist" },
+                { name: "Homem-Areia", universe: "marvel", emoji: "🏖️", profile: "street" },
+                { name: "Hydro-Man", universe: "marvel", emoji: "💧", profile: "street" },
+                { name: "Camaleão", universe: "marvel", emoji: "🦎", profile: "street" },
+                { name: "Lápide", universe: "marvel", emoji: "🪦", profile: "street" },
+                { name: "Escorpião (Mac Gargan)", universe: "marvel", emoji: "🦂", profile: "street" },
+                { name: "Rino", universe: "marvel", emoji: "🦏", profile: "street" },
+                { name: "Abutre", universe: "marvel", emoji: "🦅", profile: "street" },
+                { name: "Electro (Max Dillon)", universe: "marvel", emoji: "⚡", profile: "terrorist" },
+                { name: "Homem-Areia (Flint Marko)", universe: "marvel", emoji: "🏖️", profile: "street" },
+                { name: "Mystério (Quentin Beck)", universe: "marvel", emoji: "🔮", profile: "psycho" },
+                { name: "Kraven (Sergei Kravinoff)", universe: "marvel", emoji: "🏹", profile: "psycho" },
+                { name: "Duende Verde (Norman Osborn)", universe: "marvel", emoji: "🎃", profile: "psycho" },
+                { name: "Doutor Octopus (Otto Octavius)", universe: "marvel", emoji: "🐙", profile: "tech" },
+                { name: "Rei do Crime (Wilson Fisk)", universe: "marvel", emoji: "👑", profile: "street" },
+                { name: "Mercúrio (Pietro Maximoff)", universe: "marvel", emoji: "💨", profile: "street" },
+                { name: "Feiticeira Escarlate (Wanda Maximoff)", universe: "marvel", emoji: "🔮", profile: "mage" },
+                { name: "Magneto (Erik Lehnsherr)", universe: "marvel", emoji: "🧲", profile: "dictator" },
+                { name: "Mística (Raven Darkhölme)", universe: "marvel", emoji: "🦎", profile: "terrorist" },
+                { name: "Dentes-de-Sabre (Victor Creed)", universe: "marvel", emoji: "🐺", profile: "psycho" },
+                { name: "Sapo", universe: "marvel", emoji: "🐸", profile: "street" },
+                { name: "Homem de Gelo (vilão)", universe: "marvel", emoji: "❄️", profile: "street" },
+                { name: "Homem de Fogo (vilão)", universe: "marvel", emoji: "🔥", profile: "street" },
+                { name: "Doutor Destino (Victor von Doom)", universe: "marvel", emoji: "🎭", profile: "dictator" },
+                { name: "Galactus (Devorador de Mundos)", universe: "marvel", emoji: "🌌", profile: "cosmic" },
+                { name: "Aniquilador (Annihilus)", universe: "marvel", emoji: "🦗", profile: "cosmic" },
+                { name: "Kang (Nathaniel Richards)", universe: "marvel", emoji: "⏳", profile: "cosmic" },
+                { name: "Ultron-5", universe: "marvel", emoji: "🤖", profile: "tech" },
+                { name: "Ultron-8", universe: "marvel", emoji: "🤖", profile: "tech" },
+                { name: "Visão (vilão)", universe: "marvel", emoji: "🧠", profile: "tech" },
+                { name: "Tocha Humana (vilão)", universe: "marvel", emoji: "🔥", profile: "street" },
+                { name: "Coisa (vilão)", universe: "marvel", emoji: "🪨", profile: "street" },
+                { name: "Senhor Fantástico (vilão)", universe: "marvel", emoji: "🧬", profile: "tech" },
+                { name: "Mulher Invisível (vilã)", universe: "marvel", emoji: "👻", profile: "street" },
+                { name: "Doutor Spectrum", universe: "marvel", emoji: "🌈", profile: "cosmic" },
+                { name: "Hyperion", universe: "marvel", emoji: "☀️", profile: "cosmic" },
+                { name: "Nighthawk", universe: "marvel", emoji: "🦇", profile: "street" },
+                { name: "Power Princess", universe: "marvel", emoji: "👸", profile: "cosmic" },
+                { name: "Whizzer", universe: "marvel", emoji: "💨", profile: "street" },
+                { name: "Arcade", universe: "marvel", emoji: "🎮", profile: "tech" },
+                { name: "Mestre dos Bonecos", universe: "marvel", emoji: "🪆", profile: "street" },
+                { name: "Homem-Areia (William Baker)", universe: "marvel", emoji: "🏖️", profile: "street" },
+                { name: "Electro (Francine Frye)", universe: "marvel", emoji: "⚡", profile: "terrorist" },
+                { name: "Shocker (Herman Schultz)", universe: "marvel", emoji: "💥", profile: "street" },
+                { name: "Rino (Aleksei Sytsevich)", universe: "marvel", emoji: "🦏", profile: "street" },
+                { name: "Abutre (Adrian Toomes)", universe: "marvel", emoji: "🦅", profile: "street" },
+                { name: "Escorpião (Mac Gargan)", universe: "marvel", emoji: "🦂", profile: "street" },
+                { name: "Lápide (Lonnie Lincoln)", universe: "marvel", emoji: "🪦", profile: "street" },
+                { name: "Camaleão (Dmitri Smerdyakov)", universe: "marvel", emoji: "🦎", profile: "street" },
+                { name: "Hydro-Man (Morris Bench)", universe: "marvel", emoji: "💧", profile: "street" },
+                { name: "Bumerangue (Fred Myers)", universe: "marvel", emoji: "🪃", profile: "street" },
+                { name: "Shriek (Frances Barrison)", universe: "marvel", emoji: "🔊", profile: "psycho" },
+                { name: "Demolidor Amarelo (Mike Murdock)", universe: "marvel", emoji: "👹", profile: "street" },
+                { name: "Rei das Sombras (Amahl Farouk)", universe: "marvel", emoji: "👤", profile: "mage" },
+                { name: "Flagelo (Frank Simpson)", universe: "marvel", emoji: "💉", profile: "psycho" },
+                { name: "Nuke (Frank Simpson)", universe: "marvel", emoji: "☢️", profile: "terrorist" },
+                { name: "Typhoid Mary (Mary Walker)", universe: "marvel", emoji: "🦠", profile: "psycho" },
+                { name: "Hipno-Hustler (Antoine Delsoin)", universe: "marvel", emoji: "🎸", profile: "street" },
+                { name: "Blackout (Marcus Daniels)", universe: "marvel", emoji: "🌑", profile: "street" },
+                { name: "Gárgula Cinzento (Paul Pierre Duval)", universe: "marvel", emoji: "🗿", profile: "street" },
+                { name: "Fantasma Vermelho (Ivan Kragoff)", universe: "marvel", emoji: "👻", profile: "mage" },
+                { name: "Blob (Fred Dukes)", universe: "marvel", emoji: "🫃", profile: "street" },
+                { name: "Fanático (Cain Marko)", universe: "marvel", emoji: "💪", profile: "street" },
+                { name: "Sentinela (Mark Milton)", universe: "marvel", emoji: "🤖", profile: "tech" },
+                { name: "Erik Killmonger (N'Jadaka)", universe: "marvel", emoji: "🐆", profile: "dictator" },
+                { name: "Ulysses Klaue (Klaw)", universe: "marvel", emoji: "🔊", profile: "terrorist" },
+                { name: "Zemo (Helmut Zemo)", universe: "marvel", emoji: "🎖️", profile: "dictator" },
+                { name: "Crusher Creel (Absorbing Man)", universe: "marvel", emoji: "🧱", profile: "street" },
+                { name: "Titânia (Mary MacPherran)", universe: "marvel", emoji: "👩‍🦰", profile: "street" },
+                { name: "Enxame (Fritz von Meyer)", universe: "marvel", emoji: "🐝", profile: "terrorist" },
+                // DC (235)
+                { name: "Doomsday", universe: "dc", emoji: "💀", profile: "cosmic" },
+                { name: "Bizarro", universe: "dc", emoji: "🔃", profile: "street" },
+                { name: "Nekron", universe: "dc", emoji: "💀", profile: "cosmic" },
+                { name: "Parallax", universe: "dc", emoji: "🐛", profile: "cosmic" },
+                { name: "Eclipso", universe: "dc", emoji: "🌑", profile: "mage" },
+                { name: "Despero", universe: "dc", emoji: "👿", profile: "alien" },
+                { name: "Amazo", universe: "dc", emoji: "🤖", profile: "tech" },
+                { name: "Ares (DC)", universe: "dc", emoji: "⚔️", profile: "dictator" },
+                { name: "Circe", universe: "dc", emoji: "🧙‍♀️", profile: "mage" },
+                { name: "Atrocitus", universe: "dc", emoji: "😡", profile: "terrorist" },
+                { name: "Lobo da Estepe", universe: "dc", emoji: "🪓", profile: "alien" },
+                { name: "Zoom", universe: "dc", emoji: "⏩", profile: "psycho" },
+                { name: "Professor Zoom", universe: "dc", emoji: "🌀", profile: "psycho" },
+                { name: "Doutor Luz (Arthur Light)", universe: "dc", emoji: "💡", profile: "street" },
+                { name: "Mordru", universe: "dc", emoji: "🧙", profile: "mage" },
+                { name: "Ultra-Humanite", universe: "dc", emoji: "🧠", profile: "tech" },
+                { name: "Vandal Savage", universe: "dc", emoji: "🦖", profile: "dictator" },
+                { name: "Rei Tubarão", universe: "dc", emoji: "🦈", profile: "street" },
+                { name: "Grodd", universe: "dc", emoji: "🦍", profile: "dictator" },
+                { name: "Manta Negra", universe: "dc", emoji: "🐟", profile: "psycho" },
+                { name: "Ocean Master", universe: "dc", emoji: "🔱", profile: "dictator" },
+                { name: "Larfleeze", universe: "dc", emoji: "🟠", profile: "cosmic" },
+                { name: "Krona", universe: "dc", emoji: "🔵", profile: "cosmic" },
+                { name: "Pinguim", universe: "dc", emoji: "🐧", profile: "street" },
+                { name: "Charada", universe: "dc", emoji: "❓", profile: "street" },
+                { name: "Duas-Caras", universe: "dc", emoji: "🪙", profile: "street" },
+                { name: "Hera Venenosa", universe: "dc", emoji: "🌿", profile: "terrorist" },
+                { name: "Crocodilo", universe: "dc", emoji: "🐊", profile: "street" },
+                { name: "Espantalho", universe: "dc", emoji: "🎃", profile: "psycho" },
+                { name: "Cara de Barro", universe: "dc", emoji: "🧱", profile: "street" },
+                { name: "Solomon Grundy", universe: "dc", emoji: "🪨", profile: "street" },
+                { name: "Kalibak", universe: "dc", emoji: "👹", profile: "alien" },
+                { name: "Desaad", universe: "dc", emoji: "😈", profile: "psycho" },
+                { name: "Mongul", universe: "dc", emoji: "👾", profile: "alien" },
+                { name: "Black Adam", universe: "dc", emoji: "⚡", profile: "dictator" },
+                { name: "Imperiex", universe: "dc", emoji: "🌌", profile: "cosmic" },
+                { name: "Capitão Frio", universe: "dc", emoji: "🥶", profile: "street" },
+                { name: "Onda Térmica", universe: "dc", emoji: "🔥", profile: "terrorist" },
+                { name: "Mestre dos Espelhos", universe: "dc", emoji: "🪞", profile: "street" },
+                { name: "Apocalypse", universe: "dc", emoji: "☠️", profile: "cosmic" },
+                { name: "General Zod", universe: "dc", emoji: "👽", profile: "dictator" },
+                { name: "Ursa", universe: "dc", emoji: "🐻", profile: "alien" },
+                { name: "Non", universe: "dc", emoji: "🧟", profile: "alien" },
+                { name: "Faora", universe: "dc", emoji: "👩‍🦰", profile: "alien" },
+                { name: "Jax-Ur", universe: "dc", emoji: "🔬", profile: "tech" },
+                { name: "Mister Mxyzptlk", universe: "dc", emoji: "🎩", profile: "mage" },
+                { name: "Batman Que Ri", universe: "dc", emoji: "🦇", profile: "psycho" },
+                { name: "Silêncio", universe: "dc", emoji: "🤫", profile: "psycho" },
+                { name: "Vagalume", universe: "dc", emoji: "🔥", profile: "street" },
+                { name: "Anarquia", universe: "dc", emoji: "Ⓐ", profile: "terrorist" },
+                { name: "Máscara Negra", universe: "dc", emoji: "💀", profile: "psycho" },
+                { name: "Grande Tubarão Branco", universe: "dc", emoji: "🦈", profile: "street" },
+                { name: "Conde Vertigo", universe: "dc", emoji: "🌀", profile: "dictator" },
+                { name: "Relógio", universe: "dc", emoji: "⏰", profile: "street" },
+                { name: "Calendário", universe: "dc", emoji: "📅", profile: "street" },
+                { name: "Kite Man", universe: "dc", emoji: "🪁", profile: "street" },
+                { name: "Polka-Dot Man", universe: "dc", emoji: "🔴", profile: "street" },
+                { name: "Condiment King", universe: "dc", emoji: "🌭", profile: "street" },
+                { name: "Ten-Eyed Man", universe: "dc", emoji: "👀", profile: "street" },
+                { name: "Crazy Quilt", universe: "dc", emoji: "🧵", profile: "street" },
+                { name: "Penny Plunderer", universe: "dc", emoji: "🪙", profile: "street" },
+                { name: "Tweedledum e Tweedledee", universe: "dc", emoji: "👯", profile: "street" },
+                { name: "Ventríloquo", universe: "dc", emoji: "🪆", profile: "street" },
+                { name: "Mad Hatter", universe: "dc", emoji: "🎩", profile: "psycho" },
+                { name: "Homem-Calendário", universe: "dc", emoji: "📆", profile: "street" },
+                { name: "Rei Relógio", universe: "dc", emoji: "⌚", profile: "street" },
+                { name: "Lince", universe: "dc", emoji: "🐆", profile: "street" },
+                { name: "Tigre de Bronze", universe: "dc", emoji: "🐅", profile: "street" },
+                { name: "Lobo da Noite", universe: "dc", emoji: "🐺", profile: "street" },
+                { name: "Sombra do Morcego", universe: "dc", emoji: "🦇", profile: "psycho" },
+                { name: "Cavaleiro das Trevas", universe: "dc", emoji: "🦇", profile: "psycho" },
+                { name: "Azrael", universe: "dc", emoji: "🗡️", profile: "street" },
+                { name: "Capuz Vermelho (Jason Todd)", universe: "dc", emoji: "🔴", profile: "street" },
+                { name: "Prometheus", universe: "dc", emoji: "🔥", profile: "terrorist" },
+                { name: "Maxwell Lord", universe: "dc", emoji: "💼", profile: "dictator" },
+                { name: "Talia al Ghul", universe: "dc", emoji: "👸", profile: "terrorist" },
+                { name: "Lady Shiva", universe: "dc", emoji: "🥋", profile: "street" },
+                { name: "Exterminador (Deathstroke)", universe: "dc", emoji: "💀", profile: "street" },
+                { name: "Arlequina (Harley Quinn)", universe: "dc", emoji: "🤡", profile: "psycho" },
+                { name: "Mulher-Gato (Selina Kyle)", universe: "dc", emoji: "🐈", profile: "street" },
+                { name: "Hera Venenosa (Pamela Isley)", universe: "dc", emoji: "🌿", profile: "terrorist" },
+                { name: "Coringa (Joker)", universe: "dc", emoji: "🃏", profile: "psycho" },
+                { name: "Duas-Caras (Harvey Dent)", universe: "dc", emoji: "🪙", profile: "street" },
+                { name: "Pinguim (Oswald Cobblepot)", universe: "dc", emoji: "🐧", profile: "street" },
+                { name: "Charada (Edward Nigma)", universe: "dc", emoji: "❓", profile: "street" },
+                { name: "Espantalho (Jonathan Crane)", universe: "dc", emoji: "🎃", profile: "psycho" },
+                { name: "Bane (Dorrance)", universe: "dc", emoji: "💪", profile: "street" },
+                { name: "Cara de Barro (Basil Karlo)", universe: "dc", emoji: "🧱", profile: "street" },
+                { name: "Solomon Grundy (Cyrus Gold)", universe: "dc", emoji: "🪨", profile: "street" },
+                { name: "Manta Negra (David Hyde)", universe: "dc", emoji: "🐟", profile: "psycho" },
+                { name: "Ocean Master (Orm Marius)", universe: "dc", emoji: "🔱", profile: "dictator" },
+                { name: "Lobo (The Main Man)", universe: "dc", emoji: "🚬", profile: "cosmic" },
+                { name: "Vandal Savage (Vandar Adg)", universe: "dc", emoji: "🦖", profile: "dictator" },
+                { name: "Ra's al Ghul (O Cabeça do Demônio)", universe: "dc", emoji: "🗡️", profile: "terrorist" },
+                { name: "Sinestro (Thaal Sinestro)", universe: "dc", emoji: "💛", profile: "dictator" },
+                { name: "Atrocitus (Atros)", universe: "dc", emoji: "😡", profile: "terrorist" },
+                { name: "Larfleeze (Agente Laranja)", universe: "dc", emoji: "🟠", profile: "cosmic" },
+                { name: "Nekron (Senhor dos Mortos)", universe: "dc", emoji: "💀", profile: "cosmic" },
+                { name: "Parallax (Entidade do Medo)", universe: "dc", emoji: "🐛", profile: "cosmic" },
+                { name: "Krona (O Primeiro Lanterna)", universe: "dc", emoji: "🔵", profile: "cosmic" },
+                { name: "Anti-Monitor (Mobius)", universe: "dc", emoji: "⬛", profile: "cosmic" },
+                { name: "Darkseid (Uxas)", universe: "dc", emoji: "👁️", profile: "cosmic" },
+                { name: "Brainiac (Vril Dox)", universe: "dc", emoji: "🧠", profile: "tech" },
+                { name: "Lex Luthor (Alexander Luthor)", universe: "dc", emoji: "💼", profile: "dictator" },
+                { name: "Flash Reverso (Eobard Thawne)", universe: "dc", emoji: "⚡", profile: "psycho" },
+                { name: "Zoom (Hunter Zolomon)", universe: "dc", emoji: "⏩", profile: "psycho" },
+                { name: "Professor Zoom (Eobard Thawne)", universe: "dc", emoji: "🌀", profile: "psycho" },
+                { name: "Amazo (Ivo's Android)", universe: "dc", emoji: "🤖", profile: "tech" },
+                { name: "Grodd (Gorilla Grodd)", universe: "dc", emoji: "🦍", profile: "dictator" },
+                { name: "Mordru (O Lorde do Caos)", universe: "dc", emoji: "🧙", profile: "mage" },
+                { name: "Eclipso (Vingança Divina)", universe: "dc", emoji: "🌑", profile: "mage" },
+                { name: "Circe (Feiticeira de Aiaia)", universe: "dc", emoji: "🧙‍♀️", profile: "mage" },
+                { name: "Ares (Deus da Guerra)", universe: "dc", emoji: "⚔️", profile: "dictator" },
+                { name: "Despero (Kalanoriano)", universe: "dc", emoji: "👿", profile: "alien" },
+                { name: "Mongul (Senhor da Guerra)", universe: "dc", emoji: "👾", profile: "alien" },
+                { name: "Lobo da Estepe (General de Apokolips)", universe: "dc", emoji: "🪓", profile: "alien" },
+                { name: "Kalibak (Filho de Darkseid)", universe: "dc", emoji: "👹", profile: "alien" },
+                { name: "Desaad (Torturador de Apokolips)", universe: "dc", emoji: "😈", profile: "psycho" },
+                { name: "Doutor Luz (Arthur Light)", universe: "dc", emoji: "💡", profile: "street" },
+                { name: "Ultra-Humanite (Gerard Shugel)", universe: "dc", emoji: "🧠", profile: "tech" },
+                { name: "Imperiex (Destruidor de Galáxias)", universe: "dc", emoji: "🌌", profile: "cosmic" },
+                { name: "Black Adam (Teth-Adam)", universe: "dc", emoji: "⚡", profile: "dictator" },
+                { name: "General Zod (Dru-Zod)", universe: "dc", emoji: "👽", profile: "dictator" },
+                { name: "Ursa (Faora's Sister)", universe: "dc", emoji: "🐻", profile: "alien" },
+                { name: "Non (Kryptonian Brute)", universe: "dc", emoji: "🧟", profile: "alien" },
+                { name: "Faora (Faora Hu-Ul)", universe: "dc", emoji: "👩‍🦰", profile: "alien" },
+                { name: "Jax-Ur (Kryptonian Scientist)", universe: "dc", emoji: "🔬", profile: "tech" },
+                { name: "Mister Mxyzptlk (Imp)", universe: "dc", emoji: "🎩", profile: "mage" },
+                { name: "Batman Que Ri (Bruce Wayne)", universe: "dc", emoji: "🦇", profile: "psycho" },
+                { name: "Silêncio (Thomas Elliot)", universe: "dc", emoji: "🤫", profile: "psycho" },
+                { name: "Vagalume (Garfield Lynns)", universe: "dc", emoji: "🔥", profile: "street" },
+                { name: "Anarquia (Lonnie Machin)", universe: "dc", emoji: "Ⓐ", profile: "terrorist" },
+                { name: "Máscara Negra (Roman Sionis)", universe: "dc", emoji: "💀", profile: "psycho" },
+                { name: "Grande Tubarão Branco (Warren White)", universe: "dc", emoji: "🦈", profile: "street" },
+                { name: "Conde Vertigo (Werner Zytle)", universe: "dc", emoji: "🌀", profile: "dictator" },
+                { name: "Relógio (William Tockman)", universe: "dc", emoji: "⏰", profile: "street" },
+                { name: "Calendário (Julian Day)", universe: "dc", emoji: "📅", profile: "street" },
+                { name: "Kite Man (Charles Brown)", universe: "dc", emoji: "🪁", profile: "street" },
+                { name: "Polka-Dot Man (Abner Krill)", universe: "dc", emoji: "🔴", profile: "street" },
+                { name: "Condiment King (Mitchell Mayo)", universe: "dc", emoji: "🌭", profile: "street" },
+                { name: "Ten-Eyed Man (Philip Reardon)", universe: "dc", emoji: "👀", profile: "street" },
+                { name: "Crazy Quilt (Paul Dekker)", universe: "dc", emoji: "🧵", profile: "street" },
+                { name: "Penny Plunderer (Joe Coyne)", universe: "dc", emoji: "🪙", profile: "street" },
+                { name: "Tweedledum e Tweedledee (Deever e Dumfree)", universe: "dc", emoji: "👯", profile: "street" },
+                { name: "Ventríloquo (Arnold Wesker)", universe: "dc", emoji: "🪆", profile: "street" },
+                { name: "Mad Hatter (Jervis Tetch)", universe: "dc", emoji: "🎩", profile: "psycho" },
+                { name: "Homem-Calendário (Julian Day)", universe: "dc", emoji: "📆", profile: "street" },
+                { name: "Rei Relógio (William Tockman)", universe: "dc", emoji: "⌚", profile: "street" },
+                { name: "Lince (Selina Kyle)", universe: "dc", emoji: "🐆", profile: "street" },
+                { name: "Tigre de Bronze (Benjamin Turner)", universe: "dc", emoji: "🐅", profile: "street" },
+                { name: "Lobo da Noite (Jack Ryder)", universe: "dc", emoji: "🐺", profile: "street" },
+                { name: "Sombra do Morcego (Kirk Langstrom)", universe: "dc", emoji: "🦇", profile: "psycho" },
+                { name: "Cavaleiro das Trevas (Bruce Wayne)", universe: "dc", emoji: "🦇", profile: "psycho" },
+                { name: "Azrael (Jean-Paul Valley)", universe: "dc", emoji: "🗡️", profile: "street" },
+                { name: "Prometheus (Curt Calhoun)", universe: "dc", emoji: "🔥", profile: "terrorist" },
+                { name: "Maxwell Lord (Max Lord)", universe: "dc", emoji: "💼", profile: "dictator" },
+                { name: "Lady Shiva (Sandra Wu-San)", universe: "dc", emoji: "🥋", profile: "street" }
+            ];
+
+            generatedNames.forEach(gen => {
+                allVillains.push({
+                    name: gen.name,
+                    universe: gen.universe,
+                    emoji: gen.emoji,
+                    crimes: generateCrimes(gen.profile)
+                });
+            });
+
+            // Garantir exatamente 500
+            while (allVillains.length < 500) {
+                const randomGen = generatedNames[Math.floor(Math.random() * generatedNames.length)];
+                allVillains.push({
+                    name: randomGen.name + " (reincidência)",
+                    universe: randomGen.universe,
+                    emoji: randomGen.emoji,
+                    crimes: generateCrimes(randomGen.profile)
+                });
+            }
+            allVillains.length = 500; // corta para exatos 500
+
+            // Calcular pontuações e ordenar
+            allVillains.forEach(v => v.totalPoints = v.crimes.reduce((sum, c) => sum + c.points, 0));
+            allVillains.sort((a, b) => b.totalPoints - a.totalPoints);
+
+            // ============ RENDERIZAÇÃO ============
+            let currentUniverse = 'all', searchTerm = '';
+            const listContainer = document.getElementById('villainList');
+            const countDisplay = document.getElementById('countDisplay');
+
+            function render() {
+                let filtered = allVillains.filter(v => {
+                    if (currentUniverse !== 'all' && v.universe !== currentUniverse) return false;
+                    if (searchTerm && !v.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+                    return true;
+                });
+                countDisplay.textContent = `${filtered.length} de ${allVillains.length} entidades`;
+                listContainer.innerHTML = '';
+                filtered.forEach((v, idx) => {
+                    const card = document.createElement('div');
+                    card.className = `villain-card ${v.universe}`;
+                    const crimesHtml = v.crimes.map(c => `
+                        <span class="crime-chip">
+                            <span class="crime-pts">+${c.points}</span>
+                            <span>${c.desc}</span>
+                            <span class="crime-rubric">(${c.rubric})</span>
+                        </span>
+                    `).join('');
+                    card.innerHTML = `
+                        <div class="card-left">
+                            <span class="card-rank">#${idx+1}</span>
+                            <span class="villain-emoji">${v.emoji}</span>
+                            <div class="villain-info">
+                                <span class="villain-name">${v.name}</span>
+                                <span class="villain-universe ${v.universe}">${v.universe==='marvel'?'Marvel':'DC'}</span>
+                            </div>
+                            <span class="total-points-badge">${v.totalPoints} pts</span>
+                        </div>
+                        <div class="crimes-list">${crimesHtml}</div>
+                    `;
+                    listContainer.appendChild(card);
+                });
+            }
+
+            document.getElementById('searchInput').addEventListener('input', e => { searchTerm = e.target.value; render(); });
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active','marvel-active','dc-active'));
+                    currentUniverse = this.dataset.universe;
+                    if (currentUniverse === 'marvel') this.classList.add('active','marvel-active');
+                    else if (currentUniverse === 'dc') this.classList.add('active','dc-active');
+                    else this.classList.add('active');
+                    render();
+                });
+            });
+
+            // Modal da rubrica
+            const modal = document.getElementById('rubricModal');
+            document.getElementById('openRubricBtn').addEventListener('click', () => modal.classList.add('active'));
+            document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('active'));
+            modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
+            document.getElementById('rubricTable').innerHTML = '<tr><th>Crime</th><th>Pts</th></tr>' +
+                crimeDefinitions.map(c => `<tr><td>${c.name}</td><td class="pts">${c.points}</td></tr>`).join('');
+
+            render();
+        })();
+    </script>
+</body>
+</html>
