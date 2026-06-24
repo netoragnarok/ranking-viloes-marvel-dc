@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>500 Vilões Marvel & DC | Ranking Supremo com Sinopses</title>
     <style>
-        /* ===== CSS (mesmo do código anterior, mantido) ===== */
         :root {
             --bg: #0a0a0f; --surface: #111118; --card: #16161f; --border: #26263a;
             --text: #d8d8e8; --dim: #7777a0; --marvel: #e62429; --dc: #0476f2;
@@ -310,6 +309,119 @@
         .narrative-feed .event.damage { color: #ff7070; }
         .narrative-feed .event.knockout { color: #facc15; font-weight: bold; }
 
+        /* TEAM COMPARE */
+        .team-compare {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        .team-compare .team-column {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+        }
+        .team-compare .team-column h3 {
+            text-align: center;
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.3rem;
+        }
+        .team-compare .team-column .team-total {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--dim);
+            margin-bottom: 0.5rem;
+        }
+        .team-compare .team-column .team-total strong {
+            color: var(--gold);
+        }
+        .team-compare .fighter-card {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 0.4rem 0.6rem;
+            margin-bottom: 0.3rem;
+            border-left: 3px solid var(--border);
+            transition: 0.2s;
+        }
+        .team-compare .fighter-card.marvel { border-left-color: var(--marvel); }
+        .team-compare .fighter-card.dc { border-left-color: var(--dc); }
+        .team-compare .fighter-card.org { border-left-color: var(--org); }
+        .team-compare .fighter-card .fc-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #1a1a28;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: #fff;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .team-compare .fighter-card .fc-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .team-compare .fighter-card .fc-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex: 1;
+        }
+        .team-compare .fighter-card .fc-uni {
+            font-size: 0.55rem;
+            opacity: 0.6;
+            margin-right: 0.3rem;
+        }
+        .team-compare .fighter-card .fc-ov {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gold);
+            background: var(--goldbg);
+            padding: 0.1rem 0.4rem;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+        .team-compare .vs-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--gold);
+            padding: 0 0.5rem;
+        }
+        .team-compare .btn-battle {
+            display: block;
+            margin: 1rem auto 0;
+            padding: 0.6rem 2.5rem;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--marvel), var(--dc));
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .team-compare .btn-battle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(240,192,64,0.4);
+        }
+
         .enemy-preview {
             background: rgba(255,0,0,0.05); border: 1px solid var(--border);
             border-radius: 8px; padding: .5rem; margin: .5rem 0;
@@ -321,6 +433,9 @@
             .game-card { min-width: 70px; padding: .3rem .3rem; }
             .game-card .gc-avatar { width: 40px; height: 40px; font-size: 1rem; }
             .game-card .gc-name { font-size: .65rem; }
+            .team-compare .team-column { min-width: 180px; }
+            .team-compare .fighter-card { padding: 0.3rem 0.4rem; }
+            .team-compare .fighter-card .fc-name { font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -411,7 +526,6 @@
                     <button class="btn" id="gameSkip" style="margin:.5rem auto;display:block;">⏭ Pular (escolher aleatório)</button>
                 </div>
                 <div id="gameResult" style="display:none;">
-                    <div class="enemy-preview" id="enemyPreview"></div>
                     <div class="narrative-feed" id="narrativeFeed"></div>
                     <div class="game-result" id="battleResult"></div>
                 </div>
@@ -472,7 +586,7 @@
         animate();
     })();
 
-    // ===== CRIME DEFINITIONS (mantido) =====
+    // ===== CRIME DEFINITIONS =====
     var CR = {
         GENOCIDE:{l:"Genocídio/Extermínio em Massa",p:50}, ATT_GENOCIDE:{l:"Tentativa de Genocídio",p:20},
         MURDER:{l:"Assassinato",p:40}, FAM_MURDER:{l:"Assassinato de Familiar",p:45},
@@ -497,7 +611,7 @@
     var SC = {universal:3.0, planetario:2.2, regional:1.5, cidade:1.2, local:1.0};
     function pts(c,s){ var x=CR[c]; if(!x)return 0; return Math.round(x.p*(SC[s]||1)); }
 
-    // ===== SINOPSE E HERÓI (mantido) =====
+    // ===== SINOPSE E HERÓI =====
     var villainData = {
         "Thanos": { synopsis: "Titã eterno obcecado pela morte...", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
         "Coringa": { synopsis: "Ex-engenheiro químico que enlouqueceu...", hero: "Batman", heroWiki: "Batman" },
@@ -531,21 +645,20 @@
         "HYDRA": { synopsis: "Organização terrorista...", hero: "Capitão América", heroWiki: "Captain_America" },
         "Knull": { synopsis: "Deus primordial da escuridão...", hero: "Venom", heroWiki: "Venom_(Marvel_Comics)" }
     };
-    // Sinopses para organizações (incluindo Illuminati)
     var orgSinopses = {
-        "S.H.I.E.L.D.": "Agência de espionagem e defesa internacional, fundada por Nick Fury. Combate ameaças meta-humanas e alienígenas.",
-        "HYDRA": "Organização terrorista com raízes nazistas, que busca dominação mundial através de infiltração e experimentos.",
-        "A.I.M.": "Advanced Idea Mechanics, organização científica que desenvolve tecnologia avançada para fins criminosos.",
-        "Esquadrão Suicida": "Time de supervilões recrutados pelo governo para missões suicidas em troca de redução de pena.",
-        "Irmandade de Mutantes": "Grupo de mutantes liderado por Magneto, que luta pela supremacia mutante.",
-        "Liga da Justiça Sombria": "Time de heróis místicos da DC, liderado por John Constantine, que enfrentam ameaças sobrenaturais.",
-        "Guardiões da Galáxia": "Equipe de heróis interestelares da Marvel, liderados por Star-Lord, que protegem a galáxia.",
-        "Esquadrão Suicida DC": "Versão DC do Esquadrão Suicida, com vilões como Deadshot e Harley Quinn.",
-        "Masters of Evil": "Grupo de supervilões da Marvel, liderados por Zemo, que se unem para derrotar os Vingadores.",
-        "Injustice League": "Time de vilões da DC, contraparte maligna da Liga da Justiça.",
-        "X-Men": "Equipe de mutantes treinados por Charles Xavier para proteger a humanidade.",
-        "Vingadores": "Os mais poderosos heróis da Terra, unidos para enfrentar ameaças que nenhum herói poderia enfrentar sozinho.",
-        "Illuminati": "Um grupo secreto de heróis que se reúnem para tomar decisões que afetam o destino do mundo. Embora suas intenções sejam nobres, seus métodos muitas vezes envolvem manipulação, sacrifícios e consequências desastrosas."
+        "S.H.I.E.L.D.": "Agência de espionagem e defesa internacional, fundada por Nick Fury.",
+        "HYDRA": "Organização terrorista com raízes nazistas.",
+        "A.I.M.": "Advanced Idea Mechanics, organização científica criminosa.",
+        "Esquadrão Suicida": "Time de supervilões recrutados pelo governo.",
+        "Irmandade de Mutantes": "Grupo de mutantes liderado por Magneto.",
+        "Liga da Justiça Sombria": "Time de heróis místicos da DC.",
+        "Guardiões da Galáxia": "Equipe de heróis interestelares da Marvel.",
+        "Esquadrão Suicida DC": "Versão DC do Esquadrão Suicida.",
+        "Masters of Evil": "Grupo de supervilões da Marvel.",
+        "Injustice League": "Time de vilões da DC.",
+        "X-Men": "Equipe de mutantes treinados por Charles Xavier.",
+        "Vingadores": "Os mais poderosos heróis da Terra.",
+        "Illuminati": "Um grupo secreto de heróis que tomam decisões duvidosas para 'salvar' o mundo."
     };
 
     function getSynopsis(name) {
@@ -616,7 +729,7 @@
         UNLAWFUL_IMP: ["Manteve pessoas presas ilegalmente..."]
     };
 
-    // ===== DADOS DOS VILÕES FIXOS (mantido) =====
+    // ===== DADOS DOS VILÕES FIXOS =====
     var HD = [
     {name:"Thanos",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"FAM_MURDER",s:"local",d:"..."},{c:"CHILD_ABUSE",s:"local",d:"..."},{c:"DOMINATION",s:"universal",d:"..."}]},
     {name:"Coringa",uni:"dc", crimes:[{c:"GENOCIDE",s:"cidade",d:"..."},{c:"CHILD_MURDER",s:"local",d:"..."},{c:"PSYCH_TORTURE",s:"local",d:"..."},{c:"TERRORISM",s:"cidade",d:"..."}]},
@@ -651,7 +764,6 @@
     {name:"Knull",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"MASS_ENSLAVE",s:"universal",d:"..."},{c:"ATT_DOMINATION",s:"universal",d:"..."},{c:"MURDER",s:"local",d:"..."}]}
     ];
 
-    // ===== LISTAS DE VILÕES E HERÓIS (mantido) =====
     var EM = "Abominável,Homem-Areia,Shocker,Bastion,Omega Vermelho,Surtur,Malekith,Corruptor,Escorpião,Abutre,Morlun,Ronan,Mandarim,Arnim Zola,Super-Adaptoid,Mordo,Kaecilius,Pesadelo,Blackheart,Umar,Laufey,Fênix Negra,Exodus,Vulcan,Sebastian Shaw,Azazel,Satana,Morbius,Typhoid Mary,Arcade,Mestre dos Bonecos,Sentinela,Crusher Creel,Titânia,Enxame,Demolidor Amarelo,Flagelo,Blob,Fanático,Sapo,Ego,Korvac,Kro,Líder,Living Laser,Nébula,Nimrod,Nitro,Attuma,Blastaar,Diablo,Fin Fang Foom,Graviton,Gorgon,Mr. Hyde,Onslaught,Overmind,Super-Skrull,Terrax,Tyrannus,Whiplash,Whirlwind,Wizard,Xemnu,Zaladane,Zzzax,Supremor,Speed Demon,Stilt-Man,Homem-Absorvente,Jigsaw,Lady Deathstrike,Massacre,Silvermane,Tombstone,Hobgoblin,Jackal,Trapster,Boomerang,Hydro-Man,Molten Man,Beetle,Demogoblin,Carrion,Vermin,Calypso,Puma,Hammerhead,Tarantula,Jack O'Lantern,Constrictor,Crossbones,Death Adder,Firebrand,Mongoose,Rattler,Bushmaster,Cottonmouth,Blizzard,Spymaster,Warlord,Mentallo,Fixer,Shocker II,Ronan II,Skrull Comandante,Grandmaster,Korvac II,Onslaught II,Xorn,Sauron,Shadow King,Amora,Lorelei,Executioner,Skurge,Tyr,Ulik,Kurse,Algrim,Anti-Venom,Toxin,Scream,Hybrid,Lasher,Phage,Riot,Agony,Sleeper,Mania,Cyttorak,Shuma-Gorath,D'Spayre,Satannish,Nightmare,N'Astirh,S'ym,Belasco,Mephista,Daimon Hellstrom,Hellcat,Moonstone,Karla Sofen,Viper,Yellowjacket,Wonder Man Vilão".split(",");
     var ED = "Bizarro,Parallax,Amazo,Atrocitus,Professor Zoom,Doutor Luz,Mordru,Ultra-Humanite,Rei Tubarão,Ocean Master,Larfleeze,Krona,Kalibak,Desaad,Mongul,Imperiex,Capitão Frio,Onda Térmica,Mestre dos Espelhos,General Zod,Ursa,Non,Faora,Jax-Ur,Mister Mxyzptlk,Silêncio,Vagalume,Anarquia,Máscara Negra,Grande Tubarão Branco,Conde Vertigo,Relógio,Calendário,Polka-Dot Man,Ventríloquo,Exterminador,Sr. Frio,Lobo,Solomon Grundy,Cara de Barro,Crocodilo,Deadshot,Capitão Bumerangue,Mirror Master,Weather Wizard,Abra Kadabra,Amanda Waller,Kobra,Metallo,Parasite,Livewire,Silver Banshee,Cyborg Superman,Mongul II,Ravager,Blockbuster,Brother Blood,Monsieur Mallah,General Immortus,Black Mask,Victor Zsasz,Cornelius Stirk,Firefly,Killer Moth,Orca,Ratcatcher,Cluemaster,Film Freak,Magpie,Dr. Phosphorus,Tweedledee,Tweedledum,Amygdala,Abbatoir,Killer Frost,Heat Wave,Golden Glider,Top,Trickster,Rainbow Raider,Turtle,Murmur,Girder,Tar Pit,Fallback,Blacksmith,Cicada,Savitar,Cobalt Blue,Rival,Chunk,Atomic Skull,Riot DC,Shrapnel,Multiplex,Firestorm Vilão,Killer Frost II,Captain Cold II,Pied Piper,Trickster II,The Top II,Golden Glider II,Brother Grimm,Effigy,Sun Grater,Blacksmith II,Peekaboo,Double Down,Tar Pit II,Girder II,Magenta,Spin".split(",");
 
@@ -801,7 +913,6 @@
             AV.push(mkV(name, "dc"));
         }
     }
-    // Fallback
     var pad = 1;
     while (AV.length < 500) {
         var name = "Vilão " + pad++;
@@ -811,7 +922,6 @@
         }
     }
 
-    // Calcula score dos vilões
     for (var i = 0; i < AV.length; i++) {
       var sc = 0;
       for (var j = 0; j < AV[i].crimes.length; j++) sc += pts(AV[i].crimes[j].c, AV[i].crimes[j].s);
@@ -819,7 +929,7 @@
     }
     AV.sort(function(a,b){ return b.score - a.score; });
 
-    // ===== ORGANIZAÇÕES (com Illuminati) =====
+    // ===== ORGANIZAÇÕES =====
     var ORGANIZACOES = [
         { nome: "S.H.I.E.L.D.", uni: "marvel", membros: ["Nick Fury", "Maria Hill", "Phil Coulson", "Black Widow", "Hawkeye"] },
         { nome: "HYDRA", uni: "marvel", membros: ["Red Skull", "Baron Strucker", "Arnim Zola", "Crossbones", "Madame Hydra"] },
@@ -836,29 +946,7 @@
         { nome: "Illuminati", uni: "marvel", membros: ["Homem de Ferro", "Doutor Estranho", "Magneto", "Pantera Negra", "Professor X", "Namor", "Sr. Fantástico"] }
     ];
 
-    // Calcular overall das organizações (soma dos overais dos membros * 1.1)
-    function getOverallFromMembers(membros) {
-        var total = 0;
-        var count = 0;
-        membros.forEach(function(m) {
-            var found = allChars ? allChars.find(c => c.name === m) : null;
-            if (found) {
-                total += found.overall;
-                count++;
-            } else {
-                // fallback: estimativa baseada em nome
-                var base = 70;
-                if (/^Hulk|Thor|Superman|Flash|Darkseid|Thanos/.test(m)) base = 95;
-                else if (/^Magneto|Wolverine|Deadpool|Spider-Man/.test(m)) base = 85;
-                total += base;
-                count++;
-            }
-        });
-        if (count === 0) return 0;
-        return Math.round((total / count) * 1.1);
-    }
-
-    // ===== HERÓIS (com overais) =====
+    // ===== HERÓIS =====
     var HEROIS = [
         {name:"Homem-Aranha", uni:"marvel", overall:87, canHeal:false},
         {name:"Capitão América", uni:"marvel", overall:84, canHeal:false},
@@ -912,7 +1000,6 @@
         {name:"Overman", uni:"dc", overall:93, canHeal:false},
         {name:"Owlman", uni:"dc", overall:89, canHeal:false},
         {name:"Apollo", uni:"dc", overall:92, canHeal:false},
-        // membros adicionais para organizações
         {name:"Nick Fury", uni:"marvel", overall:82, canHeal:false},
         {name:"Maria Hill", uni:"marvel", overall:76, canHeal:false},
         {name:"Phil Coulson", uni:"marvel", overall:75, canHeal:false},
@@ -1067,7 +1154,26 @@
 
     var allChars = buildAllChars();
 
-    // Agora calculamos os overais das organizações usando allChars
+    function getOverallFromMembers(membros) {
+        var total = 0;
+        var count = 0;
+        membros.forEach(function(m) {
+            var found = allChars.find(c => c.name === m);
+            if (found) {
+                total += found.overall;
+                count++;
+            } else {
+                var base = 70;
+                if (/^Hulk|Thor|Superman|Flash|Darkseid|Thanos/.test(m)) base = 95;
+                else if (/^Magneto|Wolverine|Deadpool|Spider-Man/.test(m)) base = 85;
+                total += base;
+                count++;
+            }
+        });
+        if (count === 0) return 0;
+        return Math.round((total / count) * 1.1);
+    }
+
     var ORGANIZACOES_COM_OVERALL = ORGANIZACOES.map(function(org) {
         var overall = getOverallFromMembers(org.membros);
         return {
@@ -1077,11 +1183,8 @@
             overall: overall
         };
     });
-
-    // Ordenar organizações por overall
     ORGANIZACOES_COM_OVERALL.sort(function(a,b){ return b.overall - a.overall; });
 
-    // Para o ranking, vamos combinar vilões + organizações
     var allRankingItems = AV.slice();
     ORGANIZACOES_COM_OVERALL.forEach(function(org) {
         allRankingItems.push({
@@ -1093,15 +1196,13 @@
             crimes: []
         });
     });
-
-    // Atualizar gRank
-    var gRank = {};
     allRankingItems.sort(function(a,b){ return b.score - a.score; });
+    var gRank = {};
     for (var i = 0; i < allRankingItems.length; i++) {
         gRank[allRankingItems[i].name] = i + 1;
     }
 
-    // ===== JOGO SHOCKWAVE (com organizações) =====
+    // ===== JOGO SHOCKWAVE =====
     var gameState = {
         mode: null,
         selectedUniverse: null,
@@ -1376,15 +1477,76 @@
         startTimer();
     }
 
+    // ===== NOVAS FUNÇÕES: COMPARAÇÃO DE TIMES =====
     function endSelection() {
         gameState.isPlaying = false;
         if (gameState.timerId) { clearInterval(gameState.timerId); gameState.timerId = null; }
         document.getElementById('gameTimer').textContent = '⏱️ Time completo!';
         var enemyTeam = generateEnemyTeam();
-        var enemyTotal = enemyTeam.reduce((sum, c) => sum + c.overall, 0);
-        var preview = document.getElementById('enemyPreview');
-        preview.innerHTML = '<strong>⚔️ Time adversário:</strong> ' + enemyTeam.map(c => c.name).join(', ') + ' <span style="color:var(--gold)">(Overall total: ' + enemyTotal + ')</span>';
-        startBattle(gameState.team, enemyTeam);
+        showTeamComparison(gameState.team, enemyTeam);
+    }
+
+    function showTeamComparison(team, enemyTeam) {
+        document.getElementById('gamePlay').style.display = 'none';
+        var resultDiv = document.getElementById('gameResult');
+        resultDiv.style.display = 'block';
+        var feed = document.getElementById('narrativeFeed');
+        feed.innerHTML = '';
+        var battleResult = document.getElementById('battleResult');
+        battleResult.innerHTML = '';
+
+        var teamTotal = team.reduce((s, c) => s + c.overall, 0);
+        var enemyTotal = enemyTeam.reduce((s, c) => s + c.overall, 0);
+
+        var html = '<div class="team-compare">';
+        html += '<div class="team-column"><h3>🛡️ SEU TIME</h3><div class="team-total">Overall total: <strong>' + teamTotal + '</strong></div>';
+        team.forEach(function(c) {
+            html += renderFighterCard(c);
+        });
+        html += '</div>';
+
+        html += '<div class="vs-divider">⚡</div>';
+
+        html += '<div class="team-column"><h3>👹 TIME ADVERSÁRIO</h3><div class="team-total">Overall total: <strong>' + enemyTotal + '</strong></div>';
+        enemyTeam.forEach(function(c) {
+            html += renderFighterCard(c);
+        });
+        html += '</div>';
+        html += '</div>';
+
+        html += '<div style="text-align:center;margin-top:0.5rem;"><button class="btn-battle" id="btnStartBattle">⚔️ INICIAR BATALHA</button></div>';
+        battleResult.innerHTML = html;
+
+        // Carrega imagens dos avatares
+        document.querySelectorAll('.fc-avatar[data-name]').forEach(function(el) {
+            var name = el.dataset.name;
+            var uni = el.dataset.uni;
+            if (name && uni) {
+                var wiki = uni === 'marvel' ? 'marvel' : 'dc';
+                fetchImageWiki(name, wiki).then(function(url) {
+                    if (url) {
+                        el.innerHTML = '<img src="' + url + '" alt="' + name + '">';
+                    }
+                });
+            }
+        });
+
+        document.getElementById('btnStartBattle').addEventListener('click', function() {
+            startBattle(gameState.team, enemyTeam);
+        });
+    }
+
+    function renderFighterCard(c) {
+        var uniClass = c.isOrg ? 'org' : (c.uni === 'marvel' ? 'marvel' : 'dc');
+        var uniLabel = c.isOrg ? 'Org' : (c.uni === 'marvel' ? 'Marvel' : 'DC');
+        var ini = c.name.charAt(0).toUpperCase();
+        var avatarHtml = '<div class="fc-avatar" data-name="' + c.name + '" data-uni="' + c.uni + '">' + ini + '</div>';
+        return '<div class="fighter-card ' + uniClass + '">' +
+            avatarHtml +
+            '<span class="fc-name">' + c.name + '</span>' +
+            '<span class="fc-uni">' + uniLabel + '</span>' +
+            '<span class="fc-ov">' + c.overall + '</span>' +
+            '</div>';
     }
 
     function generateEnemyTeam() {
@@ -1546,6 +1708,13 @@
                 var resultText = win ? '🏆 VITÓRIA! Você derrotou o time adversário!' : '💀 Derrota! Seu time foi eliminado.';
                 var cls = win ? 'win' : 'lose';
                 battleResult.innerHTML = '<p class="' + cls + '">' + resultText + '</p>';
+                // Stats finais
+                var statsHtml = '<div style="margin-top:0.8rem;font-size:0.7rem;color:var(--dim);text-align:left;">';
+                statsHtml += '<p><strong>Seu time:</strong> ' + team1Alive.map(f => f.name + ' (' + f.hp + '/' + f.maxHp + ' HP)').join(', ') + '</p>';
+                statsHtml += '<p><strong>Adversário:</strong> ' + team2Alive.map(f => f.name + ' (' + f.hp + '/' + f.maxHp + ' HP)').join(', ') + '</p>';
+                statsHtml += '</div>';
+                battleResult.innerHTML += statsHtml;
+
                 if (win && gameState.wave < gameState.maxWaves) {
                     battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="nextWave()">⚡ Próxima Onda</button>';
                 } else if (win && gameState.wave >= gameState.maxWaves) {
@@ -1578,7 +1747,6 @@
         gameState.isPlaying = true;
         document.getElementById('gameResult').style.display = 'none';
         document.getElementById('gamePlay').style.display = 'block';
-        document.getElementById('enemyPreview').innerHTML = '';
         updateTeamUI();
         generateHand();
         startTimer();
@@ -1598,7 +1766,6 @@
         gameState.selectedUniverse = null;
         document.getElementById('gameWave').textContent = 'Onda 1';
         document.getElementById('gameTimer').textContent = '15s';
-        document.getElementById('enemyPreview').innerHTML = '';
         updateTeamUI();
     }
 
@@ -1629,7 +1796,7 @@
         }
     });
 
-    // ===== RANKING E FILTROS (com organizações) =====
+    // ===== RANKING E FILTROS =====
     var fUni = "all", fSrch = "", fMin = 0, fCR = new Set(), fSort = "score";
 
     var cfEl = document.getElementById("cf");
