@@ -1824,7 +1824,8 @@
             isPlaying: false,
             allChars: allChars.slice(),
             usedChars: new Set(),
-            subMode: "blind"
+            subMode: "blind",
+            subModeLocked: false
         };
 
         function getGamePool() {
@@ -1858,18 +1859,37 @@
             gameState.selectedUniverse = null;
             if (gameState.timerId) { clearInterval(gameState.timerId);
                 gameState.timerId = null; }
+            gameState.subModeLocked = false;
+            updateSubModeButtons();
             updateSubModeLabel();
         }
 
         function closeGame() {
             document.getElementById("ovGame").classList.remove("open");
             if (gameState.timerId) { clearInterval(gameState.timerId);
-                gameState.timerId = null; }
+                gameState.timerId = null; 
+                gameState.subModeLocked = false;
+                updateSubModeButtons();}
         }
 
         function updateSubModeLabel() {
             var label = document.getElementById("subModeLabel");
             label.textContent = gameState.subMode === "blind" ? "Às Cegas" : "Visual";
+        }
+
+                function updateSubModeButtons() {
+            var buttons = document.querySelectorAll("#gameModeSelect .sub-mode-select .btn");
+            buttons.forEach(function(btn) {
+                if (gameState.subModeLocked) {
+                    btn.disabled = true;
+                    btn.style.opacity = "0.5";
+                    btn.style.cursor = "not-allowed";
+                } else {
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                    btn.style.cursor = "pointer";
+                }
+            });
         }
 
         function startGame(mode) {
@@ -1894,6 +1914,8 @@
             gameState.wave = 1;
             gameState.usedChars = new Set();
             gameState.isPlaying = true;
+            gameState.subModeLocked = true;
+            updateSubModeButtons();
             document.getElementById("gamePlay").style.display = "block";
             document.getElementById("gameResult").style.display = "none";
             document.getElementById("gameWave").textContent = "Onda " + gameState.wave;
@@ -2486,6 +2508,8 @@
             document.getElementById("gameWave").textContent = "Onda 1";
             document.getElementById("gameTimer").textContent = "15s";
             updateTeamUI();
+            gameState.subModeLocked = false;
+            updateSubModeButtons();
         }
 
         // ============================================================
@@ -2511,6 +2535,7 @@
 
             document.querySelectorAll("#gameModeSelect .sub-mode-select .btn").forEach(function(btn) {
                 btn.addEventListener("click", function() {
+                    if (gameState.subModeLocked) return;
                     document.querySelectorAll("#gameModeSelect .sub-mode-select .btn").forEach(function(b) {
                         b.classList.remove("active");
                     });
