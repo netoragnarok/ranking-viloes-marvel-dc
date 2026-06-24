@@ -10,6 +10,7 @@
             --bg: #0a0a0f; --surface: #111118; --card: #16161f; --border: #26263a;
             --text: #d8d8e8; --dim: #7777a0; --marvel: #e62429; --dc: #0476f2;
             --gold: #f0c040; --goldbg: rgba(240,192,64,0.10); --r: 10px;
+            --org: #9b59b6;
         }
         body.light {
             --bg: #f0f0f5; --surface: #fff; --card: #fff; --border: #dddde8;
@@ -96,6 +97,7 @@
         .btn.a-all { background: #1e1e2e; border-color: var(--text); color: var(--text); }
         .btn.a-marvel { background: rgba(230,36,41,.15); border-color: var(--marvel); color: #ff7070; }
         .btn.a-dc { background: rgba(4,118,242,.15); border-color: var(--dc); color: #70b5ff; }
+        .btn.a-org { background: rgba(155,89,182,.15); border-color: var(--org); color: #d7a0f0; }
         .ss {
             padding: .38rem .7rem; border-radius: 20px; border: 1px solid var(--border);
             background: var(--surface); color: var(--dim); font-size: .76rem; cursor: pointer;
@@ -133,6 +135,7 @@
         .vc:hover { background: #1a1a28; }
         .vc.marvel { border-left: 3px solid var(--marvel); }
         .vc.dc { border-left: 3px solid var(--dc); }
+        .vc.org { border-left: 3px solid var(--org); }
 
         .card-left {
             display: flex; align-items: center; gap: .65rem; flex: 1; min-width: 0;
@@ -148,6 +151,7 @@
         }
         .av.marvel { border-color: var(--marvel); }
         .av.dc { border-color: var(--dc); }
+        .av.org { border-color: var(--org); background: var(--org); }
         .av img { width: 100%; height: 100%; object-fit: cover; }
 
         .info-block { flex: 1; min-width: 0; }
@@ -161,6 +165,7 @@
         }
         .ub.marvel { background: rgba(230,36,41,.12); color: #ff7070; border: 1px solid rgba(230,36,41,.3); }
         .ub.dc { background: rgba(4,118,242,.12); color: #70b5ff; border: 1px solid rgba(4,118,242,.3); }
+        .ub.org { background: rgba(155,89,182,.12); color: #d7a0f0; border: 1px solid rgba(155,89,182,.3); }
         .grank { font-size: .66rem; color: var(--dim); }
 
         .card-right {
@@ -266,6 +271,7 @@
         .game-card .gc-name { font-weight: 700; font-size: .7rem; line-height: 1.2; }
         .game-card .gc-uni { font-size: .55rem; opacity: .7; }
         .game-card .gc-ov { font-size: .55rem; color: var(--dim); margin-top: .1rem; }
+        .game-card .gc-org { font-size: .5rem; background: var(--org); color: #fff; border-radius: 4px; padding: .1rem .3rem; margin-top: .1rem; }
         .game-card.selected { border-color: var(--gold); background: var(--goldbg); }
         .game-card.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
 
@@ -324,7 +330,7 @@
         <div class="hdr">
             <div class="hdr-logos"><span class="lm">MARVEL</span><span class="hdrsep">✦</span><span class="ld">DC</span></div>
             <h1><span class="m">RANKING</span> DE <span class="d">MALIGNIDADE</span></h1>
-            <p class="hdrsub">500 Vilões • Sinopses, imagens e heróis inimigos</p>
+            <p class="hdrsub">500 Vilões • Organizações • Sinopses e imagens</p>
         </div>
 
         <div class="game-launcher">
@@ -335,14 +341,14 @@
         </div>
 
         <div class="tb">
-            <div class="sb"><input type="text" id="srch" placeholder="Buscar personagem..." autocomplete="off"></div>
+            <div class="sb"><input type="text" id="srch" placeholder="Buscar personagem ou organização..." autocomplete="off"></div>
             <button class="btn a-all" data-uni="all">Todos</button>
             <button class="btn" data-uni="marvel">Marvel</button>
             <button class="btn" data-uni="dc">DC</button>
+            <button class="btn a-org" data-uni="org">🏛️ Organizações</button>
             <select class="ss" id="srt">
                 <option value="score">Maior pontuação</option>
                 <option value="name">Nome A–Z</option>
-                <option value="crimes">Mais crimes</option>
             </select>
             <button class="btn" id="btnR">📋 Rubrica</button>
             <button class="btn" id="btnQ">❓ Quiz</button>
@@ -364,8 +370,8 @@
     <!-- MODAIS -->
     <div class="ov" id="ovD"><div class="mc"><h2 id="dN"></h2><div id="dC"></div><button class="mc-close" onclick="close_('ovD')">Fechar</button></div></div>
     <div class="ov" id="ovR"><div class="mc"><h2>📋 Rubrica de Pontuação</h2><p style="font-size:.77rem;color:var(--dim);margin-bottom:.7rem">Multiplicadores: 🌌 Universal ×3.0 | 🪐 Planetário ×2.2 | 🌍 Regional ×1.5 | 🏙️ Cidade ×1.2 | 🏠 Local ×1.0</p><div id="rC"></div><button class="mc-close" onclick="close_('ovR')">Fechar</button></div></div>
-    <div class="ov" id="ovQ"><div class="mc"><h2>❓ Quem é mais Maligno?</h2><p style="font-size:.8rem;color:var(--dim)">Clique no vilão que você acha que tem mais pontos:</p><div class="qpair" id="qP"></div><div class="qr" id="qR"></div><div style="display:flex;gap:.5rem;margin-top:.8rem"><button class="btn" id="qN">Próximo ↻</button><button class="mc-close" style="margin:0" onclick="close_('ovQ')">Fechar</button></div></div></div>
-    <div class="ov" id="ovC"><div class="mc"><h2>⚖️ Comparar Vilões</h2><div class="qpair" id="cP"></div><div style="display:flex;gap:.5rem;margin-top:1rem"><button class="btn" id="cSwap">⇄ Trocar</button><button class="mc-close" style="margin:0" onclick="close_('ovC')">Fechar</button></div></div></div>
+    <div class="ov" id="ovQ"><div class="mc"><h2>❓ Quem é mais Maligno?</h2><p style="font-size:.8rem;color:var(--dim)">Clique no vilão/organização que você acha que tem mais pontos:</p><div class="qpair" id="qP"></div><div class="qr" id="qR"></div><div style="display:flex;gap:.5rem;margin-top:.8rem"><button class="btn" id="qN">Próximo ↻</button><button class="mc-close" style="margin:0" onclick="close_('ovQ')">Fechar</button></div></div></div>
+    <div class="ov" id="ovC"><div class="mc"><h2>⚖️ Comparar</h2><div class="qpair" id="cP"></div><div style="display:flex;gap:.5rem;margin-top:1rem"><button class="btn" id="cSwap">⇄ Trocar</button><button class="mc-close" style="margin:0" onclick="close_('ovC')">Fechar</button></div></div></div>
 
     <!-- JOGO -->
     <div class="ov" id="ovGame">
@@ -493,98 +499,80 @@
 
     // ===== SINOPSE E HERÓI (mantido) =====
     var villainData = {
-        "Thanos": { synopsis: "Titã eterno obcecado pela morte. Adquiriu as Joias do Infinito após anos de busca. Motivação: 'equilibrar' o universo eliminando metade da vida.", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
-        "Coringa": { synopsis: "Ex-engenheiro químico que enlouqueceu após um dia terrível. Mestre do caos sem superpoderes, usa toxinas e armadilhas. Motivação: provar que a sanidade é uma farsa.", hero: "Batman", heroWiki: "Batman" },
-        "Darkseid": { synopsis: "Deus tirano de Apokolips, busca a Equação Anti-Vida para eliminar o livre-arbítrio. Poderes Omega absolutos.", hero: "Superman", heroWiki: "Superman" },
-        "Anti-Monitor": { synopsis: "Entidade cósmica da anti-matéria, responsável pela Crise nas Infinitas Terras. Destruiu incontáveis universos.", hero: "Liga da Justiça", heroWiki: "Justice_League" },
-        "Galactus": { synopsis: "Devorador de mundos, entidade cósmica que consome planetas para sobreviver. Poderes incomensuráveis.", hero: "Quarteto Fantástico", heroWiki: "Fantastic_Four" },
-        "Apocalipse": { synopsis: "Primeiro mutante, imortal, com poderes celestiais. Acredita na sobrevivência do mais forte.", hero: "X-Men", heroWiki: "X-Men" },
-        "Dr. Destino": { synopsis: "Monarca da Latvéria, mestre da magia e tecnologia. Obcecado em salvar sua mãe do inferno.", hero: "Quarteto Fantástico", heroWiki: "Fantastic_Four" },
-        "Magneto": { synopsis: "Sobrevivente do Holocausto, mestre do magnetismo. Luta pela supremacia mutante a qualquer custo.", hero: "X-Men", heroWiki: "X-Men" },
-        "Brainiac": { synopsis: "Android coletor de mundos, encolhe cidades e destrói planetas. Intelecto de 12º nível.", hero: "Superman", heroWiki: "Superman" },
-        "Ultron": { synopsis: "IA criada por Hank Pym, rebelou-se contra a humanidade. Corpo de adamantium e mente em constante evolução.", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
-        "Flash Reverso": { synopsis: "Eobard Thawne, velocista do futuro obcecado pelo Flash. Manipula o tempo para destruir Barry Allen.", hero: "Flash", heroWiki: "Flash_(Barry_Allen)" },
-        "Carnificina": { synopsis: "Cletus Kasady, serial killer que se fundiu a um simbionte alienígena. Puro sadismo e desejo de matar.", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
-        "Lex Luthor": { synopsis: "Bilionário gênio, presidente da LexCorp. Odeia Superman por representar o poder alienígena que ele não pode controlar.", hero: "Superman", heroWiki: "Superman" },
-        "Ra's al Ghul": { synopsis: "Líder da Liga dos Assassinos, imortal graças às Fossas de Lazarus. Deseja 'purificar' a humanidade.", hero: "Batman", heroWiki: "Batman" },
-        "Caveira Vermelha": { synopsis: "Johann Schmidt, braço direito de Hitler. Exposição à fórmula do supersoldado o transformou em crânio vermelho.", hero: "Capitão América", heroWiki: "Captain_America" },
-        "Black Adam": { synopsis: "Teth-Adam, campeão egípcio antigo do mago Shazam. Poderes divinos, governante tirânico de Kahndaq.", hero: "Shazam", heroWiki: "Shazam_(DC_Comics)" },
-        "Gorr": { synopsis: "Alienígena que obteve a Necroespada All-Black e declarou guerra a todos os deuses. Motivação: vingança pela morte de sua família.", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
-        "Nekron": { synopsis: "Senhor dos Mortos, entidade que comanda os Lanternas Negros. Deseja extinguir toda a vida.", hero: "Lanterna Verde", heroWiki: "Green_Lantern" },
-        "Kang": { synopsis: "Nathaniel Richards, viajante do tempo do século 30. Conquistador de linhas temporais com tecnologia avançada.", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
-        "Mephisto": { synopsis: "Senhor do inferno, entidade demoníaca que faz pactos por almas. Manipulador e mestre do engano.", hero: "Motoqueiro Fantasma", heroWiki: "Ghost_Rider" },
-        "Dormammu": { synopsis: "Entidade mística que governa a Dimensão das Trevas. Deseja absorver outras dimensões.", hero: "Doutor Estranho", heroWiki: "Doctor_Strange" },
-        "Hela": { synopsis: "Deusa da morte asgardiana, governante de Hel. Poderes de morte e controle sobre os mortos.", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
-        "Sinestro": { synopsis: "Ex-Lanterna Verde, mestre do medo com anel amarelo. Tirano que acredita que o medo traz ordem.", hero: "Lanterna Verde", heroWiki: "Green_Lantern" },
-        "Bane": { synopsis: "Estrategista genial com força sobre-humana induzida pelo Veneno. Famoso por quebrar a espinha de Batman.", hero: "Batman", heroWiki: "Batman" },
-        "Duende Verde": { synopsis: "Norman Osborn, bilionário que enlouqueceu após experimento com soro de desempenho. Arqui-inimigo do Homem-Aranha.", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
-        "Loki": { synopsis: "Deus da trapaça asgardiano, irmão adotivo de Thor. Manipulador e mestre das ilusões.", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
-        "Rei do Crime": { synopsis: "Wilson Fisk, chefão do crime organizado de Nova York. Força física brutal e mente estratégica.", hero: "Demolidor", heroWiki: "Daredevil_(Marvel_Comics)" },
-        "Doutor Octopus": { synopsis: "Otto Octavius, gênio da robótica com tentáculos mecânicos fundidos à coluna. Obcecado por poder e respeito.", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
-        "Mística": { synopsis: "Mutante metamorfa com habilidades de combate. Líder da Irmandade de Mutantes e agente dupla.", hero: "X-Men", heroWiki: "X-Men" },
-        "HYDRA": { synopsis: "Organização terrorista fundada por nazistas. Busca dominação mundial através de experimentos e infiltração.", hero: "Capitão América", heroWiki: "Captain_America" },
-        "Knull": { synopsis: "Deus primordial da escuridão, criador dos simbiontes. Forjou a Necroespada para matar celestiais.", hero: "Venom", heroWiki: "Venom_(Marvel_Comics)" }
+        "Thanos": { synopsis: "Titã eterno obcecado pela morte...", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
+        "Coringa": { synopsis: "Ex-engenheiro químico que enlouqueceu...", hero: "Batman", heroWiki: "Batman" },
+        "Darkseid": { synopsis: "Deus tirano de Apokolips...", hero: "Superman", heroWiki: "Superman" },
+        "Anti-Monitor": { synopsis: "Entidade cósmica da anti-matéria...", hero: "Liga da Justiça", heroWiki: "Justice_League" },
+        "Galactus": { synopsis: "Devorador de mundos...", hero: "Quarteto Fantástico", heroWiki: "Fantastic_Four" },
+        "Apocalipse": { synopsis: "Primeiro mutante...", hero: "X-Men", heroWiki: "X-Men" },
+        "Dr. Destino": { synopsis: "Monarca da Latvéria...", hero: "Quarteto Fantástico", heroWiki: "Fantastic_Four" },
+        "Magneto": { synopsis: "Sobrevivente do Holocausto...", hero: "X-Men", heroWiki: "X-Men" },
+        "Brainiac": { synopsis: "Android coletor de mundos...", hero: "Superman", heroWiki: "Superman" },
+        "Ultron": { synopsis: "IA criada por Hank Pym...", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
+        "Flash Reverso": { synopsis: "Eobard Thawne...", hero: "Flash", heroWiki: "Flash_(Barry_Allen)" },
+        "Carnificina": { synopsis: "Cletus Kasady...", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
+        "Lex Luthor": { synopsis: "Bilionário gênio...", hero: "Superman", heroWiki: "Superman" },
+        "Ra's al Ghul": { synopsis: "Líder da Liga dos Assassinos...", hero: "Batman", heroWiki: "Batman" },
+        "Caveira Vermelha": { synopsis: "Johann Schmidt...", hero: "Capitão América", heroWiki: "Captain_America" },
+        "Black Adam": { synopsis: "Teth-Adam...", hero: "Shazam", heroWiki: "Shazam_(DC_Comics)" },
+        "Gorr": { synopsis: "Alienígena que obteve a Necroespada...", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
+        "Nekron": { synopsis: "Senhor dos Mortos...", hero: "Lanterna Verde", heroWiki: "Green_Lantern" },
+        "Kang": { synopsis: "Nathaniel Richards...", hero: "Vingadores", heroWiki: "Avengers_(Marvel_Comics)" },
+        "Mephisto": { synopsis: "Senhor do inferno...", hero: "Motoqueiro Fantasma", heroWiki: "Ghost_Rider" },
+        "Dormammu": { synopsis: "Entidade mística...", hero: "Doutor Estranho", heroWiki: "Doctor_Strange" },
+        "Hela": { synopsis: "Deusa da morte...", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
+        "Sinestro": { synopsis: "Ex-Lanterna Verde...", hero: "Lanterna Verde", heroWiki: "Green_Lantern" },
+        "Bane": { synopsis: "Estrategista genial...", hero: "Batman", heroWiki: "Batman" },
+        "Duende Verde": { synopsis: "Norman Osborn...", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
+        "Loki": { synopsis: "Deus da trapaça...", hero: "Thor", heroWiki: "Thor_(Marvel_Comics)" },
+        "Rei do Crime": { synopsis: "Wilson Fisk...", hero: "Demolidor", heroWiki: "Daredevil_(Marvel_Comics)" },
+        "Doutor Octopus": { synopsis: "Otto Octavius...", hero: "Homem-Aranha", heroWiki: "Spider-Man" },
+        "Mística": { synopsis: "Mutante metamorfa...", hero: "X-Men", heroWiki: "X-Men" },
+        "HYDRA": { synopsis: "Organização terrorista...", hero: "Capitão América", heroWiki: "Captain_America" },
+        "Knull": { synopsis: "Deus primordial da escuridão...", hero: "Venom", heroWiki: "Venom_(Marvel_Comics)" }
+    };
+    // Sinopses para organizações (incluindo Illuminati)
+    var orgSinopses = {
+        "S.H.I.E.L.D.": "Agência de espionagem e defesa internacional, fundada por Nick Fury. Combate ameaças meta-humanas e alienígenas.",
+        "HYDRA": "Organização terrorista com raízes nazistas, que busca dominação mundial através de infiltração e experimentos.",
+        "A.I.M.": "Advanced Idea Mechanics, organização científica que desenvolve tecnologia avançada para fins criminosos.",
+        "Esquadrão Suicida": "Time de supervilões recrutados pelo governo para missões suicidas em troca de redução de pena.",
+        "Irmandade de Mutantes": "Grupo de mutantes liderado por Magneto, que luta pela supremacia mutante.",
+        "Liga da Justiça Sombria": "Time de heróis místicos da DC, liderado por John Constantine, que enfrentam ameaças sobrenaturais.",
+        "Guardiões da Galáxia": "Equipe de heróis interestelares da Marvel, liderados por Star-Lord, que protegem a galáxia.",
+        "Esquadrão Suicida DC": "Versão DC do Esquadrão Suicida, com vilões como Deadshot e Harley Quinn.",
+        "Masters of Evil": "Grupo de supervilões da Marvel, liderados por Zemo, que se unem para derrotar os Vingadores.",
+        "Injustice League": "Time de vilões da DC, contraparte maligna da Liga da Justiça.",
+        "X-Men": "Equipe de mutantes treinados por Charles Xavier para proteger a humanidade.",
+        "Vingadores": "Os mais poderosos heróis da Terra, unidos para enfrentar ameaças que nenhum herói poderia enfrentar sozinho.",
+        "Illuminati": "Um grupo secreto de heróis que se reúnem para tomar decisões que afetam o destino do mundo. Embora suas intenções sejam nobres, seus métodos muitas vezes envolvem manipulação, sacrifícios e consequências desastrosas."
     };
 
     function getSynopsis(name) {
         if (villainData[name]) return villainData[name].synopsis;
+        if (orgSinopses[name]) return orgSinopses[name];
         var profile = gP(name);
         var templates = {
-            cosmic: "Entidade cósmica de poder incomensurável. Age em escala universal, movido por propósitos além da compreensão humana.",
-            dictator: "Líder tirânico que conquistou poder através de força e manipulação. Governa com punho de ferro, eliminando opositores.",
-            psycho: "Mente distorcida que encontra prazer no caos e no sofrimento alheio. Sem superpoderes inatos, usa de astúcia e violência.",
-            terrorist: "Agente do caos que usa o terror como arma. Ataques coordenados contra civis e instituições.",
-            mage: "Mestre das artes místicas, obteve poder através de estudos arcanos ou pactos sombrios. Busca controle sobre forças sobrenaturais.",
-            tech: "Gênio tecnológico que usa invenções avançadas para o crime. Muitas vezes ciborgue ou criador de armas poderosas.",
-            alien: "Invasor de outro mundo, com biologia e tecnologia superiores. Deseja conquistar ou destruir a Terra.",
-            street: "Criminoso de carreira que ascendeu no submundo. Usa força bruta, armas e intimidação."
+            cosmic: "Entidade cósmica de poder incomensurável.",
+            dictator: "Líder tirânico que conquistou poder através de força.",
+            psycho: "Mente distorcida que encontra prazer no caos.",
+            terrorist: "Agente do caos que usa o terror como arma.",
+            mage: "Mestre das artes místicas.",
+            tech: "Gênio tecnológico que usa invenções avançadas.",
+            alien: "Invasor de outro mundo.",
+            street: "Criminoso de carreira que ascendeu no submundo."
         };
-        return templates[profile] || templates.street;
+        return templates[profile] || "Personagem de grande poder e influência.";
     }
 
     function getHero(name) {
         if (villainData[name]) return villainData[name].hero;
-        var profile = gP(name);
-        var heroes = {
-            cosmic: "Liga da Justiça / Vingadores",
-            dictator: "Capitão América / Superman",
-            psycho: "Batman / Homem-Aranha",
-            terrorist: "Justiceiro / Esquadrão Suicida",
-            mage: "Doutor Estranho / Zatanna",
-            tech: "Homem de Ferro / Cyborg",
-            alien: "Lanterna Verde / Capitão Marvel",
-            street: "Demolidor / Batman"
-        };
-        return heroes[profile] || "Liga da Justiça / Vingadores";
+        return "Vingadores / Liga da Justiça";
     }
 
     function getHeroWiki(name) {
         if (villainData[name]) return villainData[name].heroWiki;
-        var hero = getHero(name);
-        var map = {
-            "Vingadores": "Avengers_(Marvel_Comics)",
-            "Liga da Justiça": "Justice_League",
-            "Batman": "Batman",
-            "Superman": "Superman",
-            "X-Men": "X-Men",
-            "Quarteto Fantástico": "Fantastic_Four",
-            "Homem-Aranha": "Spider-Man",
-            "Thor": "Thor_(Marvel_Comics)",
-            "Capitão América": "Captain_America",
-            "Doutor Estranho": "Doctor_Strange",
-            "Motoqueiro Fantasma": "Ghost_Rider",
-            "Lanterna Verde": "Green_Lantern",
-            "Demolidor": "Daredevil_(Marvel_Comics)",
-            "Venom": "Venom_(Marvel_Comics)",
-            "Flash": "Flash_(Barry_Allen)",
-            "Shazam": "Shazam_(DC_Comics)",
-            "Homem de Ferro": "Iron_Man",
-            "Zatanna": "Zatanna",
-            "Cyborg": "Cyborg_(DC_Comics)",
-            "Justiceiro": "Punisher",
-            "Esquadrão Suicida": "Suicide_Squad"
-        };
-        return map[hero] || hero.replace(/ /g, "_");
+        return "Avengers_(Marvel_Comics)";
     }
 
     var crimeDescriptions = {
@@ -663,7 +651,7 @@
     {name:"Knull",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"MASS_ENSLAVE",s:"universal",d:"..."},{c:"ATT_DOMINATION",s:"universal",d:"..."},{c:"MURDER",s:"local",d:"..."}]}
     ];
 
-    // ===== LISTAS DE VILÕES (expandidas ao máximo) =====
+    // ===== LISTAS DE VILÕES E HERÓIS (mantido) =====
     var EM = "Abominável,Homem-Areia,Shocker,Bastion,Omega Vermelho,Surtur,Malekith,Corruptor,Escorpião,Abutre,Morlun,Ronan,Mandarim,Arnim Zola,Super-Adaptoid,Mordo,Kaecilius,Pesadelo,Blackheart,Umar,Laufey,Fênix Negra,Exodus,Vulcan,Sebastian Shaw,Azazel,Satana,Morbius,Typhoid Mary,Arcade,Mestre dos Bonecos,Sentinela,Crusher Creel,Titânia,Enxame,Demolidor Amarelo,Flagelo,Blob,Fanático,Sapo,Ego,Korvac,Kro,Líder,Living Laser,Nébula,Nimrod,Nitro,Attuma,Blastaar,Diablo,Fin Fang Foom,Graviton,Gorgon,Mr. Hyde,Onslaught,Overmind,Super-Skrull,Terrax,Tyrannus,Whiplash,Whirlwind,Wizard,Xemnu,Zaladane,Zzzax,Supremor,Speed Demon,Stilt-Man,Homem-Absorvente,Jigsaw,Lady Deathstrike,Massacre,Silvermane,Tombstone,Hobgoblin,Jackal,Trapster,Boomerang,Hydro-Man,Molten Man,Beetle,Demogoblin,Carrion,Vermin,Calypso,Puma,Hammerhead,Tarantula,Jack O'Lantern,Constrictor,Crossbones,Death Adder,Firebrand,Mongoose,Rattler,Bushmaster,Cottonmouth,Blizzard,Spymaster,Warlord,Mentallo,Fixer,Shocker II,Ronan II,Skrull Comandante,Grandmaster,Korvac II,Onslaught II,Xorn,Sauron,Shadow King,Amora,Lorelei,Executioner,Skurge,Tyr,Ulik,Kurse,Algrim,Anti-Venom,Toxin,Scream,Hybrid,Lasher,Phage,Riot,Agony,Sleeper,Mania,Cyttorak,Shuma-Gorath,D'Spayre,Satannish,Nightmare,N'Astirh,S'ym,Belasco,Mephista,Daimon Hellstrom,Hellcat,Moonstone,Karla Sofen,Viper,Yellowjacket,Wonder Man Vilão".split(",");
     var ED = "Bizarro,Parallax,Amazo,Atrocitus,Professor Zoom,Doutor Luz,Mordru,Ultra-Humanite,Rei Tubarão,Ocean Master,Larfleeze,Krona,Kalibak,Desaad,Mongul,Imperiex,Capitão Frio,Onda Térmica,Mestre dos Espelhos,General Zod,Ursa,Non,Faora,Jax-Ur,Mister Mxyzptlk,Silêncio,Vagalume,Anarquia,Máscara Negra,Grande Tubarão Branco,Conde Vertigo,Relógio,Calendário,Polka-Dot Man,Ventríloquo,Exterminador,Sr. Frio,Lobo,Solomon Grundy,Cara de Barro,Crocodilo,Deadshot,Capitão Bumerangue,Mirror Master,Weather Wizard,Abra Kadabra,Amanda Waller,Kobra,Metallo,Parasite,Livewire,Silver Banshee,Cyborg Superman,Mongul II,Ravager,Blockbuster,Brother Blood,Monsieur Mallah,General Immortus,Black Mask,Victor Zsasz,Cornelius Stirk,Firefly,Killer Moth,Orca,Ratcatcher,Cluemaster,Film Freak,Magpie,Dr. Phosphorus,Tweedledee,Tweedledum,Amygdala,Abbatoir,Killer Frost,Heat Wave,Golden Glider,Top,Trickster,Rainbow Raider,Turtle,Murmur,Girder,Tar Pit,Fallback,Blacksmith,Cicada,Savitar,Cobalt Blue,Rival,Chunk,Atomic Skull,Riot DC,Shrapnel,Multiplex,Firestorm Vilão,Killer Frost II,Captain Cold II,Pied Piper,Trickster II,The Top II,Golden Glider II,Brother Grimm,Effigy,Sun Grater,Blacksmith II,Peekaboo,Double Down,Tar Pit II,Girder II,Magenta,Spin".split(",");
 
@@ -723,7 +711,7 @@
       return {name: name, uni: uni, crimes: crimes};
     }
 
-    // ===== CONSTRUÇÃO DA LISTA DE VILÕES (com muitos nomes extras) =====
+    // ===== CONSTRUÇÃO DA LISTA DE VILÕES =====
     var AV = [];
     var seen = new Set();
     for (var i = 0; i < HD.length; i++) {
@@ -764,7 +752,7 @@
         "Beta Ray Bill","Hercules","Ares","Photon","Blue Marvel","Sentry","Void",
         "Hyperion","Gladiator","Ronin","Echo","Blade","Morbius","Werewolf by Night",
         "Man-Thing","Swamp Thing","John Constantine","Deadman","Spectre","Phantom Stranger",
-        "Nighthawk", "Midnighter"  // equivalentes ao Batman
+        "Nighthawk", "Midnighter"
     ];
     var EXTRA_DC = [
         "Abra Kadabra","Amos Fortune","Agent Orange","Atomic Skull","Atlas",
@@ -794,7 +782,7 @@
         "Prometheus","Shiva","Sensei","King Snake","Cheshire","Lady Shiva",
         "Bronze Tiger","Richard Dragon","David Cain","Orphan","Cassandra Cain",
         "Azrael","Bane","Killer Croc","Man-Bat","Clayface","Poison Ivy","Harley Quinn",
-        "Ultraman","Superboy-Prime","Mon-El","Magog","Overman","Owlman"  // cópias do Superman/Batman
+        "Ultraman","Superboy-Prime","Mon-El","Magog","Overman","Owlman"
     ];
 
     var idxM = 0;
@@ -813,7 +801,7 @@
             AV.push(mkV(name, "dc"));
         }
     }
-    // Fallback (praticamente nunca será usado)
+    // Fallback
     var pad = 1;
     while (AV.length < 500) {
         var name = "Vilão " + pad++;
@@ -823,7 +811,7 @@
         }
     }
 
-    // Calcula score
+    // Calcula score dos vilões
     for (var i = 0; i < AV.length; i++) {
       var sc = 0;
       for (var j = 0; j < AV[i].crimes.length; j++) sc += pts(AV[i].crimes[j].c, AV[i].crimes[j].s);
@@ -831,12 +819,47 @@
     }
     AV.sort(function(a,b){ return b.score - a.score; });
 
-    var gRank = {};
-    for (var i = 0; i < AV.length; i++) gRank[AV[i].name] = i + 1;
+    // ===== ORGANIZAÇÕES (com Illuminati) =====
+    var ORGANIZACOES = [
+        { nome: "S.H.I.E.L.D.", uni: "marvel", membros: ["Nick Fury", "Maria Hill", "Phil Coulson", "Black Widow", "Hawkeye"] },
+        { nome: "HYDRA", uni: "marvel", membros: ["Red Skull", "Baron Strucker", "Arnim Zola", "Crossbones", "Madame Hydra"] },
+        { nome: "A.I.M.", uni: "marvel", membros: ["M.O.D.O.K.", "Scientist Supreme", "Andrew Forson", "Monica Rappaccini"] },
+        { nome: "Esquadrão Suicida", uni: "dc", membros: ["Deadshot", "Harley Quinn", "Captain Boomerang", "Killer Croc", "Rick Flag"] },
+        { nome: "Irmandade de Mutantes", uni: "marvel", membros: ["Magneto", "Mística", "Destrutor", "Mestre dos Esportes", "Blob"] },
+        { nome: "Liga da Justiça Sombria", uni: "dc", membros: ["John Constantine", "Zatanna", "Deadman", "Swamp Thing", "Etrigan"] },
+        { nome: "Guardiões da Galáxia", uni: "marvel", membros: ["Star-Lord", "Gamora", "Drax", "Rocket Raccoon", "Groot", "Mantis"] },
+        { nome: "Esquadrão Suicida DC", uni: "dc", membros: ["Deadshot", "Harley Quinn", "Captain Boomerang", "Killer Croc", "El Diablo"] },
+        { nome: "Masters of Evil", uni: "marvel", membros: ["Baron Zemo", "Enchantress", "Executioner", "Wonder Man", "Melter"] },
+        { nome: "Injustice League", uni: "dc", membros: ["Lex Luthor", "Joker", "Black Adam", "Sinestro", "Reverse-Flash"] },
+        { nome: "X-Men", uni: "marvel", membros: ["Professor X", "Ciclope", "Wolverine", "Jean Grey", "Tempestade", "Noturno"] },
+        { nome: "Vingadores", uni: "marvel", membros: ["Capitão América", "Thor", "Homem de Ferro", "Hulk", "Viúva Negra", "Gavião Arqueiro"] },
+        { nome: "Illuminati", uni: "marvel", membros: ["Homem de Ferro", "Doutor Estranho", "Magneto", "Pantera Negra", "Professor X", "Namor", "Sr. Fantástico"] }
+    ];
 
-    // ===== HERÓIS (com boost para equivalentes) =====
+    // Calcular overall das organizações (soma dos overais dos membros * 1.1)
+    function getOverallFromMembers(membros) {
+        var total = 0;
+        var count = 0;
+        membros.forEach(function(m) {
+            var found = allChars ? allChars.find(c => c.name === m) : null;
+            if (found) {
+                total += found.overall;
+                count++;
+            } else {
+                // fallback: estimativa baseada em nome
+                var base = 70;
+                if (/^Hulk|Thor|Superman|Flash|Darkseid|Thanos/.test(m)) base = 95;
+                else if (/^Magneto|Wolverine|Deadpool|Spider-Man/.test(m)) base = 85;
+                total += base;
+                count++;
+            }
+        });
+        if (count === 0) return 0;
+        return Math.round((total / count) * 1.1);
+    }
+
+    // ===== HERÓIS (com overais) =====
     var HEROIS = [
-        // Marvel
         {name:"Homem-Aranha", uni:"marvel", overall:87, canHeal:false},
         {name:"Capitão América", uni:"marvel", overall:84, canHeal:false},
         {name:"Thor", uni:"marvel", overall:95, canHeal:false},
@@ -857,13 +880,11 @@
         {name:"Noturno", uni:"marvel", overall:81, canHeal:false},
         {name:"Mística", uni:"marvel", overall:79, canHeal:false},
         {name:"Venom", uni:"marvel", overall:87, canHeal:false},
-        // Marvel - equivalentes ao Superman
         {name:"Hyperion", uni:"marvel", overall:96, canHeal:false},
         {name:"Sentry", uni:"marvel", overall:98, canHeal:false},
         {name:"Blue Marvel", uni:"marvel", overall:95, canHeal:false},
         {name:"Gladiador", uni:"marvel", overall:94, canHeal:false},
-        {name:"Nighthawk", uni:"marvel", overall:88, canHeal:false}, // Batman
-        // DC
+        {name:"Nighthawk", uni:"marvel", overall:88, canHeal:false},
         {name:"Superman", uni:"dc", overall:99, canHeal:false},
         {name:"Batman", uni:"dc", overall:88, canHeal:false},
         {name:"Mulher-Maravilha", uni:"dc", overall:96, canHeal:false},
@@ -884,17 +905,45 @@
         {name:"Gelo", uni:"dc", overall:82, canHeal:false},
         {name:"Metamorfo", uni:"dc", overall:80, canHeal:false},
         {name:"Besouro Azul", uni:"dc", overall:87, canHeal:false},
-        // DC - equivalentes ao Superman
         {name:"Ultraman", uni:"dc", overall:97, canHeal:false},
         {name:"Superboy-Prime", uni:"dc", overall:99, canHeal:false},
         {name:"Mon-El", uni:"dc", overall:95, canHeal:false},
         {name:"Magog", uni:"dc", overall:91, canHeal:false},
         {name:"Overman", uni:"dc", overall:93, canHeal:false},
-        {name:"Owlman", uni:"dc", overall:89, canHeal:false}, // Batman
-        {name:"Apollo", uni:"dc", overall:92, canHeal:false}
+        {name:"Owlman", uni:"dc", overall:89, canHeal:false},
+        {name:"Apollo", uni:"dc", overall:92, canHeal:false},
+        // membros adicionais para organizações
+        {name:"Nick Fury", uni:"marvel", overall:82, canHeal:false},
+        {name:"Maria Hill", uni:"marvel", overall:76, canHeal:false},
+        {name:"Phil Coulson", uni:"marvel", overall:75, canHeal:false},
+        {name:"Baron Strucker", uni:"marvel", overall:78, canHeal:false},
+        {name:"Arnim Zola", uni:"marvel", overall:80, canHeal:false},
+        {name:"Madame Hydra", uni:"marvel", overall:79, canHeal:false},
+        {name:"Scientist Supreme", uni:"marvel", overall:77, canHeal:false},
+        {name:"Andrew Forson", uni:"marvel", overall:76, canHeal:false},
+        {name:"Monica Rappaccini", uni:"marvel", overall:78, canHeal:false},
+        {name:"Rick Flag", uni:"dc", overall:80, canHeal:false},
+        {name:"Destrutor", uni:"marvel", overall:81, canHeal:false},
+        {name:"Mestre dos Esportes", uni:"marvel", overall:79, canHeal:false},
+        {name:"Blob", uni:"marvel", overall:83, canHeal:false},
+        {name:"John Constantine", uni:"dc", overall:88, canHeal:true},
+        {name:"Deadman", uni:"dc", overall:85, canHeal:false},
+        {name:"Swamp Thing", uni:"dc", overall:89, canHeal:true},
+        {name:"Etrigan", uni:"dc", overall:87, canHeal:false},
+        {name:"Star-Lord", uni:"marvel", overall:84, canHeal:false},
+        {name:"Gamora", uni:"marvel", overall:87, canHeal:false},
+        {name:"Drax", uni:"marvel", overall:86, canHeal:false},
+        {name:"Rocket Raccoon", uni:"marvel", overall:82, canHeal:false},
+        {name:"Groot", uni:"marvel", overall:88, canHeal:true},
+        {name:"Mantis", uni:"marvel", overall:83, canHeal:false},
+        {name:"El Diablo", uni:"dc", overall:84, canHeal:false},
+        {name:"Baron Zemo", uni:"marvel", overall:85, canHeal:false},
+        {name:"Melter", uni:"marvel", overall:78, canHeal:false},
+        {name:"Professor X", uni:"marvel", overall:90, canHeal:false},
+        {name:"Namor", uni:"marvel", overall:88, canHeal:false},
+        {name:"Sr. Fantástico", uni:"marvel", overall:90, canHeal:false}
     ];
 
-    // ===== OVERALL MANUAL PARA VILÕES (com boost para equivalentes) =====
     var OVERALL_OVERRIDES = {
         "Anti-Monitor": 100,
         "Galactus": 99,
@@ -961,7 +1010,6 @@
         "Silver Banshee": 84,
         "Bizarro": 89,
         "Eradicator": 92,
-        // Novos equivalentes
         "Ultraman": 97,
         "Superboy-Prime": 99,
         "Mon-El": 95,
@@ -977,21 +1025,7 @@
         "Apollo": 92
     };
 
-    // ===== JOGO SHOCKWAVE (com exibição do overall adversário) =====
-    var gameState = {
-        mode: null,
-        selectedUniverse: null,
-        team: [],
-        hand: [],
-        timer: 15,
-        timerId: null,
-        wave: 1,
-        maxWaves: 3,
-        isPlaying: false,
-        allChars: [],
-        usedChars: new Set(),
-    };
-
+    // ===== CONSTRUÇÃO DO allChars =====
     function buildAllChars() {
         var pool = [];
         HEROIS.forEach(function(h) {
@@ -1033,44 +1067,72 @@
 
     var allChars = buildAllChars();
 
-    var imageCache = {};
-    async function fetchImageWiki(name, wiki) {
-        var cacheKey = name + "_" + wiki;
-        if (imageCache[cacheKey] !== undefined) return imageCache[cacheKey];
-        var apiUrl = `https://${wiki}.fandom.com/api.php?action=query&list=search&srsearch=${encodeURIComponent(name)}&format=json&origin=*`;
-        try {
-            var resp = await fetch(apiUrl);
-            var data = await resp.json();
-            if (data.query && data.query.search.length > 0) {
-                var pageId = data.query.search[0].pageid;
-                var imgApi = `https://${wiki}.fandom.com/api.php?action=query&prop=pageimages&pageids=${pageId}&format=json&pithumbsize=200&origin=*`;
-                var imgResp = await fetch(imgApi);
-                var imgData = await imgResp.json();
-                if (imgData.query && imgData.query.pages && imgData.query.pages[pageId] && imgData.query.pages[pageId].thumbnail) {
-                    var thumb = imgData.query.pages[pageId].thumbnail.source;
-                    imageCache[cacheKey] = thumb;
-                    return thumb;
-                }
-            }
-        } catch(e) {}
-        imageCache[cacheKey] = null;
-        return null;
+    // Agora calculamos os overais das organizações usando allChars
+    var ORGANIZACOES_COM_OVERALL = ORGANIZACOES.map(function(org) {
+        var overall = getOverallFromMembers(org.membros);
+        return {
+            nome: org.nome,
+            uni: org.uni,
+            membros: org.membros,
+            overall: overall
+        };
+    });
+
+    // Ordenar organizações por overall
+    ORGANIZACOES_COM_OVERALL.sort(function(a,b){ return b.overall - a.overall; });
+
+    // Para o ranking, vamos combinar vilões + organizações
+    var allRankingItems = AV.slice();
+    ORGANIZACOES_COM_OVERALL.forEach(function(org) {
+        allRankingItems.push({
+            name: org.nome,
+            uni: org.uni,
+            score: org.overall,
+            isOrg: true,
+            membros: org.membros,
+            crimes: []
+        });
+    });
+
+    // Atualizar gRank
+    var gRank = {};
+    allRankingItems.sort(function(a,b){ return b.score - a.score; });
+    for (var i = 0; i < allRankingItems.length; i++) {
+        gRank[allRankingItems[i].name] = i + 1;
     }
 
-    async function loadCardImage(card, avatarElement) {
-        var wiki = card.uni === 'marvel' ? 'marvel' : 'dc';
-        var url = await fetchImageWiki(card.name, wiki);
-        if (url) {
-            var img = document.createElement('img');
-            img.src = url;
-            img.alt = card.name;
-            img.onerror = function() { avatarElement.innerHTML = card.name.charAt(0).toUpperCase(); };
-            avatarElement.innerHTML = '';
-            avatarElement.appendChild(img);
-        }
+    // ===== JOGO SHOCKWAVE (com organizações) =====
+    var gameState = {
+        mode: null,
+        selectedUniverse: null,
+        team: [],
+        hand: [],
+        timer: 15,
+        timerId: null,
+        wave: 1,
+        maxWaves: 3,
+        isPlaying: false,
+        allChars: allChars.slice(),
+        usedChars: new Set(),
+    };
+
+    function getGamePool() {
+        var pool = gameState.allChars.slice();
+        var orgPool = ORGANIZACOES_COM_OVERALL.map(function(org) {
+            return {
+                name: org.nome,
+                uni: org.uni,
+                overall: org.overall,
+                type: 'organizacao',
+                canHeal: false,
+                membros: org.membros,
+                isOrg: true
+            };
+        });
+        orgPool.forEach(function(o) { pool.push(o); });
+        return pool;
     }
 
-    // Funções do jogo (abrir, fechar, etc.) - mantidas
     function openGame() {
         document.getElementById('ovGame').classList.add('open');
         document.getElementById('gameModeSelect').style.display = 'block';
@@ -1122,11 +1184,11 @@
     }
 
     function getFilteredPool() {
-        var pool = allChars.slice();
+        var pool = getGamePool();
         if (gameState.mode === 'heroes_vs_villains') {
-            pool = pool.filter(c => c.type === 'heroi');
+            pool = pool.filter(c => c.type === 'heroi' || c.type === 'organizacao');
         } else if (gameState.mode === 'villains_vs_heroes') {
-            pool = pool.filter(c => c.type === 'vilao');
+            pool = pool.filter(c => c.type === 'vilao' || c.type === 'organizacao');
         } else if (gameState.mode === 'marvel_vs_dc' && gameState.selectedUniverse) {
             pool = pool.filter(c => c.uni === gameState.selectedUniverse);
         }
@@ -1168,7 +1230,12 @@
             var avatar = document.createElement('div');
             avatar.className = 'gc-avatar';
             avatar.textContent = c.name.charAt(0).toUpperCase();
-            loadCardImage(c, avatar);
+            if (c.isOrg) {
+                avatar.style.background = 'var(--org)';
+                avatar.textContent = '🏛️';
+            } else {
+                loadCardImage(c, avatar);
+            }
 
             var nameDiv = document.createElement('div');
             nameDiv.className = 'gc-name';
@@ -1178,7 +1245,7 @@
             uniDiv.textContent = c.uni === 'marvel' ? 'Marvel' : 'DC';
             var ovDiv = document.createElement('div');
             ovDiv.className = 'gc-ov';
-            ovDiv.textContent = '⚡ Poder desconhecido';
+            ovDiv.textContent = c.isOrg ? '🏛️ Organização' : '⚡ Poder desconhecido';
 
             card.appendChild(avatar);
             card.appendChild(nameDiv);
@@ -1192,6 +1259,44 @@
         });
     }
 
+    function loadCardImage(card, avatarElement) {
+        var wiki = card.uni === 'marvel' ? 'marvel' : 'dc';
+        fetchImageWiki(card.name, wiki).then(function(url) {
+            if (url) {
+                var img = document.createElement('img');
+                img.src = url;
+                img.alt = card.name;
+                img.onerror = function() { avatarElement.innerHTML = card.name.charAt(0).toUpperCase(); };
+                avatarElement.innerHTML = '';
+                avatarElement.appendChild(img);
+            }
+        });
+    }
+
+    var imageCache = {};
+    async function fetchImageWiki(name, wiki) {
+        var cacheKey = name + "_" + wiki;
+        if (imageCache[cacheKey] !== undefined) return imageCache[cacheKey];
+        var apiUrl = `https://${wiki}.fandom.com/api.php?action=query&list=search&srsearch=${encodeURIComponent(name)}&format=json&origin=*`;
+        try {
+            var resp = await fetch(apiUrl);
+            var data = await resp.json();
+            if (data.query && data.query.search.length > 0) {
+                var pageId = data.query.search[0].pageid;
+                var imgApi = `https://${wiki}.fandom.com/api.php?action=query&prop=pageimages&pageids=${pageId}&format=json&pithumbsize=200&origin=*`;
+                var imgResp = await fetch(imgApi);
+                var imgData = await imgResp.json();
+                if (imgData.query && imgData.query.pages && imgData.query.pages[pageId] && imgData.query.pages[pageId].thumbnail) {
+                    var thumb = imgData.query.pages[pageId].thumbnail.source;
+                    imageCache[cacheKey] = thumb;
+                    return thumb;
+                }
+            }
+        } catch(e) {}
+        imageCache[cacheKey] = null;
+        return null;
+    }
+
     function updateTeamUI() {
         var container = document.getElementById('gameTeam');
         container.innerHTML = '';
@@ -1201,7 +1306,7 @@
             slot.className = 'slot';
             if (i < gameState.team.length) {
                 slot.classList.add('filled');
-                slot.textContent = gameState.team[i].name + ' (' + gameState.team[i].overall + ')';
+                slot.textContent = gameState.team[i].name + (gameState.team[i].isOrg ? ' 🏛️' : '');
             } else {
                 slot.textContent = '⬜ Vago';
             }
@@ -1217,8 +1322,22 @@
         if (!gameState.isPlaying) return;
         var card = gameState.hand[idx];
         if (!card) return;
-        gameState.team.push(card);
-        gameState.usedChars.add(card.name);
+        if (card.isOrg) {
+            var membros = card.membros || [];
+            var slotsRestantes = 7 - gameState.team.length;
+            var membrosSelecionados = membros.slice(0, slotsRestantes);
+            membrosSelecionados.forEach(function(nomeMembro) {
+                var membroChar = gameState.allChars.find(c => c.name === nomeMembro);
+                if (membroChar && !gameState.usedChars.has(membroChar.name)) {
+                    gameState.team.push(membroChar);
+                    gameState.usedChars.add(membroChar.name);
+                }
+            });
+            gameState.usedChars.add(card.name);
+        } else {
+            gameState.team.push(card);
+            gameState.usedChars.add(card.name);
+        }
         updateTeamUI();
         if (gameState.team.length >= 7) {
             endSelection();
@@ -1273,7 +1392,7 @@
         if (gameState.mode === 'marvel_vs_dc') {
             var oppUni = getOppositeUniverse();
             if (!oppUni) oppUni = gameState.selectedUniverse === 'marvel' ? 'dc' : 'marvel';
-            pool = allChars.filter(c => c.uni === oppUni);
+            pool = getGamePool().filter(c => c.uni === oppUni);
         } else {
             pool = getFilteredPool();
         }
@@ -1284,9 +1403,32 @@
             available[i] = available[j];
             available[j] = temp;
         }
-        var enemy = available.slice(0, 7);
+        var enemy = [];
+        if (Math.random() < 0.2) {
+            var orgs = ORGANIZACOES_COM_OVERALL.filter(o => !gameState.usedChars.has(o.nome) && (gameState.mode !== 'marvel_vs_dc' || o.uni === oppUni));
+            if (orgs.length > 0) {
+                var orgEscolhida = orgs[Math.floor(Math.random() * orgs.length)];
+                var membrosOrg = orgEscolhida.membros.slice(0, 7);
+                membrosOrg.forEach(function(nomeMembro) {
+                    var membroChar = gameState.allChars.find(c => c.name === nomeMembro);
+                    if (membroChar) enemy.push(membroChar);
+                });
+                while (enemy.length < 7) {
+                    var extra = available.filter(c => !enemy.some(e => e.name === c.name));
+                    if (extra.length === 0) break;
+                    var rand = extra[Math.floor(Math.random() * extra.length)];
+                    enemy.push(rand);
+                }
+            }
+        }
+        if (enemy.length < 7) {
+            var restantes = available.filter(c => !enemy.some(e => e.name === c.name));
+            for (var i = 0; i < Math.min(7 - enemy.length, restantes.length); i++) {
+                enemy.push(restantes[i]);
+            }
+        }
         while (enemy.length < 7) {
-            var fallback = pool.filter(c => !gameState.usedChars.has(c.name));
+            var fallback = pool.filter(c => !gameState.usedChars.has(c.name) && !enemy.some(e => e.name === c.name));
             if (fallback.length === 0) break;
             var rand = fallback[Math.floor(Math.random() * fallback.length)];
             enemy.push(rand);
@@ -1487,7 +1629,7 @@
         }
     });
 
-    // ===== RANKING E FILTROS (mantido) =====
+    // ===== RANKING E FILTROS (com organizações) =====
     var fUni = "all", fSrch = "", fMin = 0, fCR = new Set(), fSort = "score";
 
     var cfEl = document.getElementById("cf");
@@ -1503,24 +1645,58 @@
       cfEl.appendChild(b);
     });
 
-    function getList(){
-      var list = [];
-      for (var i = 0; i < AV.length; i++) {
-        var v = AV[i];
-        if (fUni !== "all" && v.uni !== fUni) continue;
-        if (fSrch && v.name.toLowerCase().indexOf(fSrch) < 0) continue;
-        if (v.score < fMin) continue;
-        if (fCR.size > 0) {
-          var found = false;
-          for (var j = 0; j < v.crimes.length; j++) { if (fCR.has(v.crimes[j].c)) { found = true; break; } }
-          if (!found) continue;
+    function getList() {
+        var list = [];
+        if (fUni === 'org') {
+            ORGANIZACOES_COM_OVERALL.forEach(function(org) {
+                if (fSrch && org.nome.toLowerCase().indexOf(fSrch) < 0) return;
+                list.push({
+                    name: org.nome,
+                    uni: org.uni,
+                    score: org.overall,
+                    isOrg: true,
+                    membros: org.membros,
+                    crimes: []
+                });
+            });
+        } else {
+            for (var i = 0; i < AV.length; i++) {
+                var v = AV[i];
+                if (fUni !== "all" && v.uni !== fUni) continue;
+                if (fSrch && v.name.toLowerCase().indexOf(fSrch) < 0) continue;
+                if (v.score < fMin) continue;
+                if (fCR.size > 0) {
+                    var found = false;
+                    for (var j = 0; j < v.crimes.length; j++) { if (fCR.has(v.crimes[j].c)) { found = true; break; } }
+                    if (!found) continue;
+                }
+                list.push({
+                    name: v.name,
+                    uni: v.uni,
+                    score: v.score,
+                    isOrg: false,
+                    crimes: v.crimes
+                });
+            }
+            if (fUni === 'all' || fUni === 'marvel' || fUni === 'dc') {
+                ORGANIZACOES_COM_OVERALL.forEach(function(org) {
+                    if (fUni !== 'all' && org.uni !== fUni) return;
+                    if (fSrch && org.nome.toLowerCase().indexOf(fSrch) < 0) return;
+                    if (org.overall < fMin) return;
+                    list.push({
+                        name: org.nome,
+                        uni: org.uni,
+                        score: org.overall,
+                        isOrg: true,
+                        membros: org.membros,
+                        crimes: []
+                    });
+                });
+            }
         }
-        list.push(v);
-      }
-      if (fSort === "name") list.sort(function(a,b){ return a.name.localeCompare(b.name,"pt"); });
-      else if (fSort === "crimes") list.sort(function(a,b){ return b.crimes.length - a.crimes.length; });
-      else list.sort(function(a,b){ return b.score - a.score; });
-      return list;
+        if (fSort === "name") list.sort(function(a,b){ return a.name.localeCompare(b.name,"pt"); });
+        else list.sort(function(a,b){ return b.score - a.score; });
+        return list;
     }
 
     var observer = new IntersectionObserver(function(entries) {
@@ -1539,68 +1715,67 @@
         });
     }, { rootMargin: "100px" });
 
-    function render(){
-      var list = getList();
-      var mC = 0, dC = 0;
-      for (var i = 0; i < list.length; i++) { if (list[i].uni === "marvel") mC++; else dC++; }
-      document.getElementById("stats").innerHTML =
-        "Exibindo <strong>" + list.length + "</strong> de <strong>" + AV.length + "</strong> &nbsp;|&nbsp; " +
-        "<span style='color:var(--marvel)'>Marvel: " + mC + "</span> &nbsp;|&nbsp; " +
-        "<span style='color:var(--dc)'>DC: " + dC + "</span>";
-      if (list.length === 0) {
-        document.getElementById("vl").innerHTML = '<div class="empty">Nenhum vilão encontrado com esses filtros.</div>';
-        return;
-      }
-      var html = "";
-      for (var i = 0; i < list.length; i++) {
-        var v = list[i];
-        var ini = v.name.charAt(0).toUpperCase();
-        var chips = "";
-        for (var j = 0; j < v.crimes.length; j++) {
-          var cr = v.crimes[j];
-          var p = pts(cr.c, cr.s);
-          var sl = cr.s.charAt(0).toUpperCase() + cr.s.slice(1);
-          chips += '<span class="ch"><span class="cp">+' + p + '</span>' + (CR[cr.c] ? CR[cr.c].l : cr.c) + '<span class="cs">' + sl + '</span><span class="tooltip">' + (cr.d || "") + '</span></span>';
+    function render() {
+        var list = getList();
+        var mC = 0, dC = 0, oC = 0;
+        list.forEach(function(item) {
+            if (item.isOrg) oC++;
+            else if (item.uni === "marvel") mC++;
+            else dC++;
+        });
+        document.getElementById("stats").innerHTML =
+            "Exibindo <strong>" + list.length + "</strong> itens &nbsp;|&nbsp; " +
+            "<span style='color:var(--marvel)'>Marvel: " + mC + "</span> &nbsp;|&nbsp; " +
+            "<span style='color:var(--dc)'>DC: " + dC + "</span> &nbsp;|&nbsp; " +
+            "<span style='color:var(--org)'>Organizações: " + oC + "</span>";
+        if (list.length === 0) {
+            document.getElementById("vl").innerHTML = '<div class="empty">Nenhum item encontrado com esses filtros.</div>';
+            return;
         }
-        var gr = gRank[v.name] || "?";
-        html += '<div class="vc ' + v.uni + '">';
-        html += '<div class="card-left">';
-        html += '<span class="rank">#' + (i + 1) + '</span>';
-        html += '<div class="av ' + v.uni + '" data-name="' + v.name + '" data-uni="' + v.uni + '"><span>' + ini + '</span></div>';
-        html += '<div class="info-block"><div class="vn">' + v.name + '</div><div class="vm"><span class="ub ' + v.uni + '">' + (v.uni === "marvel" ? "Marvel" : "DC") + '</span><span class="grank">#' + gr + ' geral</span></div></div>';
-        html += '<div class="card-right"><span class="sn">' + v.score + ' pts</span><button class="ib" onclick="openD(' + AV.indexOf(v) + ')">ℹ</button></div>';
-        html += '</div><div class="cc">' + chips + '</div></div>';
-      }
-      document.getElementById("vl").innerHTML = html;
-      document.querySelectorAll('.av[data-name]').forEach(function(av) { observer.observe(av); });
+        var html = "";
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            var ini = item.name.charAt(0).toUpperCase();
+            var uniClass = item.isOrg ? 'org' : (item.uni === 'marvel' ? 'marvel' : 'dc');
+            var chips = "";
+            if (item.isOrg) {
+                chips += '<span class="ch"><span class="cp">🏛️</span>' + item.membros.join(', ') + '</span>';
+            } else {
+                for (var j = 0; j < item.crimes.length; j++) {
+                    var cr = item.crimes[j];
+                    var p = pts(cr.c, cr.s);
+                    var sl = cr.s.charAt(0).toUpperCase() + cr.s.slice(1);
+                    chips += '<span class="ch"><span class="cp">+' + p + '</span>' + (CR[cr.c] ? CR[cr.c].l : cr.c) + '<span class="cs">' + sl + '</span><span class="tooltip">' + (cr.d || "") + '</span></span>';
+                }
+            }
+            var gr = gRank[item.name] || "?";
+            html += '<div class="vc ' + uniClass + '">';
+            html += '<div class="card-left">';
+            html += '<span class="rank">#' + (i + 1) + '</span>';
+            html += '<div class="av ' + uniClass + '" data-name="' + item.name + '" data-uni="' + (item.isOrg ? 'org' : item.uni) + '"><span>' + (item.isOrg ? '🏛️' : ini) + '</span></div>';
+            html += '<div class="info-block"><div class="vn">' + item.name + '</div><div class="vm"><span class="ub ' + uniClass + '">' + (item.isOrg ? 'Organização' : (item.uni === 'marvel' ? 'Marvel' : 'DC')) + '</span><span class="grank">#' + gr + ' geral</span></div></div>';
+            html += '<div class="card-right"><span class="sn">' + item.score + (item.isOrg ? ' pts (org)' : ' pts') + '</span><button class="ib" onclick="openD(\'' + item.name + '\')">ℹ</button></div>';
+            html += '</div><div class="cc">' + chips + '</div></div>';
+        }
+        document.getElementById("vl").innerHTML = html;
+        document.querySelectorAll('.av[data-name]').forEach(function(av) { observer.observe(av); });
     }
 
-    async function openD(idx){
-      var v = AV[idx]; if (!v) return;
-      document.getElementById("dN").textContent = v.name;
-      var h = '<p style="font-size:.78rem;color:var(--dim);margin-bottom:.9rem">' +
-        'Universo: <strong style="color:var(--text)">' + (v.uni === "marvel" ? "Marvel" : "DC") + '</strong> | ' +
-        'Total: <strong style="color:var(--gold)">' + v.score + ' pts</strong> | ' +
-        'Crimes: <strong style="color:var(--text)">' + v.crimes.length + '</strong></p>';
-
-      h += '<div class="synopsis"><strong>Quem é:</strong> ' + getSynopsis(v.name) + '<br><strong>Inimigo:</strong> ' + getHero(v.name) + '</div>';
-
-      var villainImg = await fetchImageWiki(v.name, v.uni === "marvel" ? "marvel" : "dc");
-      var heroName = getHeroWiki(v.name);
-      var heroImg = await fetchImageWiki(heroName, v.uni === "marvel" ? "marvel" : "dc");
-      h += '<div style="display:flex;gap:1rem;justify-content:center;margin-bottom:1rem">';
-      h += '<div style="text-align:center"><img src="' + (villainImg || '') + '" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--marvel)" onerror="this.style.display=\'none\'"><br><small>Vilão</small></div>';
-      h += '<div style="text-align:center"><img src="' + (heroImg || '') + '" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--dc)" onerror="this.style.display=\'none\'"><br><small>Herói inimigo</small></div>';
-      h += '</div>';
-
-      for (var i = 0; i < v.crimes.length; i++) {
-        var cr = v.crimes[i];
-        var p = pts(cr.c, cr.s);
-        var scMap = {universal:"🌌 Universal",planetario:"🪐 Planetário",regional:"🌍 Regional",cidade:"🏙️ Cidade",local:"🏠 Local"};
-        h += '<div class="dc-row"><h4>' + (CR[cr.c] ? CR[cr.c].l : cr.c) + ' <span class="dcp">+' + p + ' pts</span> <span style="font-size:.68rem;color:var(--dim)">[' + (scMap[cr.s] || cr.s) + ']</span></h4><p>' + (cr.d || "") + '</p></div>';
-      }
-      document.getElementById("dC").innerHTML = h;
-      open_("ovD");
+    function openD(name) {
+        var item = allRankingItems.find(function(el) { return el.name === name; });
+        if (!item) return;
+        document.getElementById("dN").textContent = name;
+        var h = '<p style="font-size:.78rem;color:var(--dim);margin-bottom:.9rem">' +
+            'Tipo: <strong style="color:var(--text)">' + (item.isOrg ? 'Organização' : (item.uni === 'marvel' ? 'Vilão Marvel' : 'Vilão DC')) + '</strong> | ' +
+            'Total: <strong style="color:var(--gold)">' + item.score + (item.isOrg ? ' pts (organização)' : ' pts') + '</strong></p>';
+        h += '<div class="synopsis"><strong>Descrição:</strong> ' + getSynopsis(name) + '</div>';
+        if (item.isOrg) {
+            h += '<p><strong>Membros:</strong> ' + item.membros.join(', ') + '</p>';
+        } else {
+            h += '<p><strong>Inimigo:</strong> ' + getHero(name) + '</p>';
+        }
+        document.getElementById("dC").innerHTML = h;
+        open_("ovD");
     }
 
     function open_(id){ document.getElementById(id).classList.add("open"); }
@@ -1614,7 +1789,7 @@
       btn.addEventListener("click",function(){
         document.querySelectorAll("[data-uni]").forEach(function(b){ b.className = "btn"; });
         fUni = btn.dataset.uni;
-        btn.className = "btn " + (fUni === "all" ? "a-all" : fUni === "marvel" ? "a-marvel" : "a-dc");
+        btn.className = "btn " + (fUni === "all" ? "a-all" : fUni === "marvel" ? "a-marvel" : fUni === "dc" ? "a-dc" : "a-org");
         render();
       });
     });
@@ -1635,14 +1810,16 @@
     });
 
     function loadQ(){
-      var i1 = Math.floor(Math.random()*AV.length), i2;
-      do { i2 = Math.floor(Math.random()*AV.length); } while (i2 === i1);
-      var v1 = AV[i1], v2 = AV[i2];
+      var list = getList();
+      if (list.length < 2) return;
+      var i1 = Math.floor(Math.random() * list.length), i2;
+      do { i2 = Math.floor(Math.random() * list.length); } while (i2 === i1);
+      var v1 = list[i1], v2 = list[i2];
       document.getElementById("qR").className = "qr";
       document.getElementById("qP").innerHTML =
-        '<div class="qo" onclick="ansQ('+v1.score+','+v2.score+')"><div class="qon">'+v1.name+'</div><div class="ub '+v1.uni+'" style="margin:.3rem auto;width:fit-content">'+(v1.uni==="marvel"?"Marvel":"DC")+'</div><div class="qop">? pts</div></div>'+
+        '<div class="qo" onclick="ansQ('+v1.score+','+v2.score+')"><div class="qon">'+v1.name+'</div><div class="ub '+(v1.isOrg ? 'org' : v1.uni)+'" style="margin:.3rem auto;width:fit-content">'+(v1.isOrg ? 'Organização' : (v1.uni==="marvel"?"Marvel":"DC"))+'</div><div class="qop">? pts</div></div>'+
         '<div style="font-size:1.4rem;display:flex;align-items:center;color:var(--dim);padding:.5rem">VS</div>'+
-        '<div class="qo" onclick="ansQ('+v2.score+','+v1.score+')"><div class="qon">'+v2.name+'</div><div class="ub '+v2.uni+'" style="margin:.3rem auto;width:fit-content">'+(v2.uni==="marvel"?"Marvel":"DC")+'</div><div class="qop">? pts</div></div>';
+        '<div class="qo" onclick="ansQ('+v2.score+','+v1.score+')"><div class="qon">'+v2.name+'</div><div class="ub '+(v2.isOrg ? 'org' : v2.uni)+'" style="margin:.3rem auto;width:fit-content">'+(v2.isOrg ? 'Organização' : (v2.uni==="marvel"?"Marvel":"DC"))+'</div><div class="qop">? pts</div></div>';
       document.getElementById("qP").dataset.s1 = v1.score;
       document.getElementById("qP").dataset.s2 = v2.score;
     }
@@ -1660,11 +1837,13 @@
 
     var cIdx1 = 0, cIdx2 = 1;
     function loadC(){
-      var v1 = AV[cIdx1], v2 = AV[cIdx2];
+      var list = getList();
+      if (list.length < 2) return;
+      var v1 = list[cIdx1 % list.length], v2 = list[cIdx2 % list.length];
       document.getElementById("cP").innerHTML =
-        '<div class="qo"><div class="qon">'+v1.name+'</div><div class="ub '+v1.uni+'" style="margin:.3rem auto;width:fit-content">'+(v1.uni==="marvel"?"Marvel":"DC")+'</div><div class="qop">'+v1.score+' pts</div><div style="font-size:.7rem;color:var(--dim)">#'+(gRank[v1.name]||"?")+' geral</div></div>'+
+        '<div class="qo"><div class="qon">'+v1.name+'</div><div class="ub '+(v1.isOrg ? 'org' : v1.uni)+'" style="margin:.3rem auto;width:fit-content">'+(v1.isOrg ? 'Organização' : (v1.uni==="marvel"?"Marvel":"DC"))+'</div><div class="qop">'+v1.score+' pts</div><div style="font-size:.7rem;color:var(--dim)">#'+(gRank[v1.name]||"?")+' geral</div></div>'+
         '<div style="font-size:1.4rem;display:flex;align-items:center;color:var(--dim);padding:.5rem">VS</div>'+
-        '<div class="qo"><div class="qon">'+v2.name+'</div><div class="ub '+v2.uni+'" style="margin:.3rem auto;width:fit-content">'+(v2.uni==="marvel"?"Marvel":"DC")+'</div><div class="qop">'+v2.score+' pts</div><div style="font-size:.7rem;color:var(--dim)">#'+(gRank[v2.name]||"?")+' geral</div></div>';
+        '<div class="qo"><div class="qon">'+v2.name+'</div><div class="ub '+(v2.isOrg ? 'org' : v2.uni)+'" style="margin:.3rem auto;width:fit-content">'+(v2.isOrg ? 'Organização' : (v2.uni==="marvel"?"Marvel":"DC"))+'</div><div class="qop">'+v2.score+' pts</div><div style="font-size:.7rem;color:var(--dim)">#'+(gRank[v2.name]||"?")+' geral</div></div>';
     }
     document.getElementById("btnC").addEventListener("click",function(){ loadC(); open_("ovC"); });
     document.getElementById("cSwap").addEventListener("click",function(){
@@ -1672,15 +1851,17 @@
     });
 
     document.getElementById("btnE").addEventListener("click",function(){
-      var csv = "\uFEFFNome,Universo,Pontuação,Crimes\n";
-      for (var i = 0; i < AV.length; i++) {
-        var v = AV[i];
-        var cstr = v.crimes.map(function(c){ return (CR[c.c]?CR[c.c].l:c.c)+"("+pts(c.c,c.s)+"pts)"; }).join(" | ");
-        csv += '"'+v.name+'","'+(v.uni==="marvel"?"Marvel":"DC")+'",'+v.score+',"'+cstr+'"\n';
+      var csv = "\uFEFFNome,Universo,Tipo,Pontuação,Detalhes\n";
+      var list = getList();
+      for (var i = 0; i < list.length; i++) {
+        var item = list[i];
+        var tipo = item.isOrg ? 'Organização' : (item.uni === 'marvel' ? 'Vilão Marvel' : 'Vilão DC');
+        var detalhes = item.isOrg ? 'Membros: ' + item.membros.join('; ') : 'Crimes: ' + (item.crimes ? item.crimes.map(function(c){ return (CR[c.c]?CR[c.c].l:c.c)+"("+pts(c.c,c.s)+"pts)"; }).join(" | ") : '');
+        csv += '"'+item.name+'","'+(item.uni || '')+'","'+tipo+'",'+item.score+',"'+detalhes+'"\n';
       }
       var a = document.createElement("a");
       a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
-      a.download = "ranking_viloes_500.csv"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      a.download = "ranking_viloes_organizacoes.csv"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
     });
 
     if (localStorage.getItem("theme") === "light") document.body.classList.add("light");
