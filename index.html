@@ -141,15 +141,9 @@
             letter-spacing: .2em;
         }
         @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .tb {
             max-width: 1100px;
@@ -812,18 +806,9 @@
             animation: pulseKnockout .8s ease-in-out;
         }
         @keyframes pulseKnockout {
-            0% {
-                transform: scale(1);
-                background: rgba(250, 204, 21, .1);
-            }
-            50% {
-                transform: scale(1.02);
-                background: rgba(250, 204, 21, .25);
-            }
-            100% {
-                transform: scale(1);
-                background: rgba(250, 204, 21, .15);
-            }
+            0% { transform: scale(1); background: rgba(250, 204, 21, .1); }
+            50% { transform: scale(1.02); background: rgba(250, 204, 21, .25); }
+            100% { transform: scale(1); background: rgba(250, 204, 21, .15); }
         }
         .team-compare {
             display: flex;
@@ -954,68 +939,71 @@
         .enemy-preview strong {
             color: var(--gold);
         }
+
+        /* NOVOS ESTILOS PARA BARRAS DE VIDA */
         .battle-team {
-    flex: 1;
-    min-width: 250px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 12px;
-    padding: 0.8rem;
-    border: 1px solid var(--border);
-}
-.battle-team h3 {
-    text-align: center;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-}
-.battle-card {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--surface);
-    border-radius: 8px;
-    padding: 0.4rem 0.6rem;
-    margin-bottom: 0.4rem;
-    border-left: 3px solid var(--border);
-    flex-wrap: wrap;
-}
-.battle-card.marvel { border-left-color: var(--marvel); }
-.battle-card.dc { border-left-color: var(--dc); }
-.battle-card.org { border-left-color: var(--org); }
-.battle-avatar {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: #1a1a28;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 900; color: #fff; font-size: 0.9rem;
-    flex-shrink: 0;
-    overflow: hidden;
-    border: 1px solid var(--border);
-}
-.battle-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.battle-info {
-    flex: 1; min-width: 120px;
-}
-.battle-name {
-    font-weight: 700; font-size: 0.8rem;
-}
-.battle-ov {
-    font-size: 0.7rem; color: var(--dim);
-}
-.battle-hp-bar {
-    width: 100%; height: 8px; background: #333;
-    border-radius: 4px; margin-top: 3px; overflow: hidden;
-}
-.battle-hp-fill {
-    height: 100%; width: 100%;
-    background: linear-gradient(90deg, #4ade80, #22c55e);
-    border-radius: 4px; transition: width 0.3s ease;
-}
-.battle-hp-fill.low { background: linear-gradient(90deg, #facc15, #eab308); }
-.battle-hp-fill.critical { background: linear-gradient(90deg, #ef4444, #dc2626); }
-.battle-hp-text {
-    font-size: 0.6rem; color: var(--dim); text-align: right;
-}
+            flex: 1;
+            min-width: 250px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+        }
+        .battle-team h3 {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .battle-card {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 0.4rem 0.6rem;
+            margin-bottom: 0.4rem;
+            border-left: 3px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .battle-card.marvel { border-left-color: var(--marvel); }
+        .battle-card.dc { border-left-color: var(--dc); }
+        .battle-card.org { border-left-color: var(--org); }
+        .battle-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: #1a1a28;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; color: #fff; font-size: 0.9rem;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .battle-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .battle-info {
+            flex: 1; min-width: 120px;
+        }
+        .battle-name {
+            font-weight: 700; font-size: 0.8rem;
+        }
+        .battle-ov {
+            font-size: 0.7rem; color: var(--dim);
+        }
+        .battle-hp-bar {
+            width: 100%; height: 8px; background: #333;
+            border-radius: 4px; margin-top: 3px; overflow: hidden;
+        }
+        .battle-hp-fill {
+            height: 100%; width: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            border-radius: 4px; transition: width 0.3s ease;
+        }
+        .battle-hp-fill.low { background: linear-gradient(90deg, #facc15, #eab308); }
+        .battle-hp-fill.critical { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        .battle-hp-text {
+            font-size: 0.6rem; color: var(--dim); text-align: right;
+        }
+
         @media (max-width:600px) {
             .game-card {
                 min-width: 70px;
@@ -1704,7 +1692,20 @@
             { name: "Melter", uni: "marvel", overall: 78, canHeal: false },
             { name: "Professor X", uni: "marvel", overall: 90, canHeal: false },
             { name: "Namor", uni: "marvel", overall: 88, canHeal: false },
-            { name: "Sr. Fantástico", uni: "marvel", overall: 90, canHeal: false }
+            { name: "Sr. Fantástico", uni: "marvel", overall: 90, canHeal: false },
+            // NOVOS HERÓIS PODEROSOS
+            { name: "Silver Surfer", uni: "marvel", overall: 96, canHeal: true },
+            { name: "Adam Warlock", uni: "marvel", overall: 95, canHeal: true },
+            { name: "Franklin Richards", uni: "marvel", overall: 100, canHeal: false },
+            { name: "Beyonder", uni: "marvel", overall: 100, canHeal: false },
+            { name: "Living Tribunal", uni: "marvel", overall: 100, canHeal: false },
+            { name: "Eternidade", uni: "marvel", overall: 100, canHeal: false },
+            { name: "Infinito", uni: "marvel", overall: 100, canHeal: false },
+            { name: "Spectre", uni: "dc", overall: 100, canHeal: false },
+            { name: "Doutor Manhattan", uni: "dc", overall: 100, canHeal: false },
+            { name: "Mister Mxyzptlk", uni: "dc", overall: 98, canHeal: false },
+            { name: "Batman que Ri", uni: "dc", overall: 97, canHeal: false },
+            { name: "Perpétua", uni: "dc", overall: 100, canHeal: false }
         ];
 
         var OVERALL_OVERRIDES = {
@@ -1717,7 +1718,7 @@
             "Trigon": 96,
             "Imperiex": 97,
             "Surtur": 95,
-            "Onslaught": 95,
+            "Onslaught": 97,
             "Apocalipse": 94,
             "BlackAdam": 95,
             "FlashReverso": 94,
@@ -1727,7 +1728,7 @@
             "Nekron": 93,
             "Mephisto": 92,
             "Hela": 92,
-            "DrDestino": 92,
+            "DrDestino": 94,
             "Magneto": 91,
             "Brainiac": 92,
             "Ultron": 91,
@@ -1747,7 +1748,7 @@
             "Korvac": 91,
             "Shadow King": 89,
             "Cyttorak": 92,
-            "Shuma-Gorath": 93,
+            "Shuma-Gorath": 96,
             "Deathstroke": 88,
             "Deadshot": 82,
             "Steppenwolf": 86,
@@ -1755,7 +1756,7 @@
             "Kalibak": 87,
             "Granny Goodness": 84,
             "Mordru": 91,
-            "Eclipso": 90,
+            "Eclipso": 93,
             "Parallax": 94,
             "Atrocitus": 89,
             "Larfleeze": 88,
@@ -1766,7 +1767,7 @@
             "General Zod": 96,
             "Faora": 93,
             "Non": 90,
-            "Mister Mxyzptlk": 93,
+            "Mister Mxyzptlk": 98,
             "Metallo": 85,
             "Parasite": 83,
             "Livewire": 82,
@@ -1781,11 +1782,15 @@
             "Owlman": 89,
             "Hyperion": 96,
             "Sentry": 98,
+            "Void": 99,
             "Blue Marvel": 95,
             "Gladiador": 94,
             "Nighthawk": 88,
             "Midnighter": 87,
-            "Apollo": 92
+            "Apollo": 92,
+            "Fanático": 94,
+            "Spectre": 100,
+            "Doutor Manhattan": 100
         };
 
         function buildAllChars() {
@@ -1920,8 +1925,7 @@
             gameState.usedChars = new Set();
             gameState.isPlaying = false;
             gameState.selectedUniverse = null;
-            if (gameState.timerId) { clearInterval(gameState.timerId);
-                gameState.timerId = null; }
+            if (gameState.timerId) { clearInterval(gameState.timerId); gameState.timerId = null; }
             gameState.subModeLocked = false;
             updateSubModeButtons();
             updateSubModeLabel();
@@ -1929,10 +1933,9 @@
 
         function closeGame() {
             document.getElementById("ovGame").classList.remove("open");
-            if (gameState.timerId) { clearInterval(gameState.timerId);
-                gameState.timerId = null; 
-                gameState.subModeLocked = false;
-                updateSubModeButtons();}
+            if (gameState.timerId) { clearInterval(gameState.timerId); gameState.timerId = null; }
+            gameState.subModeLocked = false;
+            updateSubModeButtons();
         }
 
         function updateSubModeLabel() {
@@ -1940,7 +1943,7 @@
             label.textContent = gameState.subMode === "blind" ? "Às Cegas" : "Visual";
         }
 
-                function updateSubModeButtons() {
+        function updateSubModeButtons() {
             var buttons = document.querySelectorAll("#gameModeSelect .sub-mode-select .btn");
             buttons.forEach(function(btn) {
                 if (gameState.subModeLocked) {
@@ -2184,8 +2187,7 @@
 
         function endSelection() {
             gameState.isPlaying = false;
-            if (gameState.timerId) { clearInterval(gameState.timerId);
-                gameState.timerId = null; }
+            if (gameState.timerId) { clearInterval(gameState.timerId); gameState.timerId = null; }
             document.getElementById("gameTimer").textContent = "⏱️ Time completo!";
             var enemyTeam = generateEnemyTeam();
             showTeamComparison(gameState.team, enemyTeam);
@@ -2242,55 +2244,6 @@
                 '<span class="fc-ov">' + c.overall + '</span>' +
                 '</div>';
         }
-
-        function renderBattleArena(team1, team2) {
-    var arena = document.getElementById("battleArena");
-    arena.innerHTML = "";
-    // Coluna do time do jogador
-    var col1 = document.createElement("div");
-    col1.className = "battle-team";
-    col1.innerHTML = "<h3>🛡️ Seu Time</h3>";
-    team1.forEach(function(c, idx) {
-        col1.appendChild(createBattleCard(c, "player", idx));
-    });
-    arena.appendChild(col1);
-    // Coluna do time adversário
-    var col2 = document.createElement("div");
-    col2.className = "battle-team";
-    col2.innerHTML = "<h3>👹 Adversário</h3>";
-    team2.forEach(function(c, idx) {
-        col2.appendChild(createBattleCard(c, "enemy", idx));
-    });
-    arena.appendChild(col2);
-}
-
-function createBattleCard(char, side, index) {
-    var card = document.createElement("div");
-    card.className = "battle-card " + (char.isOrg ? "org" : (char.uni === "marvel" ? "marvel" : "dc"));
-    card.id = side + "-card-" + index;
-    // Avatar
-    var avatar = document.createElement("div");
-    avatar.className = "battle-avatar";
-    avatar.textContent = char.name.charAt(0).toUpperCase();
-    if (char.isOrg) avatar.textContent = "🏛️";
-    // Tentar carregar imagem (opcional, mantém a inicial se falhar)
-    var wiki = char.isOrg ? "org" : (char.uni === "marvel" ? "marvel" : "dc");
-    fetchImageWiki(char.name, wiki).then(function(url) {
-        if (url) {
-            avatar.innerHTML = '<img src="' + url + '" alt="' + char.name + '">';
-        }
-    });
-    card.appendChild(avatar);
-    // Informações
-    var info = document.createElement("div");
-    info.className = "battle-info";
-    info.innerHTML = '<div class="battle-name">' + char.name + '</div>' +
-        '<div class="battle-ov">Overall: ' + char.overall + '</div>' +
-        '<div class="battle-hp-bar"><div class="battle-hp-fill" id="' + side + '-hp-fill-' + index + '"></div></div>' +
-        '<div class="battle-hp-text" id="' + side + '-hp-text-' + index + '">' + (char.overall * 2) + '/' + (char.overall * 2) + '</div>';
-    card.appendChild(info);
-    return card;
-}
 
         function generateEnemyTeam() {
             var pool;
@@ -2489,152 +2442,186 @@ function createBattleCard(char, side, index) {
             }, 700);
         }
 
+        function renderBattleArena(team1, team2) {
+            var arena = document.getElementById("battleArena");
+            arena.innerHTML = "";
+            var col1 = document.createElement("div");
+            col1.className = "battle-team";
+            col1.innerHTML = "<h3>🛡️ Seu Time</h3>";
+            team1.forEach(function(c, idx) {
+                col1.appendChild(createBattleCard(c, "player", idx));
+            });
+            arena.appendChild(col1);
+            var col2 = document.createElement("div");
+            col2.className = "battle-team";
+            col2.innerHTML = "<h3>👹 Adversário</h3>";
+            team2.forEach(function(c, idx) {
+                col2.appendChild(createBattleCard(c, "enemy", idx));
+            });
+            arena.appendChild(col2);
+        }
+
+        function createBattleCard(char, side, index) {
+            var card = document.createElement("div");
+            card.className = "battle-card " + (char.isOrg ? "org" : (char.uni === "marvel" ? "marvel" : "dc"));
+            card.id = side + "-card-" + index;
+            var avatar = document.createElement("div");
+            avatar.className = "battle-avatar";
+            avatar.textContent = char.name.charAt(0).toUpperCase();
+            if (char.isOrg) avatar.textContent = "🏛️";
+            var wiki = char.isOrg ? "org" : (char.uni === "marvel" ? "marvel" : "dc");
+            fetchImageWiki(char.name, wiki).then(function(url) {
+                if (url) {
+                    avatar.innerHTML = '<img src="' + url + '" alt="' + char.name + '">';
+                }
+            });
+            card.appendChild(avatar);
+            var info = document.createElement("div");
+            info.className = "battle-info";
+            info.innerHTML = '<div class="battle-name">' + char.name + '</div>' +
+                '<div class="battle-ov">Overall: ' + char.overall + '</div>' +
+                '<div class="battle-hp-bar"><div class="battle-hp-fill" id="' + side + '-hp-fill-' + index + '"></div></div>' +
+                '<div class="battle-hp-text" id="' + side + '-hp-text-' + index + '">' + (char.overall * 2) + '/' + (char.overall * 2) + '</div>';
+            card.appendChild(info);
+            return card;
+        }
+
         function executeBattle(team1, team2) {
-    var feed = document.getElementById("narrativeFeed");
-    var battleResult = document.getElementById("battleResult");
-    battleResult.innerHTML = "";
+            var feed = document.getElementById("narrativeFeed");
+            var battleResult = document.getElementById("battleResult");
+            battleResult.innerHTML = "";
 
-    // Inicializa os lutadores com índices e lado
-    var fighters1 = team1.map(function(c, i) {
-        return { ...c, hp: c.overall * 2, maxHp: c.overall * 2, side: "player", index: i };
-    });
-    var fighters2 = team2.map(function(c, i) {
-        return { ...c, hp: c.overall * 2, maxHp: c.overall * 2, side: "enemy", index: i };
-    });
-
-    // Desenha a arena com barras de vida
-    renderBattleArena(team1, team2);
-    var arena = document.getElementById("battleArena");
-    arena.style.display = "flex";
-
-    // Função para atualizar a barra de HP e o texto de um lutador
-    function updateHpDisplay(fighter) {
-        var fillId = fighter.side + "-hp-fill-" + fighter.index;
-        var textId = fighter.side + "-hp-text-" + fighter.index;
-        var fill = document.getElementById(fillId);
-        var text = document.getElementById(textId);
-        if (!fill || !text) return;
-        var percent = Math.max(0, (fighter.hp / fighter.maxHp) * 100);
-        fill.style.width = percent + "%";
-        text.textContent = Math.max(0, fighter.hp) + "/" + fighter.maxHp;
-        fill.classList.remove("low", "critical");
-        if (percent <= 30) fill.classList.add("critical");
-        else if (percent <= 60) fill.classList.add("low");
-    }
-
-    // Atualiza todas as barras iniciais
-    fighters1.concat(fighters2).forEach(function(f) { updateHpDisplay(f); });
-
-    var events = [];
-    var turn = 0, maxTurns = 50;
-
-    function addEvent(text, cls, affectedFighters) {
-        events.push({ text: text, cls: cls || "", affected: affectedFighters || [] });
-    }
-
-    function doAttack(attacker, defender) {
-        var baseDamage = Math.round(attacker.overall * (0.3 + Math.random() * 0.4));
-        var defenseFactor = defender.overall / 100;
-        var damage = Math.max(1, Math.round(baseDamage * (1 - defenseFactor * 0.3)));
-        defender.hp = Math.max(0, defender.hp - damage);
-        var action = Math.random() > .5 ? "ataca" : "desfere um golpe";
-        addEvent("⚔️ " + attacker.name + " " + action + " " + defender.name + " causando " + damage + " de dano!", "damage", [ { fighter: defender, hpChange: -damage } ]);
-        if (defender.hp <= 0) {
-            var knockoutMsg = getKnockoutMessage(attacker, defender);
-            addEvent("💥 " + knockoutMsg, "knockout", []);
-        }
-    }
-
-    // Simulação da batalha
-    while (fighters1.some(function(f) { return f.hp > 0; }) && fighters2.some(function(f) { return f.hp > 0; }) && turn < maxTurns) {
-        turn++;
-        // Time 1 ataca
-        var attacker1 = fighters1.filter(function(f) { return f.hp > 0; });
-        var target1 = fighters2.filter(function(f) { return f.hp > 0; });
-        if (attacker1.length > 0 && target1.length > 0) {
-            var atk = attacker1[Math.floor(Math.random() * attacker1.length)];
-            var def = target1[Math.floor(Math.random() * target1.length)];
-            if (atk.canHeal && Math.random() < .3 && fighters1.some(function(f) { return f.hp < f.maxHp; })) {
-                var needHeal = fighters1.filter(function(f) { return f.hp < f.maxHp; }).sort(function(a, b) { return a.hp - b.hp; });
-                if (needHeal.length > 0) {
-                    var healed = needHeal[0];
-                    var healAmount = Math.round(atk.overall * .3);
-                    healed.hp = Math.min(healed.maxHp, healed.hp + healAmount);
-                    addEvent("🩹 " + atk.name + " cura " + healed.name + " em " + healAmount + " HP!", "heal", [ { fighter: healed, hpChange: healAmount } ]);
-                } else {
-                    doAttack(atk, def);
-                }
-            } else {
-                doAttack(atk, def);
-            }
-        }
-        if (!fighters2.some(function(f) { return f.hp > 0; })) break;
-        // Time 2 ataca
-        var attacker2 = fighters2.filter(function(f) { return f.hp > 0; });
-        var target2 = fighters1.filter(function(f) { return f.hp > 0; });
-        if (attacker2.length > 0 && target2.length > 0) {
-            var atk2 = attacker2[Math.floor(Math.random() * attacker2.length)];
-            var def2 = target2[Math.floor(Math.random() * target2.length)];
-            if (atk2.canHeal && Math.random() < .3 && fighters2.some(function(f) { return f.hp < f.maxHp; })) {
-                var needHeal2 = fighters2.filter(function(f) { return f.hp < f.maxHp; }).sort(function(a, b) { return a.hp - b.hp; });
-                if (needHeal2.length > 0) {
-                    var healed2 = needHeal2[0];
-                    var healAmount2 = Math.round(atk2.overall * .3);
-                    healed2.hp = Math.min(healed2.maxHp, healed2.hp + healAmount2);
-                    addEvent("🩹 " + atk2.name + " cura " + healed2.name + " em " + healAmount2 + " HP!", "heal", [ { fighter: healed2, hpChange: healAmount2 } ]);
-                } else {
-                    doAttack(atk2, def2);
-                }
-            } else {
-                doAttack(atk2, def2);
-            }
-        }
-    }
-
-    // Exibição dos eventos com atualização das barras
-    var idxEvent = 0;
-    function showNextEvent() {
-        if (idxEvent < events.length) {
-            var ev = events[idxEvent];
-            var p = document.createElement("div");
-            p.className = "event" + (ev.cls ? " " + ev.cls : "");
-            p.textContent = ev.text;
-            feed.appendChild(p);
-            feed.scrollTop = feed.scrollHeight;
-
-            // Atualiza as barras de vida dos personagens afetados
-            ev.affected.forEach(function(aff) {
-                updateHpDisplay(aff.fighter);
+            var fighters1 = team1.map(function(c, i) {
+                return { ...c, hp: c.overall * 2, maxHp: c.overall * 2, side: "player", index: i };
+            });
+            var fighters2 = team2.map(function(c, i) {
+                return { ...c, hp: c.overall * 2, maxHp: c.overall * 2, side: "enemy", index: i };
             });
 
-            idxEvent++;
-            setTimeout(showNextEvent, 900);
-        } else {
-            // Batalha terminada
-            var team1Alive = fighters1.filter(function(f) { return f.hp > 0; });
-            var team2Alive = fighters2.filter(function(f) { return f.hp > 0; });
-            var win = team1Alive.length > team2Alive.length;
-            var resultText = win ? "🏆 VITÓRIA! Você derrotou o time adversário!" : "💀 Derrota! Seu time foi eliminado.";
-            var cls = win ? "win" : "lose";
-            battleResult.innerHTML = '<p class="' + cls + '">' + resultText + '</p>';
-            var statsHtml = '<div style="margin-top:0.8rem;font-size:0.7rem;color:var(--dim);text-align:left;">' +
-                '<p><strong>Seu time:</strong> ' + team1Alive.map(function(f) { return f.name + " (" + f.hp + "/" + f.maxHp + " HP)"; }).join(", ") + '</p>' +
-                '<p><strong>Adversário:</strong> ' + team2Alive.map(function(f) { return f.name + " (" + f.hp + "/" + f.maxHp + " HP)"; }).join(", ") + '</p></div>';
-            battleResult.innerHTML += statsHtml;
-            if (win && gameState.wave < gameState.maxWaves) {
-                battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="nextWave()">⚡ Próxima Onda</button>';
-            } else if (win && gameState.wave >= gameState.maxWaves) {
-                battleResult.innerHTML += '<p style="color:#4ade80;font-size:1.2rem;">🎉 CAMPEÃO! Você venceu todas as ondas!</p>';
-            } else {
-                battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="resetGame()">🔄 Jogar novamente</button>';
-            }
-        }
-    }
+            renderBattleArena(team1, team2);
+            var arena = document.getElementById("battleArena");
+            arena.style.display = "flex";
 
-    showCountdown(function() {
-        setTimeout(showNextEvent, 600);
-    });
-}
+            function updateHpDisplay(fighter) {
+                var fillId = fighter.side + "-hp-fill-" + fighter.index;
+                var textId = fighter.side + "-hp-text-" + fighter.index;
+                var fill = document.getElementById(fillId);
+                var text = document.getElementById(textId);
+                if (!fill || !text) return;
+                var percent = Math.max(0, (fighter.hp / fighter.maxHp) * 100);
+                fill.style.width = percent + "%";
+                text.textContent = Math.max(0, fighter.hp) + "/" + fighter.maxHp;
+                fill.classList.remove("low", "critical");
+                if (percent <= 30) fill.classList.add("critical");
+                else if (percent <= 60) fill.classList.add("low");
+            }
+
+            fighters1.concat(fighters2).forEach(function(f) { updateHpDisplay(f); });
+
+            var events = [];
+            var turn = 0, maxTurns = 50;
+
+            function addEvent(text, cls, affectedFighters) {
+                events.push({ text: text, cls: cls || "", affected: affectedFighters || [] });
+            }
+
+            function doAttack(attacker, defender) {
+                var baseDamage = Math.round(attacker.overall * (0.3 + Math.random() * 0.4));
+                var defenseFactor = defender.overall / 100;
+                var damage = Math.max(1, Math.round(baseDamage * (1 - defenseFactor * 0.3)));
+                defender.hp = Math.max(0, defender.hp - damage);
+                var action = Math.random() > .5 ? "ataca" : "desfere um golpe";
+                addEvent("⚔️ " + attacker.name + " " + action + " " + defender.name + " causando " + damage + " de dano!", "damage", [ { fighter: defender, hpChange: -damage } ]);
+                if (defender.hp <= 0) {
+                    var knockoutMsg = getKnockoutMessage(attacker, defender);
+                    addEvent("💥 " + knockoutMsg, "knockout", []);
+                }
+            }
+
+            while (fighters1.some(function(f) { return f.hp > 0; }) && fighters2.some(function(f) { return f.hp > 0; }) && turn < maxTurns) {
+                turn++;
+                var attacker1 = fighters1.filter(function(f) { return f.hp > 0; });
+                var target1 = fighters2.filter(function(f) { return f.hp > 0; });
+                if (attacker1.length > 0 && target1.length > 0) {
+                    var atk = attacker1[Math.floor(Math.random() * attacker1.length)];
+                    var def = target1[Math.floor(Math.random() * target1.length)];
+                    if (atk.canHeal && Math.random() < .3 && fighters1.some(function(f) { return f.hp < f.maxHp; })) {
+                        var needHeal = fighters1.filter(function(f) { return f.hp < f.maxHp; }).sort(function(a, b) { return a.hp - b.hp; });
+                        if (needHeal.length > 0) {
+                            var healed = needHeal[0];
+                            var healAmount = Math.round(atk.overall * .3);
+                            healed.hp = Math.min(healed.maxHp, healed.hp + healAmount);
+                            addEvent("🩹 " + atk.name + " cura " + healed.name + " em " + healAmount + " HP!", "heal", [ { fighter: healed, hpChange: healAmount } ]);
+                        } else {
+                            doAttack(atk, def);
+                        }
+                    } else {
+                        doAttack(atk, def);
+                    }
+                }
+                if (!fighters2.some(function(f) { return f.hp > 0; })) break;
+                var attacker2 = fighters2.filter(function(f) { return f.hp > 0; });
+                var target2 = fighters1.filter(function(f) { return f.hp > 0; });
+                if (attacker2.length > 0 && target2.length > 0) {
+                    var atk2 = attacker2[Math.floor(Math.random() * attacker2.length)];
+                    var def2 = target2[Math.floor(Math.random() * target2.length)];
+                    if (atk2.canHeal && Math.random() < .3 && fighters2.some(function(f) { return f.hp < f.maxHp; })) {
+                        var needHeal2 = fighters2.filter(function(f) { return f.hp < f.maxHp; }).sort(function(a, b) { return a.hp - b.hp; });
+                        if (needHeal2.length > 0) {
+                            var healed2 = needHeal2[0];
+                            var healAmount2 = Math.round(atk2.overall * .3);
+                            healed2.hp = Math.min(healed2.maxHp, healed2.hp + healAmount2);
+                            addEvent("🩹 " + atk2.name + " cura " + healed2.name + " em " + healAmount2 + " HP!", "heal", [ { fighter: healed2, hpChange: healAmount2 } ]);
+                        } else {
+                            doAttack(atk2, def2);
+                        }
+                    } else {
+                        doAttack(atk2, def2);
+                    }
+                }
+            }
+
+            var idxEvent = 0;
+            function showNextEvent() {
+                if (idxEvent < events.length) {
+                    var ev = events[idxEvent];
+                    var p = document.createElement("div");
+                    p.className = "event" + (ev.cls ? " " + ev.cls : "");
+                    p.textContent = ev.text;
+                    feed.appendChild(p);
+                    feed.scrollTop = feed.scrollHeight;
+
+                    ev.affected.forEach(function(aff) {
+                        updateHpDisplay(aff.fighter);
+                    });
+
+                    idxEvent++;
+                    setTimeout(showNextEvent, 900);
+                } else {
+                    var team1Alive = fighters1.filter(function(f) { return f.hp > 0; });
+                    var team2Alive = fighters2.filter(function(f) { return f.hp > 0; });
+                    var win = team1Alive.length > team2Alive.length;
+                    var resultText = win ? "🏆 VITÓRIA! Você derrotou o time adversário!" : "💀 Derrota! Seu time foi eliminado.";
+                    var cls = win ? "win" : "lose";
+                    battleResult.innerHTML = '<p class="' + cls + '">' + resultText + '</p>';
+                    var statsHtml = '<div style="margin-top:0.8rem;font-size:0.7rem;color:var(--dim);text-align:left;">' +
+                        '<p><strong>Seu time:</strong> ' + team1Alive.map(function(f) { return f.name + " (" + f.hp + "/" + f.maxHp + " HP)"; }).join(", ") + '</p>' +
+                        '<p><strong>Adversário:</strong> ' + team2Alive.map(function(f) { return f.name + " (" + f.hp + "/" + f.maxHp + " HP)"; }).join(", ") + '</p></div>';
+                    battleResult.innerHTML += statsHtml;
+                    if (win && gameState.wave < gameState.maxWaves) {
+                        battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="nextWave()">⚡ Próxima Onda</button>';
+                    } else if (win && gameState.wave >= gameState.maxWaves) {
+                        battleResult.innerHTML += '<p style="color:#4ade80;font-size:1.2rem;">🎉 CAMPEÃO! Você venceu todas as ondas!</p>';
+                    } else {
+                        battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="resetGame()">🔄 Jogar novamente</button>';
+                    }
+                }
+            }
+
+            showCountdown(function() {
+                setTimeout(showNextEvent, 600);
+            });
+        }
 
         function nextWave() {
             gameState.wave++;
@@ -2650,8 +2637,7 @@ function createBattleCard(char, side, index) {
 
         function resetGame() {
             gameState.isPlaying = false;
-            if (gameState.timerId) { clearInterval(gameState.timerId);
-                gameState.timerId = null; }
+            if (gameState.timerId) { clearInterval(gameState.timerId); gameState.timerId = null; }
             document.getElementById("gameResult").style.display = "none";
             document.getElementById("gamePlay").style.display = "none";
             document.getElementById("gameModeSelect").style.display = "block";
@@ -2672,7 +2658,6 @@ function createBattleCard(char, side, index) {
         // 9. EVENTOS E RANKING
         // ============================================================
         document.addEventListener("DOMContentLoaded", function() {
-            // Game
             document.getElementById("btnGameBig").addEventListener("click", openGame);
 
             document.querySelectorAll("#gameModeSelect .btn[data-mode]").forEach(function(btn) {
@@ -2702,7 +2687,6 @@ function createBattleCard(char, side, index) {
                 });
             });
 
-            // Ranking
             var cfEl = document.getElementById("cf");
             Object.keys(CR).forEach(function(k) {
                 var b = document.createElement("button");
@@ -2900,7 +2884,6 @@ function createBattleCard(char, side, index) {
         }
 
         function open_(id) { document.getElementById(id).classList.add("open"); }
-
         function close_(id) { document.getElementById(id).classList.remove("open"); }
 
         document.querySelectorAll(".ov").forEach(function(el) {
@@ -2938,9 +2921,7 @@ function createBattleCard(char, side, index) {
                 res.textContent = "❌ Errado!";
                 res.className = "qr no";
             }
-            opts.forEach(function(o) { o.onclick = null;
-                o.style.opacity = ".7";
-                o.style.cursor = "default"; });
+            opts.forEach(function(o) { o.onclick = null; o.style.opacity = ".7"; o.style.cursor = "default"; });
         }
     </script>
 </body>
