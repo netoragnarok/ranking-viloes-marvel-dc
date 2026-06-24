@@ -1452,7 +1452,7 @@
 
             renderBattleArena(team1, team2);
 
-            function updateHpDisplay(fighter) {
+                        function updateHpDisplay(fighter) {
                 var fillId = fighter.side + "-hp-fill-" + fighter.index;
                 var textId = fighter.side + "-hp-text-" + fighter.index;
                 var fill = document.getElementById(fillId);
@@ -1464,10 +1464,25 @@
                 fill.classList.remove("low", "critical");
                 if (percent <= 30) fill.classList.add("critical");
                 else if (percent <= 60) fill.classList.add("low");
+
                 var card = document.getElementById(fighter.side + "-card-" + fighter.index);
                 if (card) {
-                    if (fighter.hp <= 0) { card.classList.add("knocked-out"); }
-                    else { card.classList.remove("knocked-out"); }
+                    if (fighter.hp <= 0) {
+                        card.classList.add("knocked-out");
+                        // Adiciona um selo de "NOCAUTEADO" (caveira)
+                        if (!card.querySelector(".ko-badge")) {
+                            var badge = document.createElement("div");
+                            badge.className = "ko-badge";
+                            badge.textContent = "💀";
+                            badge.style.cssText = "position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:2rem;pointer-events:none;z-index:5;";
+                            card.style.position = "relative";
+                            card.appendChild(badge);
+                        }
+                    } else {
+                        card.classList.remove("knocked-out");
+                        var badge = card.querySelector(".ko-badge");
+                        if (badge) badge.remove();
+                    }
                 }
             }
 
