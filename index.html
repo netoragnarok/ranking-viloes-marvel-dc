@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>500 Vilões Marvel & DC | Ranking Supremo com Sinopses</title>
     <style>
+        /* ===== CSS (mesmo do código anterior, mantido) ===== */
         :root {
             --bg: #0a0a0f; --surface: #111118; --card: #16161f; --border: #26263a;
             --text: #d8d8e8; --dim: #7777a0; --marvel: #e62429; --dc: #0476f2;
@@ -37,7 +38,6 @@
         h1 .m { color: var(--marvel); } h1 .d { color: var(--dc); }
         .hdrsub { font-size: .78rem; color: var(--dim); }
 
-        /* ===== BOTÃO DE DESTAQUE DO JOGO ===== */
         .game-launcher {
             max-width: 1100px; margin: 1rem auto 0; padding: 0 1rem;
             display: flex; justify-content: center;
@@ -327,7 +327,6 @@
             <p class="hdrsub">500 Vilões • Sinopses, imagens e heróis inimigos</p>
         </div>
 
-        <!-- BOTÃO DE DESTAQUE DO JOGO -->
         <div class="game-launcher">
             <button class="btn-game-big" id="btnGameBig">
                 <span class="main-text">⚡ JOGAR MVxDC: SHOCKWAVE</span>
@@ -350,7 +349,6 @@
             <button class="btn" id="btnC">⚖️ Comparar</button>
             <button class="btn" id="btnE">📥 CSV</button>
             <button class="btn" id="btnT">🌓 Tema</button>
-            <!-- Botão antigo removido, agora temos o grande em destaque -->
             <div class="sr-wrap">
                 <span>Pts mín:</span>
                 <input type="range" id="rng" min="0" max="800" step="10" value="0">
@@ -630,7 +628,7 @@
         UNLAWFUL_IMP: ["Manteve pessoas presas ilegalmente..."]
     };
 
-    // ===== DADOS DOS VILÕES FIXOS =====
+    // ===== DADOS DOS VILÕES FIXOS (mantido) =====
     var HD = [
     {name:"Thanos",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"FAM_MURDER",s:"local",d:"..."},{c:"CHILD_ABUSE",s:"local",d:"..."},{c:"DOMINATION",s:"universal",d:"..."}]},
     {name:"Coringa",uni:"dc", crimes:[{c:"GENOCIDE",s:"cidade",d:"..."},{c:"CHILD_MURDER",s:"local",d:"..."},{c:"PSYCH_TORTURE",s:"local",d:"..."},{c:"TERRORISM",s:"cidade",d:"..."}]},
@@ -665,7 +663,7 @@
     {name:"Knull",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"MASS_ENSLAVE",s:"universal",d:"..."},{c:"ATT_DOMINATION",s:"universal",d:"..."},{c:"MURDER",s:"local",d:"..."}]}
     ];
 
-    // ===== LISTAS DE VILÕES =====
+    // ===== LISTAS DE VILÕES (expandidas ao máximo) =====
     var EM = "Abominável,Homem-Areia,Shocker,Bastion,Omega Vermelho,Surtur,Malekith,Corruptor,Escorpião,Abutre,Morlun,Ronan,Mandarim,Arnim Zola,Super-Adaptoid,Mordo,Kaecilius,Pesadelo,Blackheart,Umar,Laufey,Fênix Negra,Exodus,Vulcan,Sebastian Shaw,Azazel,Satana,Morbius,Typhoid Mary,Arcade,Mestre dos Bonecos,Sentinela,Crusher Creel,Titânia,Enxame,Demolidor Amarelo,Flagelo,Blob,Fanático,Sapo,Ego,Korvac,Kro,Líder,Living Laser,Nébula,Nimrod,Nitro,Attuma,Blastaar,Diablo,Fin Fang Foom,Graviton,Gorgon,Mr. Hyde,Onslaught,Overmind,Super-Skrull,Terrax,Tyrannus,Whiplash,Whirlwind,Wizard,Xemnu,Zaladane,Zzzax,Supremor,Speed Demon,Stilt-Man,Homem-Absorvente,Jigsaw,Lady Deathstrike,Massacre,Silvermane,Tombstone,Hobgoblin,Jackal,Trapster,Boomerang,Hydro-Man,Molten Man,Beetle,Demogoblin,Carrion,Vermin,Calypso,Puma,Hammerhead,Tarantula,Jack O'Lantern,Constrictor,Crossbones,Death Adder,Firebrand,Mongoose,Rattler,Bushmaster,Cottonmouth,Blizzard,Spymaster,Warlord,Mentallo,Fixer,Shocker II,Ronan II,Skrull Comandante,Grandmaster,Korvac II,Onslaught II,Xorn,Sauron,Shadow King,Amora,Lorelei,Executioner,Skurge,Tyr,Ulik,Kurse,Algrim,Anti-Venom,Toxin,Scream,Hybrid,Lasher,Phage,Riot,Agony,Sleeper,Mania,Cyttorak,Shuma-Gorath,D'Spayre,Satannish,Nightmare,N'Astirh,S'ym,Belasco,Mephista,Daimon Hellstrom,Hellcat,Moonstone,Karla Sofen,Viper,Yellowjacket,Wonder Man Vilão".split(",");
     var ED = "Bizarro,Parallax,Amazo,Atrocitus,Professor Zoom,Doutor Luz,Mordru,Ultra-Humanite,Rei Tubarão,Ocean Master,Larfleeze,Krona,Kalibak,Desaad,Mongul,Imperiex,Capitão Frio,Onda Térmica,Mestre dos Espelhos,General Zod,Ursa,Non,Faora,Jax-Ur,Mister Mxyzptlk,Silêncio,Vagalume,Anarquia,Máscara Negra,Grande Tubarão Branco,Conde Vertigo,Relógio,Calendário,Polka-Dot Man,Ventríloquo,Exterminador,Sr. Frio,Lobo,Solomon Grundy,Cara de Barro,Crocodilo,Deadshot,Capitão Bumerangue,Mirror Master,Weather Wizard,Abra Kadabra,Amanda Waller,Kobra,Metallo,Parasite,Livewire,Silver Banshee,Cyborg Superman,Mongul II,Ravager,Blockbuster,Brother Blood,Monsieur Mallah,General Immortus,Black Mask,Victor Zsasz,Cornelius Stirk,Firefly,Killer Moth,Orca,Ratcatcher,Cluemaster,Film Freak,Magpie,Dr. Phosphorus,Tweedledee,Tweedledum,Amygdala,Abbatoir,Killer Frost,Heat Wave,Golden Glider,Top,Trickster,Rainbow Raider,Turtle,Murmur,Girder,Tar Pit,Fallback,Blacksmith,Cicada,Savitar,Cobalt Blue,Rival,Chunk,Atomic Skull,Riot DC,Shrapnel,Multiplex,Firestorm Vilão,Killer Frost II,Captain Cold II,Pied Piper,Trickster II,The Top II,Golden Glider II,Brother Grimm,Effigy,Sun Grater,Blacksmith II,Peekaboo,Double Down,Tar Pit II,Girder II,Magenta,Spin".split(",");
 
@@ -725,7 +723,7 @@
       return {name: name, uni: uni, crimes: crimes};
     }
 
-    // ===== CONSTRUÇÃO DA LISTA DE VILÕES =====
+    // ===== CONSTRUÇÃO DA LISTA DE VILÕES (com muitos nomes extras) =====
     var AV = [];
     var seen = new Set();
     for (var i = 0; i < HD.length; i++) {
@@ -756,7 +754,17 @@
         "Ahab","Barracuda","Blackout","Bloodscream","Brothers Grimm","Chthon",
         "Crimson Cowl","Ghaur","Madcap","Maelstrom","Morg","Moses Magnum",
         "Prodigy","Red Ghost","Saturnyne","Scalphunter","Selene","Sersi","Sin",
-        "Superia","Zzzax","Korvac","Maelstrom","Overmind","Supremor","Kurse"
+        "Superia","Zzzax","Korvac","Maelstrom","Overmind","Supremor","Kurse",
+        "Algrim","Tyr","Ulik","Enchantress","Executioner","Skurge","Amora","Lorelei",
+        "Hela","Fenrir","Midgard Serpent","Surtur","Ymir","Mangog","Desak",
+        "Gorr","Knull","Kang","Doom","Ultron","M.O.D.O.K.","A.I.M.","H.Y.D.R.A.",
+        "Deathlok","Drax","Gamora","Rocket Raccoon","Groot","Mantis","Nebula",
+        "Yondu","Kraglin","Taserface","Star-Lord","Adam Warlock","Quasar","Nova",
+        "Silver Surfer","Firelord","Air-Walker","Terrax","Red Shift","Stardust",
+        "Beta Ray Bill","Hercules","Ares","Photon","Blue Marvel","Sentry","Void",
+        "Hyperion","Gladiator","Ronin","Echo","Blade","Morbius","Werewolf by Night",
+        "Man-Thing","Swamp Thing","John Constantine","Deadman","Spectre","Phantom Stranger",
+        "Nighthawk", "Midnighter"  // equivalentes ao Batman
     ];
     var EXTRA_DC = [
         "Abra Kadabra","Amos Fortune","Agent Orange","Atomic Skull","Atlas",
@@ -780,7 +788,13 @@
         "Spy Smasher","Brainwave","Despero","Fatal Five","Persuader","Tharok",
         "Validus","Man-Eater","Starro","The Trench","Mr. Bloom","The Judge",
         "Great White Shark","Silver Banshee","Time Trapper","Krona","Mordru",
-        "Ultra-Humanite","Imperiex","Cyborg Superman","Mongul II","Ravager"
+        "Ultra-Humanite","Imperiex","Cyborg Superman","Mongul II","Ravager",
+        "Trigon","Brother Blood","Deathstroke","Deadshot","Captain Boomerang",
+        "Mirror Master","Weather Wizard","Abra Kadabra","Amanda Waller","Kobra",
+        "Prometheus","Shiva","Sensei","King Snake","Cheshire","Lady Shiva",
+        "Bronze Tiger","Richard Dragon","David Cain","Orphan","Cassandra Cain",
+        "Azrael","Bane","Killer Croc","Man-Bat","Clayface","Poison Ivy","Harley Quinn",
+        "Ultraman","Superboy-Prime","Mon-El","Magog","Overman","Owlman"  // cópias do Superman/Batman
     ];
 
     var idxM = 0;
@@ -799,6 +813,7 @@
             AV.push(mkV(name, "dc"));
         }
     }
+    // Fallback (praticamente nunca será usado)
     var pad = 1;
     while (AV.length < 500) {
         var name = "Vilão " + pad++;
@@ -808,6 +823,7 @@
         }
     }
 
+    // Calcula score
     for (var i = 0; i < AV.length; i++) {
       var sc = 0;
       for (var j = 0; j < AV[i].crimes.length; j++) sc += pts(AV[i].crimes[j].c, AV[i].crimes[j].s);
@@ -818,65 +834,150 @@
     var gRank = {};
     for (var i = 0; i < AV.length; i++) gRank[AV[i].name] = i + 1;
 
-    // ===== HERÓIS =====
+    // ===== HERÓIS (com boost para equivalentes) =====
     var HEROIS = [
-        {name:"Homem-Aranha", uni:"marvel", overall:85, canHeal:false},
-        {name:"Capitão América", uni:"marvel", overall:82, canHeal:false},
-        {name:"Thor", uni:"marvel", overall:93, canHeal:false},
-        {name:"Homem de Ferro", uni:"marvel", overall:90, canHeal:false},
-        {name:"Hulk", uni:"marvel", overall:96, canHeal:false},
-        {name:"Viúva Negra", uni:"marvel", overall:78, canHeal:false},
-        {name:"Gavião Arqueiro", uni:"marvel", overall:76, canHeal:false},
-        {name:"Wolverine", uni:"marvel", overall:88, canHeal:true},
-        {name:"Doutor Estranho", uni:"marvel", overall:92, canHeal:true},
-        {name:"Pantera Negra", uni:"marvel", overall:84, canHeal:false},
-        {name:"Capitã Marvel", uni:"marvel", overall:94, canHeal:false},
-        {name:"Demolidor", uni:"marvel", overall:80, canHeal:false},
-        {name:"Motoqueiro Fantasma", uni:"marvel", overall:86, canHeal:false},
-        {name:"Deadpool", uni:"marvel", overall:83, canHeal:true},
-        {name:"Tempestade", uni:"marvel", overall:89, canHeal:false},
-        {name:"Jean Grey", uni:"marvel", overall:95, canHeal:true},
-        {name:"Ciclope", uni:"marvel", overall:81, canHeal:false},
-        {name:"Noturno", uni:"marvel", overall:79, canHeal:false},
-        {name:"Mística", uni:"marvel", overall:77, canHeal:false},
-        {name:"Venom", uni:"marvel", overall:85, canHeal:false},
+        // Marvel
+        {name:"Homem-Aranha", uni:"marvel", overall:87, canHeal:false},
+        {name:"Capitão América", uni:"marvel", overall:84, canHeal:false},
+        {name:"Thor", uni:"marvel", overall:95, canHeal:false},
+        {name:"Homem de Ferro", uni:"marvel", overall:92, canHeal:false},
+        {name:"Hulk", uni:"marvel", overall:97, canHeal:false},
+        {name:"Viúva Negra", uni:"marvel", overall:80, canHeal:false},
+        {name:"Gavião Arqueiro", uni:"marvel", overall:78, canHeal:false},
+        {name:"Wolverine", uni:"marvel", overall:90, canHeal:true},
+        {name:"Doutor Estranho", uni:"marvel", overall:94, canHeal:true},
+        {name:"Pantera Negra", uni:"marvel", overall:86, canHeal:false},
+        {name:"Capitã Marvel", uni:"marvel", overall:96, canHeal:false},
+        {name:"Demolidor", uni:"marvel", overall:82, canHeal:false},
+        {name:"Motoqueiro Fantasma", uni:"marvel", overall:88, canHeal:false},
+        {name:"Deadpool", uni:"marvel", overall:85, canHeal:true},
+        {name:"Tempestade", uni:"marvel", overall:91, canHeal:false},
+        {name:"Jean Grey", uni:"marvel", overall:98, canHeal:true},
+        {name:"Ciclope", uni:"marvel", overall:83, canHeal:false},
+        {name:"Noturno", uni:"marvel", overall:81, canHeal:false},
+        {name:"Mística", uni:"marvel", overall:79, canHeal:false},
+        {name:"Venom", uni:"marvel", overall:87, canHeal:false},
+        // Marvel - equivalentes ao Superman
+        {name:"Hyperion", uni:"marvel", overall:96, canHeal:false},
+        {name:"Sentry", uni:"marvel", overall:98, canHeal:false},
+        {name:"Blue Marvel", uni:"marvel", overall:95, canHeal:false},
+        {name:"Gladiador", uni:"marvel", overall:94, canHeal:false},
+        {name:"Nighthawk", uni:"marvel", overall:88, canHeal:false}, // Batman
         // DC
-        {name:"Superman", uni:"dc", overall:100, canHeal:false},
+        {name:"Superman", uni:"dc", overall:99, canHeal:false},
         {name:"Batman", uni:"dc", overall:88, canHeal:false},
-        {name:"Mulher-Maravilha", uni:"dc", overall:95, canHeal:false},
-        {name:"Flash", uni:"dc", overall:92, canHeal:false},
-        {name:"Lanterna Verde", uni:"dc", overall:89, canHeal:false},
-        {name:"Aquaman", uni:"dc", overall:84, canHeal:false},
-        {name:"Ciborgue", uni:"dc", overall:82, canHeal:false},
-        {name:"Shazam", uni:"dc", overall:91, canHeal:false},
-        {name:"Zatanna", uni:"dc", overall:86, canHeal:true},
-        {name:"Ravena", uni:"dc", overall:87, canHeal:true},
-        {name:"Arqueiro Verde", uni:"dc", overall:80, canHeal:false},
-        {name:"Canário Negro", uni:"dc", overall:81, canHeal:false},
-        {name:"Batgirl", uni:"dc", overall:79, canHeal:false},
-        {name:"Supergirl", uni:"dc", overall:92, canHeal:false},
-        {name:"Asa Noturna", uni:"dc", overall:83, canHeal:false},
-        {name:"Oráculo", uni:"dc", overall:78, canHeal:false},
-        {name:"Fogo", uni:"dc", overall:82, canHeal:false},
-        {name:"Gelo", uni:"dc", overall:80, canHeal:false},
-        {name:"Metamorfo", uni:"dc", overall:79, canHeal:false},
-        {name:"Besouro Azul", uni:"dc", overall:85, canHeal:false}
+        {name:"Mulher-Maravilha", uni:"dc", overall:96, canHeal:false},
+        {name:"Flash", uni:"dc", overall:100, canHeal:false},
+        {name:"Lanterna Verde", uni:"dc", overall:92, canHeal:false},
+        {name:"Aquaman", uni:"dc", overall:86, canHeal:false},
+        {name:"Ciborgue", uni:"dc", overall:85, canHeal:false},
+        {name:"Shazam", uni:"dc", overall:95, canHeal:false},
+        {name:"Zatanna", uni:"dc", overall:90, canHeal:true},
+        {name:"Ravena", uni:"dc", overall:91, canHeal:true},
+        {name:"Arqueiro Verde", uni:"dc", overall:82, canHeal:false},
+        {name:"Canário Negro", uni:"dc", overall:83, canHeal:false},
+        {name:"Batgirl", uni:"dc", overall:81, canHeal:false},
+        {name:"Supergirl", uni:"dc", overall:96, canHeal:false},
+        {name:"Asa Noturna", uni:"dc", overall:84, canHeal:false},
+        {name:"Oráculo", uni:"dc", overall:79, canHeal:false},
+        {name:"Fogo", uni:"dc", overall:84, canHeal:false},
+        {name:"Gelo", uni:"dc", overall:82, canHeal:false},
+        {name:"Metamorfo", uni:"dc", overall:80, canHeal:false},
+        {name:"Besouro Azul", uni:"dc", overall:87, canHeal:false},
+        // DC - equivalentes ao Superman
+        {name:"Ultraman", uni:"dc", overall:97, canHeal:false},
+        {name:"Superboy-Prime", uni:"dc", overall:99, canHeal:false},
+        {name:"Mon-El", uni:"dc", overall:95, canHeal:false},
+        {name:"Magog", uni:"dc", overall:91, canHeal:false},
+        {name:"Overman", uni:"dc", overall:93, canHeal:false},
+        {name:"Owlman", uni:"dc", overall:89, canHeal:false}, // Batman
+        {name:"Apollo", uni:"dc", overall:92, canHeal:false}
     ];
 
+    // ===== OVERALL MANUAL PARA VILÕES (com boost para equivalentes) =====
     var OVERALL_OVERRIDES = {
-        "Surtur": 93, "Abominável": 86, "Galactus": 99, "Thanos": 98, "Darkseid": 98,
-        "Anti-Monitor": 99, "Knull": 96, "Dormammu": 95, "Mephisto": 90, "Hela": 91,
-        "Loki": 87, "Apocalipse": 92, "Magneto": 90, "Ultron": 89, "Brainiac": 91,
-        "Sinestro": 88, "Black Adam": 94, "Doomsday": 95, "Caveira Vermelha": 80,
-        "Lex Luthor": 83, "Coringa": 78, "Duende Verde": 82, "Carnificina": 85,
-        "Kang": 90, "Gorr": 92, "Nekron": 93, "Flash Reverso": 89, "Ra's al Ghul": 82,
-        "Bane": 83, "Dr. Destino": 91, "Korvac": 91, "Onslaught": 94, "Shadow King": 88,
-        "Cyttorak": 92, "Shuma-Gorath": 93, "Trigon": 96, "Deathstroke": 88,
-        "Imperiex": 97, "Cyborg Superman": 90, "Mongul II": 88, "Steppenwolf": 85,
-        "Kalibak": 86, "Desaad": 82, "Granny Goodness": 83
+        "Anti-Monitor": 100,
+        "Galactus": 99,
+        "Thanos": 98,
+        "Darkseid": 99,
+        "Knull": 97,
+        "Dormammu": 96,
+        "Trigon": 96,
+        "Imperiex": 97,
+        "Surtur": 95,
+        "Onslaught": 95,
+        "Apocalipse": 94,
+        "Black Adam": 95,
+        "Flash Reverso": 94,
+        "Zoom": 93,
+        "Savitar": 92,
+        "Gorr": 93,
+        "Nekron": 93,
+        "Mephisto": 92,
+        "Hela": 92,
+        "Dr. Destino": 92,
+        "Magneto": 91,
+        "Brainiac": 92,
+        "Ultron": 91,
+        "Sinestro": 90,
+        "Kang": 91,
+        "Doomsday": 95,
+        "Cyborg Superman": 94,
+        "Mongul II": 91,
+        "Abominável": 86,
+        "Caveira Vermelha": 82,
+        "Lex Luthor": 85,
+        "Coringa": 80,
+        "Duende Verde": 84,
+        "Carnificina": 87,
+        "Ra's al Ghul": 83,
+        "Bane": 84,
+        "Korvac": 91,
+        "Shadow King": 89,
+        "Cyttorak": 92,
+        "Shuma-Gorath": 93,
+        "Deathstroke": 88,
+        "Deadshot": 82,
+        "Steppenwolf": 86,
+        "Desaad": 83,
+        "Kalibak": 87,
+        "Granny Goodness": 84,
+        "Mordru": 91,
+        "Eclipso": 90,
+        "Parallax": 94,
+        "Atrocitus": 89,
+        "Larfleeze": 88,
+        "Starro": 90,
+        "Despero": 91,
+        "Krona": 92,
+        "Ultra-Humanite": 84,
+        "General Zod": 96,
+        "Faora": 93,
+        "Non": 90,
+        "Mister Mxyzptlk": 93,
+        "Metallo": 85,
+        "Parasite": 83,
+        "Livewire": 82,
+        "Silver Banshee": 84,
+        "Bizarro": 89,
+        "Eradicator": 92,
+        // Novos equivalentes
+        "Ultraman": 97,
+        "Superboy-Prime": 99,
+        "Mon-El": 95,
+        "Magog": 91,
+        "Overman": 93,
+        "Owlman": 89,
+        "Hyperion": 96,
+        "Sentry": 98,
+        "Blue Marvel": 95,
+        "Gladiador": 94,
+        "Nighthawk": 88,
+        "Midnighter": 87,
+        "Apollo": 92
     };
 
-    // ===== JOGO SHOCKWAVE =====
+    // ===== JOGO SHOCKWAVE (com exibição do overall adversário) =====
     var gameState = {
         mode: null,
         selectedUniverse: null,
@@ -932,21 +1033,6 @@
 
     var allChars = buildAllChars();
 
-    // Função para carregar imagem da carta
-    async function loadCardImage(card, avatarElement) {
-        var wiki = card.uni === 'marvel' ? 'marvel' : 'dc';
-        var url = await fetchImageWiki(card.name, wiki);
-        if (url) {
-            var img = document.createElement('img');
-            img.src = url;
-            img.alt = card.name;
-            img.onerror = function() { avatarElement.innerHTML = card.name.charAt(0).toUpperCase(); };
-            avatarElement.innerHTML = '';
-            avatarElement.appendChild(img);
-        }
-    }
-
-    // Função fetchImageWiki (já existente, mantida)
     var imageCache = {};
     async function fetchImageWiki(name, wiki) {
         var cacheKey = name + "_" + wiki;
@@ -971,6 +1057,20 @@
         return null;
     }
 
+    async function loadCardImage(card, avatarElement) {
+        var wiki = card.uni === 'marvel' ? 'marvel' : 'dc';
+        var url = await fetchImageWiki(card.name, wiki);
+        if (url) {
+            var img = document.createElement('img');
+            img.src = url;
+            img.alt = card.name;
+            img.onerror = function() { avatarElement.innerHTML = card.name.charAt(0).toUpperCase(); };
+            avatarElement.innerHTML = '';
+            avatarElement.appendChild(img);
+        }
+    }
+
+    // Funções do jogo (abrir, fechar, etc.) - mantidas
     function openGame() {
         document.getElementById('ovGame').classList.add('open');
         document.getElementById('gameModeSelect').style.display = 'block';
@@ -1068,7 +1168,6 @@
             var avatar = document.createElement('div');
             avatar.className = 'gc-avatar';
             avatar.textContent = c.name.charAt(0).toUpperCase();
-            // Carrega imagem assincronamente
             loadCardImage(c, avatar);
 
             var nameDiv = document.createElement('div');
@@ -1163,8 +1262,9 @@
         if (gameState.timerId) { clearInterval(gameState.timerId); gameState.timerId = null; }
         document.getElementById('gameTimer').textContent = '⏱️ Time completo!';
         var enemyTeam = generateEnemyTeam();
+        var enemyTotal = enemyTeam.reduce((sum, c) => sum + c.overall, 0);
         var preview = document.getElementById('enemyPreview');
-        preview.innerHTML = '<strong>⚔️ Time adversário:</strong> ' + enemyTeam.map(c => c.name).join(', ');
+        preview.innerHTML = '<strong>⚔️ Time adversário:</strong> ' + enemyTeam.map(c => c.name).join(', ') + ' <span style="color:var(--gold)">(Overall total: ' + enemyTotal + ')</span>';
         startBattle(gameState.team, enemyTeam);
     }
 
@@ -1362,8 +1462,8 @@
 
     // ===== EVENTOS =====
     document.getElementById('btnGameBig').addEventListener('click', openGame);
-    // Mantém compatibilidade com o botão antigo (se alguém clicar)
-    document.getElementById('btnGame') && document.getElementById('btnGame').addEventListener('click', openGame);
+    var oldBtn = document.getElementById('btnGame');
+    if (oldBtn) oldBtn.addEventListener('click', openGame);
 
     document.querySelectorAll('#gameModeSelect .btn[data-mode]').forEach(function(btn) {
         btn.addEventListener('click', function() {
@@ -1387,7 +1487,7 @@
         }
     });
 
-    // ===== RANKING E FILTROS =====
+    // ===== RANKING E FILTROS (mantido) =====
     var fUni = "all", fSrch = "", fMin = 0, fCR = new Set(), fSort = "score";
 
     var cfEl = document.getElementById("cf");
