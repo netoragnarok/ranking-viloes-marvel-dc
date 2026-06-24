@@ -1187,11 +1187,30 @@
             generateHand(); updateTeamUI(); startTimer();
         }
 
-        function getFilteredPool() {
+                function getPlayerPool() {
             var pool = getGamePool();
-            if (gameState.mode === "heroes_vs_villains") pool = pool.filter(function(c) { return c.type === "heroi" || c.type === "organizacao"; });
-            else if (gameState.mode === "villains_vs_heroes") pool = pool.filter(function(c) { return c.type === "vilao" || c.type === "organizacao"; });
-            else if (gameState.mode === "marvel_vs_dc" && gameState.selectedUniverse) pool = pool.filter(function(c) { return c.uni === gameState.selectedUniverse; });
+            if (gameState.mode === "heroes_vs_villains") {
+                pool = pool.filter(function(c) { return c.type !== "vilao"; }); // heróis + organizações
+            } else if (gameState.mode === "villains_vs_heroes") {
+                pool = pool.filter(function(c) { return c.type !== "heroi"; }); // vilões + organizações
+            } else if (gameState.mode === "marvel_vs_dc" && gameState.selectedUniverse) {
+                pool = pool.filter(function(c) { return c.uni === gameState.selectedUniverse; });
+            }
+            // mixed: sem filtro (todos)
+            return pool;
+        }
+
+        function getEnemyPool() {
+            var pool = getGamePool();
+            if (gameState.mode === "heroes_vs_villains") {
+                pool = pool.filter(function(c) { return c.type !== "heroi"; }); // só vilões e organizações (inimigo não pode ter herói)
+            } else if (gameState.mode === "villains_vs_heroes") {
+                pool = pool.filter(function(c) { return c.type !== "vilao"; }); // só heróis e organizações (inimigo não pode ter vilão)
+            } else if (gameState.mode === "marvel_vs_dc") {
+                var oppUni = getOppositeUniverse();
+                if (oppUni) pool = pool.filter(function(c) { return c.uni === oppUni; });
+            }
+            // mixed: sem filtro (todos)
             return pool;
         }
 
@@ -1202,7 +1221,7 @@
         }
 
         function generateHand() {
-            var pool = getFilteredPool();
+            var pool = getPlayerPool();
             var available = pool.filter(function(c) { return !gameState.usedChars.has(c.name); });
             for (var i = available.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var temp = available[i]; available[i] = available[j]; available[j] = temp; }
             var hand = available.slice(0, 5);
@@ -1351,27 +1370,50 @@
         }
 
         function generateEnemyTeam() {
-            var pool;
-            if (gameState.mode === "marvel_vs_dc") {
-                var oppUni = getOppositeUniverse(); if (!oppUni) oppUni = gameState.selectedUniverse === "marvel" ? "dc" : "marvel";
-                pool = getGamePool().filter(function(c) { return c.uni === oppUni; });
-            } else { pool = getFilteredPool(); }
-            var available = pool.filter(function(c) { return !gameState.usedChars.has(c.name); });
-            for (var i = available.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var temp = available[i]; available[i] = available[j]; available[j] = temp; }
-            var enemy = [];
-            if (Math.random() < 0.2) {
-                var orgs = ORGANIZACOES_COM_OVERALL.filter(function(o) { return !gameState.usedChars.has(o.nome) && (gameState.mode !== "marvel_vs_dc" || o.uni === oppUni); });
-                if (orgs.length > 0) {
-                    var orgEscolhida = orgs[Math.floor(Math.random() * orgs.length)];
-                    var membrosOrg = orgEscolhida.membros.slice(0, 7);
-                    membrosOrg.forEach(function(nomeMembro) { var membroChar = gameState.allChars.find(function(c) { return c.name === nomeMembro; }); if (membroChar) enemy.push(membroChar); });
-                    while (enemy.length < 7) { var extra = available.filter(function(c) { return !enemy.some(function(e) { return e.name === c.name; }); }); if (extra.length === 0) break; var rand = extra[Math.floor(Math.random() * extra.length)]; enemy.push(rand); }
-                }
+    var pool = getEnemyPool();
+    var available = pool.filter(function(c) { return !gameState.usedChars.has(c.name); });
+    for (var i = available.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = available[i];
+        available[i] = available[j];
+        available[j] = temp;
+    }
+    var enemy = [];
+    if (Math.random() < 0.2) {
+        var orgs = ORGANIZACOES_COM_OVERALL.filter(function(o) {
+            return !gameState.usedChars.has(o.nome) && (gameState.mode !== "marvel_vs_dc" || o.uni === getOppositeUniverse());
+        });
+        if (orgs.length > 0) {
+            var orgEscolhida = orgs[Math.floor(Math.random() * orgs.length)];
+            var membrosOrg = orgEscolhida.membros.slice(0, 7);
+            membrosOrg.forEach(function(nomeMembro) {
+                var membroChar = gameState.allChars.find(function(c) { return c.name === nomeMembro; });
+                if (membroChar) enemy.push(membroChar);
+            });
+            while (enemy.length < 7) {
+                var extra = available.filter(function(c) { return !enemy.some(function(e) { return e.name === c.name; }); });
+                if (extra.length === 0) break;
+                var rand = extra[Math.floor(Math.random() * extra.length)];
+                enemy.push(rand);
             }
-            if (enemy.length < 7) { var restantes = available.filter(function(c) { return !enemy.some(function(e) { return e.name === c.name; }); }); for (var i = 0; i < Math.min(7 - enemy.length, restantes.length); i++) { enemy.push(restantes[i]); } }
-            while (enemy.length < 7) { var fallback = pool.filter(function(c) { return !gameState.usedChars.has(c.name) && !enemy.some(function(e) { return e.name === c.name; }); }); if (fallback.length === 0) break; var rand = fallback[Math.floor(Math.random() * fallback.length)]; enemy.push(rand); }
-            return enemy;
         }
+    }
+    if (enemy.length < 7) {
+        var restantes = available.filter(function(c) { return !enemy.some(function(e) { return e.name === c.name; }); });
+        for (var i = 0; i < Math.min(7 - enemy.length, restantes.length); i++) {
+            enemy.push(restantes[i]);
+        }
+    }
+    while (enemy.length < 7) {
+        var fallback = pool.filter(function(c) {
+            return !gameState.usedChars.has(c.name) && !enemy.some(function(e) { return e.name === c.name; });
+        });
+        if (fallback.length === 0) break;
+        var rand = fallback[Math.floor(Math.random() * fallback.length)];
+        enemy.push(rand);
+    }
+    return enemy;
+}
 
         var PODERES_POR_PERSONAGEM = {
             "Superman": ["Soco de Força Bruta", "Visão de Calor", "Sopro de Gelo", "Raio de Energia", "Impacto Supersônico"],
