@@ -954,6 +954,68 @@
         .enemy-preview strong {
             color: var(--gold);
         }
+        .battle-team {
+    flex: 1;
+    min-width: 250px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+}
+.battle-team h3 {
+    text-align: center;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+.battle-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 0.4rem;
+    border-left: 3px solid var(--border);
+    flex-wrap: wrap;
+}
+.battle-card.marvel { border-left-color: var(--marvel); }
+.battle-card.dc { border-left-color: var(--dc); }
+.battle-card.org { border-left-color: var(--org); }
+.battle-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #1a1a28;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; color: #fff; font-size: 0.9rem;
+    flex-shrink: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+.battle-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.battle-info {
+    flex: 1; min-width: 120px;
+}
+.battle-name {
+    font-weight: 700; font-size: 0.8rem;
+}
+.battle-ov {
+    font-size: 0.7rem; color: var(--dim);
+}
+.battle-hp-bar {
+    width: 100%; height: 8px; background: #333;
+    border-radius: 4px; margin-top: 3px; overflow: hidden;
+}
+.battle-hp-fill {
+    height: 100%; width: 100%;
+    background: linear-gradient(90deg, #4ade80, #22c55e);
+    border-radius: 4px; transition: width 0.3s ease;
+}
+.battle-hp-fill.low { background: linear-gradient(90deg, #facc15, #eab308); }
+.battle-hp-fill.critical { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.battle-hp-text {
+    font-size: 0.6rem; color: var(--dim); text-align: right;
+}
         @media (max-width:600px) {
             .game-card {
                 min-width: 70px;
@@ -1049,6 +1111,7 @@
                 </div>
                 <div id="gameResult" style="display:none;">
                     <div class="narrative-feed" id="narrativeFeed"></div>
+                    <div id="battleArena" style="display: flex; gap: 1rem; justify-content: center; margin: 1rem 0;"></div>
                     <div class="game-result" id="battleResult"></div>
                 </div>
             </div>
@@ -2180,6 +2243,55 @@
                 '</div>';
         }
 
+        function renderBattleArena(team1, team2) {
+    var arena = document.getElementById("battleArena");
+    arena.innerHTML = "";
+    // Coluna do time do jogador
+    var col1 = document.createElement("div");
+    col1.className = "battle-team";
+    col1.innerHTML = "<h3>🛡️ Seu Time</h3>";
+    team1.forEach(function(c, idx) {
+        col1.appendChild(createBattleCard(c, "player", idx));
+    });
+    arena.appendChild(col1);
+    // Coluna do time adversário
+    var col2 = document.createElement("div");
+    col2.className = "battle-team";
+    col2.innerHTML = "<h3>👹 Adversário</h3>";
+    team2.forEach(function(c, idx) {
+        col2.appendChild(createBattleCard(c, "enemy", idx));
+    });
+    arena.appendChild(col2);
+}
+
+function createBattleCard(char, side, index) {
+    var card = document.createElement("div");
+    card.className = "battle-card " + (char.isOrg ? "org" : (char.uni === "marvel" ? "marvel" : "dc"));
+    card.id = side + "-card-" + index;
+    // Avatar
+    var avatar = document.createElement("div");
+    avatar.className = "battle-avatar";
+    avatar.textContent = char.name.charAt(0).toUpperCase();
+    if (char.isOrg) avatar.textContent = "🏛️";
+    // Tentar carregar imagem (opcional, mantém a inicial se falhar)
+    var wiki = char.isOrg ? "org" : (char.uni === "marvel" ? "marvel" : "dc");
+    fetchImageWiki(char.name, wiki).then(function(url) {
+        if (url) {
+            avatar.innerHTML = '<img src="' + url + '" alt="' + char.name + '">';
+        }
+    });
+    card.appendChild(avatar);
+    // Informações
+    var info = document.createElement("div");
+    info.className = "battle-info";
+    info.innerHTML = '<div class="battle-name">' + char.name + '</div>' +
+        '<div class="battle-ov">Overall: ' + char.overall + '</div>' +
+        '<div class="battle-hp-bar"><div class="battle-hp-fill" id="' + side + '-hp-fill-' + index + '"></div></div>' +
+        '<div class="battle-hp-text" id="' + side + '-hp-text-' + index + '">' + (char.overall * 2) + '/' + (char.overall * 2) + '</div>';
+    card.appendChild(info);
+    return card;
+}
+
         function generateEnemyTeam() {
             var pool;
             if (gameState.mode === "marvel_vs_dc") {
@@ -2353,6 +2465,8 @@
             feed.innerHTML = "";
             var battleResult = document.getElementById("battleResult");
             battleResult.innerHTML = "";
+            document.getElementById("battleArena").innerHTML = "";
+            document.getElementById("battleArena").style.display = "none";
             showCountdown(function() {
                 executeBattle(team1, team2);
             });
@@ -2376,109 +2490,151 @@
         }
 
         function executeBattle(team1, team2) {
-            var feed = document.getElementById("narrativeFeed");
-            var battleResult = document.getElementById("battleResult");
-            var fighters1 = team1.map(function(c) { return { ...c,
-                hp: c.overall * 2,
-                maxHp: c.overall * 2 }; });
-            var fighters2 = team2.map(function(c) { return { ...c,
-                hp: c.overall * 2,
-                maxHp: c.overall * 2 }; });
-            var events = [];
-            var turn = 0,
-                maxTurns = 50;
+    var feed = document.getElementById("narrativeFeed");
+    var battleResult = document.getElementById("battleResult");
+    battleResult.innerHTML = "";
 
-            function addEvent(text, cls) {
-                events.push({ text: text, cls: cls || "" });
-            }
+    // Inicializa os lutadores com índices e lado
+    var fighters1 = team1.map(function(c, i) {
+        return { ...c, hp: c.overall * 2, maxHp: c.overall * 2, side: "player", index: i };
+    });
+    var fighters2 = team2.map(function(c, i) {
+        return { ...c, hp: c.overall * 2, maxHp: c.overall * 2, side: "enemy", index: i };
+    });
 
-            while (fighters1.some(function(f) { return f.hp > 0; }) && fighters2.some(function(f) { return f.hp > 0; }) && turn < maxTurns) {
-                turn++;
-                var attacker1 = fighters1.filter(function(f) { return f.hp > 0; });
-                var target1 = fighters2.filter(function(f) { return f.hp > 0; });
-                if (attacker1.length > 0 && target1.length > 0) {
-                    var atk = attacker1[Math.floor(Math.random() * attacker1.length)];
-                    var def = target1[Math.floor(Math.random() * target1.length)];
-                    if (atk.canHeal && Math.random() < .3 && fighters1.some(function(f) { return f.hp < f.maxHp; })) {
-                        var needHeal = fighters1.filter(function(f) { return f.hp < f.maxHp; }).sort(function(a, b) { return a.hp - b.hp; });
-                        if (needHeal.length > 0) {
-                            var healed = needHeal[0];
-                            var healAmount = Math.round(atk.overall * .3);
-                            healed.hp = Math.min(healed.maxHp, healed.hp + healAmount);
-                            addEvent("🩹 " + atk.name + " usa um poder de cura e restaura " + healAmount + " HP de " + healed.name + "!", "heal");
-                        } else {
-                            doAttack(atk, def, addEvent);
-                        }
-                    } else {
-                        doAttack(atk, def, addEvent);
-                    }
+    // Desenha a arena com barras de vida
+    renderBattleArena(team1, team2);
+    var arena = document.getElementById("battleArena");
+    arena.style.display = "flex";
+
+    // Função para atualizar a barra de HP e o texto de um lutador
+    function updateHpDisplay(fighter) {
+        var fillId = fighter.side + "-hp-fill-" + fighter.index;
+        var textId = fighter.side + "-hp-text-" + fighter.index;
+        var fill = document.getElementById(fillId);
+        var text = document.getElementById(textId);
+        if (!fill || !text) return;
+        var percent = Math.max(0, (fighter.hp / fighter.maxHp) * 100);
+        fill.style.width = percent + "%";
+        text.textContent = Math.max(0, fighter.hp) + "/" + fighter.maxHp;
+        fill.classList.remove("low", "critical");
+        if (percent <= 30) fill.classList.add("critical");
+        else if (percent <= 60) fill.classList.add("low");
+    }
+
+    // Atualiza todas as barras iniciais
+    fighters1.concat(fighters2).forEach(function(f) { updateHpDisplay(f); });
+
+    var events = [];
+    var turn = 0, maxTurns = 50;
+
+    function addEvent(text, cls, affectedFighters) {
+        events.push({ text: text, cls: cls || "", affected: affectedFighters || [] });
+    }
+
+    function doAttack(attacker, defender) {
+        var baseDamage = Math.round(attacker.overall * (0.3 + Math.random() * 0.4));
+        var defenseFactor = defender.overall / 100;
+        var damage = Math.max(1, Math.round(baseDamage * (1 - defenseFactor * 0.3)));
+        defender.hp = Math.max(0, defender.hp - damage);
+        var action = Math.random() > .5 ? "ataca" : "desfere um golpe";
+        addEvent("⚔️ " + attacker.name + " " + action + " " + defender.name + " causando " + damage + " de dano!", "damage", [ { fighter: defender, hpChange: -damage } ]);
+        if (defender.hp <= 0) {
+            var knockoutMsg = getKnockoutMessage(attacker, defender);
+            addEvent("💥 " + knockoutMsg, "knockout", []);
+        }
+    }
+
+    // Simulação da batalha
+    while (fighters1.some(function(f) { return f.hp > 0; }) && fighters2.some(function(f) { return f.hp > 0; }) && turn < maxTurns) {
+        turn++;
+        // Time 1 ataca
+        var attacker1 = fighters1.filter(function(f) { return f.hp > 0; });
+        var target1 = fighters2.filter(function(f) { return f.hp > 0; });
+        if (attacker1.length > 0 && target1.length > 0) {
+            var atk = attacker1[Math.floor(Math.random() * attacker1.length)];
+            var def = target1[Math.floor(Math.random() * target1.length)];
+            if (atk.canHeal && Math.random() < .3 && fighters1.some(function(f) { return f.hp < f.maxHp; })) {
+                var needHeal = fighters1.filter(function(f) { return f.hp < f.maxHp; }).sort(function(a, b) { return a.hp - b.hp; });
+                if (needHeal.length > 0) {
+                    var healed = needHeal[0];
+                    var healAmount = Math.round(atk.overall * .3);
+                    healed.hp = Math.min(healed.maxHp, healed.hp + healAmount);
+                    addEvent("🩹 " + atk.name + " cura " + healed.name + " em " + healAmount + " HP!", "heal", [ { fighter: healed, hpChange: healAmount } ]);
+                } else {
+                    doAttack(atk, def);
                 }
-                if (!fighters2.some(function(f) { return f.hp > 0; })) break;
-                var attacker2 = fighters2.filter(function(f) { return f.hp > 0; });
-                var target2 = fighters1.filter(function(f) { return f.hp > 0; });
-                if (attacker2.length > 0 && target2.length > 0) {
-                    var atk2 = attacker2[Math.floor(Math.random() * attacker2.length)];
-                    var def2 = target2[Math.floor(Math.random() * target2.length)];
-                    if (atk2.canHeal && Math.random() < .3 && fighters2.some(function(f) { return f.hp < f.maxHp; })) {
-                        var needHeal2 = fighters2.filter(function(f) { return f.hp < f.maxHp; }).sort(function(a, b) { return a.hp - b.hp; });
-                        if (needHeal2.length > 0) {
-                            var healed2 = needHeal2[0];
-                            var healAmount2 = Math.round(atk2.overall * .3);
-                            healed2.hp = Math.min(healed2.maxHp, healed2.hp + healAmount2);
-                            addEvent("🩹 " + atk2.name + " usa um poder de cura e restaura " + healAmount2 + " HP de " + healed2.name + "!", "heal");
-                        } else {
-                            doAttack(atk2, def2, addEvent);
-                        }
-                    } else {
-                        doAttack(atk2, def2, addEvent);
-                    }
-                }
+            } else {
+                doAttack(atk, def);
             }
+        }
+        if (!fighters2.some(function(f) { return f.hp > 0; })) break;
+        // Time 2 ataca
+        var attacker2 = fighters2.filter(function(f) { return f.hp > 0; });
+        var target2 = fighters1.filter(function(f) { return f.hp > 0; });
+        if (attacker2.length > 0 && target2.length > 0) {
+            var atk2 = attacker2[Math.floor(Math.random() * attacker2.length)];
+            var def2 = target2[Math.floor(Math.random() * target2.length)];
+            if (atk2.canHeal && Math.random() < .3 && fighters2.some(function(f) { return f.hp < f.maxHp; })) {
+                var needHeal2 = fighters2.filter(function(f) { return f.hp < f.maxHp; }).sort(function(a, b) { return a.hp - b.hp; });
+                if (needHeal2.length > 0) {
+                    var healed2 = needHeal2[0];
+                    var healAmount2 = Math.round(atk2.overall * .3);
+                    healed2.hp = Math.min(healed2.maxHp, healed2.hp + healAmount2);
+                    addEvent("🩹 " + atk2.name + " cura " + healed2.name + " em " + healAmount2 + " HP!", "heal", [ { fighter: healed2, hpChange: healAmount2 } ]);
+                } else {
+                    doAttack(atk2, def2);
+                }
+            } else {
+                doAttack(atk2, def2);
+            }
+        }
+    }
+
+    // Exibição dos eventos com atualização das barras
+    var idxEvent = 0;
+    function showNextEvent() {
+        if (idxEvent < events.length) {
+            var ev = events[idxEvent];
+            var p = document.createElement("div");
+            p.className = "event" + (ev.cls ? " " + ev.cls : "");
+            p.textContent = ev.text;
+            feed.appendChild(p);
+            feed.scrollTop = feed.scrollHeight;
+
+            // Atualiza as barras de vida dos personagens afetados
+            ev.affected.forEach(function(aff) {
+                updateHpDisplay(aff.fighter);
+            });
+
+            idxEvent++;
+            setTimeout(showNextEvent, 900);
+        } else {
+            // Batalha terminada
             var team1Alive = fighters1.filter(function(f) { return f.hp > 0; });
             var team2Alive = fighters2.filter(function(f) { return f.hp > 0; });
             var win = team1Alive.length > team2Alive.length;
-            var idxEvent = 0;
-
-            function showNextEvent() {
-                if (idxEvent < events.length) {
-                    var ev = events[idxEvent];
-                    var p = document.createElement("div");
-                    p.className = "event" + (ev.cls ? " " + ev.cls : "");
-                    p.textContent = ev.text;
-                    feed.appendChild(p);
-                    feed.scrollTop = feed.scrollHeight;
-                    idxEvent++;
-                    setTimeout(showNextEvent, 900);
-                } else {
-                    var resultText = win ? "🏆 VITÓRIA! Você derrotou o time adversário!" : "💀 Derrota! Seu time foi eliminado.";
-                    var cls = win ? "win" : "lose";
-                    battleResult.innerHTML = '<p class="' + cls + '">' + resultText + '</p>';
-                    var statsHtml = '<div style="margin-top:0.8rem;font-size:0.7rem;color:var(--dim);text-align:left;"><p><strong>Seu time:</strong> ' + team1Alive.map(function(f) { return f.name + " (" + f.hp + "/" + f.maxHp + " HP)"; }).join(", ") + '</p><p><strong>Adversário:</strong> ' + team2Alive.map(function(f) { return f.name + " (" + f.hp + "/" + f.maxHp + " HP)"; }).join(", ") + '</p></div>';
-                    battleResult.innerHTML += statsHtml;
-                    if (win && gameState.wave < gameState.maxWaves) {
-                        battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="nextWave()">⚡ Próxima Onda</button>';
-                    } else if (win && gameState.wave >= gameState.maxWaves) {
-                        battleResult.innerHTML += '<p style="color:#4ade80;font-size:1.2rem;">🎉 CAMPEÃO! Você venceu todas as ondas!</p>';
-                    } else {
-                        battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="resetGame()">🔄 Jogar novamente</button>';
-                    }
-                }
-            }
-            setTimeout(showNextEvent, 600);
-        }
-
-        function doAttack(attacker, defender, addEvent) {
-            var baseDamage = Math.round(attacker.overall * (0.3 + Math.random() * 0.4));
-            var defenseFactor = defender.overall / 100;
-            var damage = Math.max(1, Math.round(baseDamage * (1 - defenseFactor * 0.3)));
-            defender.hp = Math.max(0, defender.hp - damage);
-            var action = Math.random() > .5 ? "ataca" : "desfere um golpe";
-            addEvent("⚔️ " + attacker.name + " " + action + " " + defender.name + " causando " + damage + " de dano!", "damage");
-            if (defender.hp <= 0) {
-                var knockoutMsg = getKnockoutMessage(attacker, defender);
-                addEvent("💥 " + knockoutMsg, "knockout");
+            var resultText = win ? "🏆 VITÓRIA! Você derrotou o time adversário!" : "💀 Derrota! Seu time foi eliminado.";
+            var cls = win ? "win" : "lose";
+            battleResult.innerHTML = '<p class="' + cls + '">' + resultText + '</p>';
+            var statsHtml = '<div style="margin-top:0.8rem;font-size:0.7rem;color:var(--dim);text-align:left;">' +
+                '<p><strong>Seu time:</strong> ' + team1Alive.map(function(f) { return f.name + " (" + f.hp + "/" + f.maxHp + " HP)"; }).join(", ") + '</p>' +
+                '<p><strong>Adversário:</strong> ' + team2Alive.map(function(f) { return f.name + " (" + f.hp + "/" + f.maxHp + " HP)"; }).join(", ") + '</p></div>';
+            battleResult.innerHTML += statsHtml;
+            if (win && gameState.wave < gameState.maxWaves) {
+                battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="nextWave()">⚡ Próxima Onda</button>';
+            } else if (win && gameState.wave >= gameState.maxWaves) {
+                battleResult.innerHTML += '<p style="color:#4ade80;font-size:1.2rem;">🎉 CAMPEÃO! Você venceu todas as ondas!</p>';
+            } else {
+                battleResult.innerHTML += '<button class="btn" style="margin-top:.8rem;" onclick="resetGame()">🔄 Jogar novamente</button>';
             }
         }
+    }
+
+    showCountdown(function() {
+        setTimeout(showNextEvent, 600);
+    });
+}
 
         function nextWave() {
             gameState.wave++;
