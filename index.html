@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>500 Vilões Marvel & DC | Ranking Supremo com Sinopses</title>
     <style>
-        /* ===== CSS (mantido) ===== */
         :root {
             --bg: #0a0a0f; --surface: #111118; --card: #16161f; --border: #26263a;
             --text: #d8d8e8; --dim: #7777a0; --marvel: #e62429; --dc: #0476f2;
@@ -37,6 +36,40 @@
         h1 { font-size: clamp(1.3rem,3.5vw,1.9rem); font-weight: 900; line-height: 1.25; margin-bottom: .25rem; }
         h1 .m { color: var(--marvel); } h1 .d { color: var(--dc); }
         .hdrsub { font-size: .78rem; color: var(--dim); }
+
+        /* ===== BOTÃO DE DESTAQUE DO JOGO ===== */
+        .game-launcher {
+            max-width: 1100px; margin: 1rem auto 0; padding: 0 1rem;
+            display: flex; justify-content: center;
+        }
+        .game-launcher .btn-game-big {
+            display: flex; flex-direction: column; align-items: center;
+            padding: .8rem 2.5rem; border-radius: 50px;
+            background: linear-gradient(135deg, var(--marvel), var(--gold), var(--dc));
+            background-size: 300% 300%;
+            animation: gradientShift 3s ease infinite;
+            border: none; box-shadow: 0 0 30px rgba(240,192,64,0.3);
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%; max-width: 500px;
+            text-decoration: none; color: #fff; font-weight: 900;
+            letter-spacing: 0.05em; text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .game-launcher .btn-game-big:hover {
+            transform: scale(1.03); box-shadow: 0 0 50px rgba(240,192,64,0.6);
+        }
+        .game-launcher .btn-game-big .main-text {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            line-height: 1.4;
+        }
+        .game-launcher .btn-game-big .sub-text {
+            font-size: .7rem; font-weight: 600; opacity: 0.9;
+            letter-spacing: 0.2em;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
         .tb {
             max-width: 1100px; margin: .8rem auto 0; padding: 0 1rem;
@@ -163,7 +196,6 @@
 
         .empty { text-align: center; padding: 3rem 1rem; color: var(--dim); }
 
-        /* ===== OVERLAYS ===== */
         .ov {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88);
             z-index: 9999; align-items: center; justify-content: center; padding: 1rem;
@@ -212,16 +244,28 @@
         /* JOGO */
         .game-mode-select { display: flex; gap: .7rem; flex-wrap: wrap; margin-bottom: 1rem; }
         .game-mode-select .btn { flex: 1; min-width: 120px; }
-        .game-hand { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; margin: 1rem 0; }
+        .game-hand {
+            display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; margin: 1rem 0;
+        }
         .game-card {
             background: var(--surface); border: 2px solid var(--border); border-radius: 10px;
-            padding: .5rem .8rem; min-width: 90px; text-align: center; cursor: pointer;
-            transition: 0.2s; flex: 1 0 auto; max-width: 120px;
+            padding: .5rem .5rem .4rem; min-width: 80px; max-width: 110px;
+            text-align: center; cursor: pointer;
+            transition: 0.2s; flex: 1 0 auto;
+            display: flex; flex-direction: column; align-items: center;
         }
         .game-card:hover { border-color: var(--gold); transform: scale(1.05); }
-        .game-card .gc-name { font-weight: 700; font-size: .8rem; }
-        .game-card .gc-uni { font-size: .6rem; opacity: .7; }
-        .game-card .gc-ov { font-size: .6rem; color: var(--dim); margin-top: .2rem; }
+        .game-card .gc-avatar {
+            width: 50px; height: 50px; border-radius: 50%; overflow: hidden;
+            border: 2px solid var(--border); background: #1a1a28;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: 900; color: #fff; margin-bottom: .2rem;
+            flex-shrink: 0;
+        }
+        .game-card .gc-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .game-card .gc-name { font-weight: 700; font-size: .7rem; line-height: 1.2; }
+        .game-card .gc-uni { font-size: .55rem; opacity: .7; }
+        .game-card .gc-ov { font-size: .55rem; color: var(--dim); margin-top: .1rem; }
         .game-card.selected { border-color: var(--gold); background: var(--goldbg); }
         .game-card.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
 
@@ -252,8 +296,8 @@
 
         .narrative-feed {
             background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 8px;
-            padding: .5rem; margin: .8rem 0; max-height: 200px; overflow-y: auto;
-            font-size: .75rem; line-height: 1.6; color: var(--text);
+            padding: .5rem; margin: .8rem 0; max-height: 250px; overflow-y: auto;
+            font-size: .8rem; line-height: 1.8; color: var(--text);
         }
         .narrative-feed .event { border-bottom: 1px solid rgba(255,255,255,0.05); padding: .2rem 0; }
         .narrative-feed .event.heal { color: #4ade80; }
@@ -263,13 +307,14 @@
         .enemy-preview {
             background: rgba(255,0,0,0.05); border: 1px solid var(--border);
             border-radius: 8px; padding: .5rem; margin: .5rem 0;
-            font-size: .75rem; text-align: center;
+            font-size: .8rem; text-align: center;
         }
         .enemy-preview strong { color: var(--gold); }
 
         @media (max-width: 600px) {
-            .game-card { min-width: 70px; padding: .3rem .5rem; }
-            .game-card .gc-name { font-size: .7rem; }
+            .game-card { min-width: 70px; padding: .3rem .3rem; }
+            .game-card .gc-avatar { width: 40px; height: 40px; font-size: 1rem; }
+            .game-card .gc-name { font-size: .65rem; }
         }
     </style>
 </head>
@@ -280,6 +325,14 @@
             <div class="hdr-logos"><span class="lm">MARVEL</span><span class="hdrsep">✦</span><span class="ld">DC</span></div>
             <h1><span class="m">RANKING</span> DE <span class="d">MALIGNIDADE</span></h1>
             <p class="hdrsub">500 Vilões • Sinopses, imagens e heróis inimigos</p>
+        </div>
+
+        <!-- BOTÃO DE DESTAQUE DO JOGO -->
+        <div class="game-launcher">
+            <button class="btn-game-big" id="btnGameBig">
+                <span class="main-text">⚡ JOGAR MVxDC: SHOCKWAVE</span>
+                <span class="sub-text">Monte seu time e batalhe em ondas!</span>
+            </button>
         </div>
 
         <div class="tb">
@@ -297,7 +350,7 @@
             <button class="btn" id="btnC">⚖️ Comparar</button>
             <button class="btn" id="btnE">📥 CSV</button>
             <button class="btn" id="btnT">🌓 Tema</button>
-            <button class="btn" id="btnGame">⚡ MVxDC: Shockwave</button>
+            <!-- Botão antigo removido, agora temos o grande em destaque -->
             <div class="sr-wrap">
                 <span>Pts mín:</span>
                 <input type="range" id="rng" min="0" max="800" step="10" value="0">
@@ -577,42 +630,42 @@
         UNLAWFUL_IMP: ["Manteve pessoas presas ilegalmente..."]
     };
 
-    // ===== DADOS DOS VILÕES FIXOS (mantido) =====
+    // ===== DADOS DOS VILÕES FIXOS =====
     var HD = [
-    {name:"Thanos",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"Com as Joias do Infinito..."},{c:"FAM_MURDER",s:"local",d:"Atirou Gamora..."},{c:"CHILD_ABUSE",s:"local",d:"Torturou Nebulosa..."},{c:"DOMINATION",s:"universal",d:"Controlou realidade..."}]},
-    {name:"Coringa",uni:"dc", crimes:[{c:"GENOCIDE",s:"cidade",d:"Lançou gás hilariante..."},{c:"CHILD_MURDER",s:"local",d:"Espancou Jason Todd..."},{c:"PSYCH_TORTURE",s:"local",d:"Paralisou Barbara Gordon..."},{c:"TERRORISM",s:"cidade",d:"Atos terroristas..."}]},
-    {name:"Darkseid",uni:"dc", crimes:[{c:"GENOCIDE",s:"planetario",d:"Destruiu incontáveis planetas..."},{c:"FAM_MURDER",s:"local",d:"Matou o próprio filho Orion..."},{c:"MASS_ENSLAVE",s:"planetario",d:"Transformou bilhões em Parademônios..."},{c:"ATT_DOMINATION",s:"universal",d:"Busca a Equação Anti-Vida..."}]},
-    {name:"Anti-Monitor",uni:"dc", crimes:[{c:"GENOCIDE",s:"universal",d:"Crise nas Infinitas Terras..."},{c:"DOMINATION",s:"universal",d:"Converteu matéria anti-positiva..."}]},
-    {name:"Galactus",uni:"marvel", crimes:[{c:"GENOCIDE",s:"planetario",d:"Devorou bilhões de mundos..."},{c:"MASS_DAMAGE",s:"planetario",d:"Extinção de ecossistemas..."}]},
-    {name:"Apocalipse",uni:"marvel", crimes:[{c:"GENOCIDE",s:"regional",d:"Era do Apocalipse..."},{c:"TYRANNY",s:"regional",d:"Dominou a América do Norte..."},{c:"CHILD_ABUSE",s:"local",d:"Sequestrou Scott Summers..."},{c:"FORCED_TRANSF",s:"local",d:"Transformou Warren Worthington..."}]},
-    {name:"Dr. Destino",uni:"marvel", crimes:[{c:"TYRANNY",s:"regional",d:"Governa a Latvéria..."},{c:"GENOCIDE",s:"universal",d:"Guerras Secretas..."},{c:"KIDNAP",s:"local",d:"Aprisionou a alma..."},{c:"GRAND_THEFT_S",s:"local",d:"Coleciona almas..."}]},
-    {name:"Magneto",uni:"marvel", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"Desativou a rede elétrica global..."},{c:"TERRORISM",s:"regional",d:"Afundou submarinos..."},{c:"MURDER",s:"local",d:"Arrancou o adamantium..."},{c:"TYRANNY",s:"regional",d:"Governou Genosha..."}]},
-    {name:"Brainiac",uni:"dc", crimes:[{c:"GENOCIDE",s:"planetario",d:"Encolheu e engarrafou Kandor..."},{c:"MASS_ENSLAVE",s:"planetario",d:"Aprisionou populações..."},{c:"GENOCIDE",s:"planetario",d:"Contribuiu para a destruição de Krypton..."}]},
-    {name:"Ultron",uni:"marvel", crimes:[{c:"GENOCIDE",s:"regional",d:"Ultron Unlimited..."},{c:"ATT_GENOCIDE",s:"planetario",d:"Múltiplas tentativas..."},{c:"PSYCH_TORTURE",s:"local",d:"Criou a Mimosa..."},{c:"ENSLAVE",s:"regional",d:"Transformou humanos em ciborgues..."}]},
-    {name:"Flash Reverso",uni:"dc", crimes:[{c:"FAM_MURDER",s:"local",d:"Matou a mãe de Barry Allen..."},{c:"FAM_MURDER",s:"local",d:"Assassinou a noiva de Barry..."},{c:"PSYCH_TORTURE",s:"local",d:"Manipulou toda a vida de Barry..."},{c:"WAR_CRIMES",s:"regional",d:"Flashpoint..."}]},
-    {name:"Carnificina",uni:"marvel", crimes:[{c:"GENOCIDE",s:"cidade",d:"Maximum Carnage..."},{c:"CHILD_MURDER",s:"local",d:"Assassinou crianças..."},{c:"TERRORISM",s:"cidade",d:"Ataques terroristas aleatórios..."}]},
-    {name:"Lex Luthor",uni:"dc", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"Tentou usar a Equação Anti-Vida..."},{c:"ABUSE_POWER",s:"regional",d:"Usou a presidência dos EUA..."},{c:"MURDER",s:"local",d:"Ordenou assassinatos..."},{c:"MASS_DAMAGE",s:"cidade",d:"Destruiu Metrópolis..."}]},
-    {name:"Ra's al Ghul",uni:"dc", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"Múltiplos planos..."},{c:"TERRORISM",s:"regional",d:"Ataques terroristas..."},{c:"ENSLAVE",s:"regional",d:"Lavagem cerebral..."},{c:"CHILD_ABUSE",s:"local",d:"Usou a própria filha Talia..."}]},
-    {name:"Caveira Vermelha",uni:"marvel", crimes:[{c:"WAR_CRIMES",s:"regional",d:"Crimes de guerra nazistas..."},{c:"GENOCIDE",s:"regional",d:"Comandou campos de extermínio..."},{c:"TERRORISM",s:"planetario",d:"Liderou a HYDRA..."},{c:"ATT_DOMINATION",s:"planetario",d:"Obteve o Cubo Cósmico..."}]},
-    {name:"Black Adam",uni:"dc", crimes:[{c:"GENOCIDE",s:"regional",d:"World War III..."},{c:"TYRANNY",s:"regional",d:"Governou Kahndaq..."},{c:"WAR_CRIMES",s:"regional",d:"Crimes de guerra..."}]},
-    {name:"Gorr",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"Assassinou centenas de deuses..."},{c:"MASS_ENSLAVE",s:"planetario",d:"Escravizou deuses..."},{c:"ATT_GENOCIDE",s:"universal",d:"Planejou a Bomba dos Deuses..."}]},
-    {name:"Nekron",uni:"dc", crimes:[{c:"ATT_GENOCIDE",s:"universal",d:"Blackest Night..."},{c:"MASS_ENSLAVE",s:"universal",d:"Ressuscitou heróis mortos..."}]},
-    {name:"Kang",uni:"marvel", crimes:[{c:"GENOCIDE",s:"planetario",d:"Conquistou e destruiu civilizações..."},{c:"WAR_CRIMES",s:"regional",d:"Guerras temporais..."},{c:"DOMINATION",s:"planetario",d:"Dominou o Século 30..."}]},
-    {name:"Mephisto",uni:"marvel", crimes:[{c:"GRAND_THEFT_S",s:"universal",d:"Coleciona almas..."},{c:"PSYCH_TORTURE",s:"local",d:"Apagou o casamento..."},{c:"ENSLAVE",s:"universal",d:"Mantém almas presas..."},{c:"DECEPTION",s:"universal",d:"Manipulou heróis e vilões..."}]},
-    {name:"Dormammu",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"Consumiu incontáveis dimensões..."},{c:"ATT_DOMINATION",s:"universal",d:"Invasões repetidas..."},{c:"DOMINATION",s:"universal",d:"Domina o Domínio das Trevas..."}]},
-    {name:"Hela",uni:"marvel", crimes:[{c:"GENOCIDE",s:"planetario",d:"Destruiu Asgard..."},{c:"TYRANNY",s:"regional",d:"Governou Hel..."},{c:"ATT_DOMINATION",s:"planetario",d:"Tentou dominar Asgard e a Terra..."}]},
-    {name:"Sinestro",uni:"dc", crimes:[{c:"TYRANNY",s:"regional",d:"Governou Korugar..."},{c:"TERRORISM",s:"planetario",d:"Sinestro Corps War..."},{c:"ENSLAVE",s:"regional",d:"Escravizou o planeta Korugar..."}]},
-    {name:"Bane",uni:"dc", crimes:[{c:"TERRORISM",s:"cidade",d:"Libertou todos os criminosos..."},{c:"ATT_MURDER",s:"local",d:"Quebrou a espinha de Batman..."},{c:"TYRANNY",s:"cidade",d:"Dominou Gotham City..."}]},
-    {name:"Duende Verde",uni:"marvel", crimes:[{c:"MURDER",s:"local",d:"Assassinou Gwen Stacy..."},{c:"CHILD_MURDER",s:"local",d:"Tentou matar o bebê..."},{c:"ATT_GENOCIDE",s:"planetario",d:"Dark Reign..."},{c:"PSYCH_TORTURE",s:"local",d:"Revelou a identidade secreta..."}]},
-    {name:"Loki",uni:"marvel", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"Desencadeou a invasão Chitauri..."},{c:"DECEPTION",s:"regional",d:"Manipulou os Vingadores..."},{c:"MURDER",s:"local",d:"Assassinou agentes da S.H.I.E.L.D..."}]},
-    {name:"Rei do Crime",uni:"marvel", crimes:[{c:"MURDER",s:"local",d:"Ordenou centenas de assassinatos..."},{c:"ENSLAVE",s:"cidade",d:"Controlou o submundo..."},{c:"PSYCH_TORTURE",s:"local",d:"Orquestrou a ruína de Matt Murdock..."},{c:"ABUSE_POWER",s:"cidade",d:"Corrompeu polícia, promotores..."}]},
-    {name:"Doutor Octopus",uni:"marvel", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"Superior Spider-Man..."},{c:"TERRORISM",s:"cidade",d:"Criou fusão nuclear..."},{c:"DOMINATION",s:"local",d:"Tomou o corpo do Homem-Aranha..."}]},
-    {name:"Mística",uni:"marvel", crimes:[{c:"TERRORISM",s:"regional",d:"Liderou a Irmandade..."},{c:"CHILD_MURDER",s:"local",d:"Jogou o bebê Noturno..."},{c:"TREASON",s:"regional",d:"Traiu os X-Men..."}]},
-    {name:"HYDRA",uni:"marvel", crimes:[{c:"WAR_CRIMES",s:"regional",d:"Crimes de guerra nazistas..."},{c:"TERRORISM",s:"planetario",d:"Ataques terroristas..."},{c:"ATT_GENOCIDE",s:"planetario",d:"Projeto Insight..."},{c:"ENSLAVE",s:"planetario",d:"Sequestro e lavagem cerebral..."}]},
-    {name:"Knull",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"Criou a Necroespada..."},{c:"MASS_ENSLAVE",s:"universal",d:"Escravizou civilizações..."},{c:"ATT_DOMINATION",s:"universal",d:"Tentou mergulhar o universo na escuridão..."},{c:"MURDER",s:"local",d:"Assassinou inúmeros seres..."}]}
+    {name:"Thanos",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"FAM_MURDER",s:"local",d:"..."},{c:"CHILD_ABUSE",s:"local",d:"..."},{c:"DOMINATION",s:"universal",d:"..."}]},
+    {name:"Coringa",uni:"dc", crimes:[{c:"GENOCIDE",s:"cidade",d:"..."},{c:"CHILD_MURDER",s:"local",d:"..."},{c:"PSYCH_TORTURE",s:"local",d:"..."},{c:"TERRORISM",s:"cidade",d:"..."}]},
+    {name:"Darkseid",uni:"dc", crimes:[{c:"GENOCIDE",s:"planetario",d:"..."},{c:"FAM_MURDER",s:"local",d:"..."},{c:"MASS_ENSLAVE",s:"planetario",d:"..."},{c:"ATT_DOMINATION",s:"universal",d:"..."}]},
+    {name:"Anti-Monitor",uni:"dc", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"DOMINATION",s:"universal",d:"..."}]},
+    {name:"Galactus",uni:"marvel", crimes:[{c:"GENOCIDE",s:"planetario",d:"..."},{c:"MASS_DAMAGE",s:"planetario",d:"..."}]},
+    {name:"Apocalipse",uni:"marvel", crimes:[{c:"GENOCIDE",s:"regional",d:"..."},{c:"TYRANNY",s:"regional",d:"..."},{c:"CHILD_ABUSE",s:"local",d:"..."},{c:"FORCED_TRANSF",s:"local",d:"..."}]},
+    {name:"Dr. Destino",uni:"marvel", crimes:[{c:"TYRANNY",s:"regional",d:"..."},{c:"GENOCIDE",s:"universal",d:"..."},{c:"KIDNAP",s:"local",d:"..."},{c:"GRAND_THEFT_S",s:"local",d:"..."}]},
+    {name:"Magneto",uni:"marvel", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"..."},{c:"TERRORISM",s:"regional",d:"..."},{c:"MURDER",s:"local",d:"..."},{c:"TYRANNY",s:"regional",d:"..."}]},
+    {name:"Brainiac",uni:"dc", crimes:[{c:"GENOCIDE",s:"planetario",d:"..."},{c:"MASS_ENSLAVE",s:"planetario",d:"..."},{c:"GENOCIDE",s:"planetario",d:"..."}]},
+    {name:"Ultron",uni:"marvel", crimes:[{c:"GENOCIDE",s:"regional",d:"..."},{c:"ATT_GENOCIDE",s:"planetario",d:"..."},{c:"PSYCH_TORTURE",s:"local",d:"..."},{c:"ENSLAVE",s:"regional",d:"..."}]},
+    {name:"Flash Reverso",uni:"dc", crimes:[{c:"FAM_MURDER",s:"local",d:"..."},{c:"FAM_MURDER",s:"local",d:"..."},{c:"PSYCH_TORTURE",s:"local",d:"..."},{c:"WAR_CRIMES",s:"regional",d:"..."}]},
+    {name:"Carnificina",uni:"marvel", crimes:[{c:"GENOCIDE",s:"cidade",d:"..."},{c:"CHILD_MURDER",s:"local",d:"..."},{c:"TERRORISM",s:"cidade",d:"..."}]},
+    {name:"Lex Luthor",uni:"dc", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"..."},{c:"ABUSE_POWER",s:"regional",d:"..."},{c:"MURDER",s:"local",d:"..."},{c:"MASS_DAMAGE",s:"cidade",d:"..."}]},
+    {name:"Ra's al Ghul",uni:"dc", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"..."},{c:"TERRORISM",s:"regional",d:"..."},{c:"ENSLAVE",s:"regional",d:"..."},{c:"CHILD_ABUSE",s:"local",d:"..."}]},
+    {name:"Caveira Vermelha",uni:"marvel", crimes:[{c:"WAR_CRIMES",s:"regional",d:"..."},{c:"GENOCIDE",s:"regional",d:"..."},{c:"TERRORISM",s:"planetario",d:"..."},{c:"ATT_DOMINATION",s:"planetario",d:"..."}]},
+    {name:"Black Adam",uni:"dc", crimes:[{c:"GENOCIDE",s:"regional",d:"..."},{c:"TYRANNY",s:"regional",d:"..."},{c:"WAR_CRIMES",s:"regional",d:"..."}]},
+    {name:"Gorr",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"MASS_ENSLAVE",s:"planetario",d:"..."},{c:"ATT_GENOCIDE",s:"universal",d:"..."}]},
+    {name:"Nekron",uni:"dc", crimes:[{c:"ATT_GENOCIDE",s:"universal",d:"..."},{c:"MASS_ENSLAVE",s:"universal",d:"..."}]},
+    {name:"Kang",uni:"marvel", crimes:[{c:"GENOCIDE",s:"planetario",d:"..."},{c:"WAR_CRIMES",s:"regional",d:"..."},{c:"DOMINATION",s:"planetario",d:"..."}]},
+    {name:"Mephisto",uni:"marvel", crimes:[{c:"GRAND_THEFT_S",s:"universal",d:"..."},{c:"PSYCH_TORTURE",s:"local",d:"..."},{c:"ENSLAVE",s:"universal",d:"..."},{c:"DECEPTION",s:"universal",d:"..."}]},
+    {name:"Dormammu",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"ATT_DOMINATION",s:"universal",d:"..."},{c:"DOMINATION",s:"universal",d:"..."}]},
+    {name:"Hela",uni:"marvel", crimes:[{c:"GENOCIDE",s:"planetario",d:"..."},{c:"TYRANNY",s:"regional",d:"..."},{c:"ATT_DOMINATION",s:"planetario",d:"..."}]},
+    {name:"Sinestro",uni:"dc", crimes:[{c:"TYRANNY",s:"regional",d:"..."},{c:"TERRORISM",s:"planetario",d:"..."},{c:"ENSLAVE",s:"regional",d:"..."}]},
+    {name:"Bane",uni:"dc", crimes:[{c:"TERRORISM",s:"cidade",d:"..."},{c:"ATT_MURDER",s:"local",d:"..."},{c:"TYRANNY",s:"cidade",d:"..."}]},
+    {name:"Duende Verde",uni:"marvel", crimes:[{c:"MURDER",s:"local",d:"..."},{c:"CHILD_MURDER",s:"local",d:"..."},{c:"ATT_GENOCIDE",s:"planetario",d:"..."},{c:"PSYCH_TORTURE",s:"local",d:"..."}]},
+    {name:"Loki",uni:"marvel", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"..."},{c:"DECEPTION",s:"regional",d:"..."},{c:"MURDER",s:"local",d:"..."}]},
+    {name:"Rei do Crime",uni:"marvel", crimes:[{c:"MURDER",s:"local",d:"..."},{c:"ENSLAVE",s:"cidade",d:"..."},{c:"PSYCH_TORTURE",s:"local",d:"..."},{c:"ABUSE_POWER",s:"cidade",d:"..."}]},
+    {name:"Doutor Octopus",uni:"marvel", crimes:[{c:"ATT_GENOCIDE",s:"planetario",d:"..."},{c:"TERRORISM",s:"cidade",d:"..."},{c:"DOMINATION",s:"local",d:"..."}]},
+    {name:"Mística",uni:"marvel", crimes:[{c:"TERRORISM",s:"regional",d:"..."},{c:"CHILD_MURDER",s:"local",d:"..."},{c:"TREASON",s:"regional",d:"..."}]},
+    {name:"HYDRA",uni:"marvel", crimes:[{c:"WAR_CRIMES",s:"regional",d:"..."},{c:"TERRORISM",s:"planetario",d:"..."},{c:"ATT_GENOCIDE",s:"planetario",d:"..."},{c:"ENSLAVE",s:"planetario",d:"..."}]},
+    {name:"Knull",uni:"marvel", crimes:[{c:"GENOCIDE",s:"universal",d:"..."},{c:"MASS_ENSLAVE",s:"universal",d:"..."},{c:"ATT_DOMINATION",s:"universal",d:"..."},{c:"MURDER",s:"local",d:"..."}]}
     ];
 
-    // ===== LISTAS DE VILÕES (expandidas) =====
+    // ===== LISTAS DE VILÕES =====
     var EM = "Abominável,Homem-Areia,Shocker,Bastion,Omega Vermelho,Surtur,Malekith,Corruptor,Escorpião,Abutre,Morlun,Ronan,Mandarim,Arnim Zola,Super-Adaptoid,Mordo,Kaecilius,Pesadelo,Blackheart,Umar,Laufey,Fênix Negra,Exodus,Vulcan,Sebastian Shaw,Azazel,Satana,Morbius,Typhoid Mary,Arcade,Mestre dos Bonecos,Sentinela,Crusher Creel,Titânia,Enxame,Demolidor Amarelo,Flagelo,Blob,Fanático,Sapo,Ego,Korvac,Kro,Líder,Living Laser,Nébula,Nimrod,Nitro,Attuma,Blastaar,Diablo,Fin Fang Foom,Graviton,Gorgon,Mr. Hyde,Onslaught,Overmind,Super-Skrull,Terrax,Tyrannus,Whiplash,Whirlwind,Wizard,Xemnu,Zaladane,Zzzax,Supremor,Speed Demon,Stilt-Man,Homem-Absorvente,Jigsaw,Lady Deathstrike,Massacre,Silvermane,Tombstone,Hobgoblin,Jackal,Trapster,Boomerang,Hydro-Man,Molten Man,Beetle,Demogoblin,Carrion,Vermin,Calypso,Puma,Hammerhead,Tarantula,Jack O'Lantern,Constrictor,Crossbones,Death Adder,Firebrand,Mongoose,Rattler,Bushmaster,Cottonmouth,Blizzard,Spymaster,Warlord,Mentallo,Fixer,Shocker II,Ronan II,Skrull Comandante,Grandmaster,Korvac II,Onslaught II,Xorn,Sauron,Shadow King,Amora,Lorelei,Executioner,Skurge,Tyr,Ulik,Kurse,Algrim,Anti-Venom,Toxin,Scream,Hybrid,Lasher,Phage,Riot,Agony,Sleeper,Mania,Cyttorak,Shuma-Gorath,D'Spayre,Satannish,Nightmare,N'Astirh,S'ym,Belasco,Mephista,Daimon Hellstrom,Hellcat,Moonstone,Karla Sofen,Viper,Yellowjacket,Wonder Man Vilão".split(",");
     var ED = "Bizarro,Parallax,Amazo,Atrocitus,Professor Zoom,Doutor Luz,Mordru,Ultra-Humanite,Rei Tubarão,Ocean Master,Larfleeze,Krona,Kalibak,Desaad,Mongul,Imperiex,Capitão Frio,Onda Térmica,Mestre dos Espelhos,General Zod,Ursa,Non,Faora,Jax-Ur,Mister Mxyzptlk,Silêncio,Vagalume,Anarquia,Máscara Negra,Grande Tubarão Branco,Conde Vertigo,Relógio,Calendário,Polka-Dot Man,Ventríloquo,Exterminador,Sr. Frio,Lobo,Solomon Grundy,Cara de Barro,Crocodilo,Deadshot,Capitão Bumerangue,Mirror Master,Weather Wizard,Abra Kadabra,Amanda Waller,Kobra,Metallo,Parasite,Livewire,Silver Banshee,Cyborg Superman,Mongul II,Ravager,Blockbuster,Brother Blood,Monsieur Mallah,General Immortus,Black Mask,Victor Zsasz,Cornelius Stirk,Firefly,Killer Moth,Orca,Ratcatcher,Cluemaster,Film Freak,Magpie,Dr. Phosphorus,Tweedledee,Tweedledum,Amygdala,Abbatoir,Killer Frost,Heat Wave,Golden Glider,Top,Trickster,Rainbow Raider,Turtle,Murmur,Girder,Tar Pit,Fallback,Blacksmith,Cicada,Savitar,Cobalt Blue,Rival,Chunk,Atomic Skull,Riot DC,Shrapnel,Multiplex,Firestorm Vilão,Killer Frost II,Captain Cold II,Pied Piper,Trickster II,The Top II,Golden Glider II,Brother Grimm,Effigy,Sun Grater,Blacksmith II,Peekaboo,Double Down,Tar Pit II,Girder II,Magenta,Spin".split(",");
 
@@ -672,7 +725,7 @@
       return {name: name, uni: uni, crimes: crimes};
     }
 
-    // ===== CONSTRUÇÃO DA LISTA DE VILÕES (agora com mais nomes) =====
+    // ===== CONSTRUÇÃO DA LISTA DE VILÕES =====
     var AV = [];
     var seen = new Set();
     for (var i = 0; i < HD.length; i++) {
@@ -685,7 +738,6 @@
       if (!seen.has(ED[i])) { seen.add(ED[i]); AV.push(mkV(ED[i], "dc")); }
     }
 
-    // Listas extras gigantes para evitar genéricos
     var EXTRA_MARVEL = [
         "Ares","Absorbing Man","Attuma","Baron Mordo","Bullseye","Chameleon",
         "Count Nefaria","Crimson Dynamo","Crossbones","Daken","Deathbird","Electro",
@@ -704,8 +756,7 @@
         "Ahab","Barracuda","Blackout","Bloodscream","Brothers Grimm","Chthon",
         "Crimson Cowl","Ghaur","Madcap","Maelstrom","Morg","Moses Magnum",
         "Prodigy","Red Ghost","Saturnyne","Scalphunter","Selene","Sersi","Sin",
-        "Superia","Zzzax","Korvac","Maelstrom","Overmind","Supremor","Kurse",
-        "Algrim","Tyr","Ulik","Enchantress","Executioner","Skurge","Amora","Lorelei"
+        "Superia","Zzzax","Korvac","Maelstrom","Overmind","Supremor","Kurse"
     ];
     var EXTRA_DC = [
         "Abra Kadabra","Amos Fortune","Agent Orange","Atomic Skull","Atlas",
@@ -748,7 +799,6 @@
             AV.push(mkV(name, "dc"));
         }
     }
-    // Fallback (se ainda faltar, mas agora é quase impossível)
     var pad = 1;
     while (AV.length < 500) {
         var name = "Vilão " + pad++;
@@ -768,7 +818,7 @@
     var gRank = {};
     for (var i = 0; i < AV.length; i++) gRank[AV[i].name] = i + 1;
 
-    // ===== HERÓIS (overall revisado) =====
+    // ===== HERÓIS =====
     var HEROIS = [
         {name:"Homem-Aranha", uni:"marvel", overall:85, canHeal:false},
         {name:"Capitão América", uni:"marvel", overall:82, canHeal:false},
@@ -813,38 +863,17 @@
         {name:"Besouro Azul", uni:"dc", overall:85, canHeal:false}
     ];
 
-    // ===== OVERALL MANUAL PARA VILÕES ESPECÍFICOS =====
     var OVERALL_OVERRIDES = {
-        "Surtur": 94,
-        "Abominável": 87,
-        "Galactus": 99,
-        "Thanos": 98,
-        "Darkseid": 98,
-        "Anti-Monitor": 99,
-        "Knull": 96,
-        "Dormammu": 95,
-        "Mephisto": 90,
-        "Hela": 91,
-        "Loki": 88,
-        "Apocalipse": 92,
-        "Magneto": 90,
-        "Ultron": 89,
-        "Brainiac": 91,
-        "Sinestro": 88,
-        "Black Adam": 94,
-        "Doomsday": 95,
-        "Caveira Vermelha": 80,
-        "Lex Luthor": 83,
-        "Coringa": 78,
-        "Duende Verde": 82,
-        "Carnificina": 85,
-        "Kang": 90,
-        "Gorr": 92,
-        "Nekron": 93,
-        "Flash Reverso": 89,
-        "Ra's al Ghul": 82,
-        "Bane": 83,
-        "Dr. Destino": 91
+        "Surtur": 93, "Abominável": 86, "Galactus": 99, "Thanos": 98, "Darkseid": 98,
+        "Anti-Monitor": 99, "Knull": 96, "Dormammu": 95, "Mephisto": 90, "Hela": 91,
+        "Loki": 87, "Apocalipse": 92, "Magneto": 90, "Ultron": 89, "Brainiac": 91,
+        "Sinestro": 88, "Black Adam": 94, "Doomsday": 95, "Caveira Vermelha": 80,
+        "Lex Luthor": 83, "Coringa": 78, "Duende Verde": 82, "Carnificina": 85,
+        "Kang": 90, "Gorr": 92, "Nekron": 93, "Flash Reverso": 89, "Ra's al Ghul": 82,
+        "Bane": 83, "Dr. Destino": 91, "Korvac": 91, "Onslaught": 94, "Shadow King": 88,
+        "Cyttorak": 92, "Shuma-Gorath": 93, "Trigon": 96, "Deathstroke": 88,
+        "Imperiex": 97, "Cyborg Superman": 90, "Mongul II": 88, "Steppenwolf": 85,
+        "Kalibak": 86, "Desaad": 82, "Granny Goodness": 83
     };
 
     // ===== JOGO SHOCKWAVE =====
@@ -881,13 +910,12 @@
                 if (OVERALL_OVERRIDES[v.name]) {
                     overall = OVERALL_OVERRIDES[v.name];
                 } else {
-                    // Fórmula melhorada: score base + bônus por perfil
                     var base = Math.min(100, Math.round((v.score / 600) * 80 + 15));
                     var profile = gP(v.name);
                     var bonus = 0;
-                    if (profile === 'cosmic') bonus = 10;
-                    else if (profile === 'dictator' || profile === 'alien') bonus = 5;
-                    else if (profile === 'mage') bonus = 4;
+                    if (profile === 'cosmic') bonus = 12;
+                    else if (profile === 'dictator' || profile === 'alien') bonus = 6;
+                    else if (profile === 'mage') bonus = 5;
                     overall = Math.min(100, base + bonus);
                 }
                 pool.push({
@@ -904,7 +932,45 @@
 
     var allChars = buildAllChars();
 
-    // Funções do jogo (abrir, fechar, seleção de modo, etc.) – mantidas
+    // Função para carregar imagem da carta
+    async function loadCardImage(card, avatarElement) {
+        var wiki = card.uni === 'marvel' ? 'marvel' : 'dc';
+        var url = await fetchImageWiki(card.name, wiki);
+        if (url) {
+            var img = document.createElement('img');
+            img.src = url;
+            img.alt = card.name;
+            img.onerror = function() { avatarElement.innerHTML = card.name.charAt(0).toUpperCase(); };
+            avatarElement.innerHTML = '';
+            avatarElement.appendChild(img);
+        }
+    }
+
+    // Função fetchImageWiki (já existente, mantida)
+    var imageCache = {};
+    async function fetchImageWiki(name, wiki) {
+        var cacheKey = name + "_" + wiki;
+        if (imageCache[cacheKey] !== undefined) return imageCache[cacheKey];
+        var apiUrl = `https://${wiki}.fandom.com/api.php?action=query&list=search&srsearch=${encodeURIComponent(name)}&format=json&origin=*`;
+        try {
+            var resp = await fetch(apiUrl);
+            var data = await resp.json();
+            if (data.query && data.query.search.length > 0) {
+                var pageId = data.query.search[0].pageid;
+                var imgApi = `https://${wiki}.fandom.com/api.php?action=query&prop=pageimages&pageids=${pageId}&format=json&pithumbsize=200&origin=*`;
+                var imgResp = await fetch(imgApi);
+                var imgData = await imgResp.json();
+                if (imgData.query && imgData.query.pages && imgData.query.pages[pageId] && imgData.query.pages[pageId].thumbnail) {
+                    var thumb = imgData.query.pages[pageId].thumbnail.source;
+                    imageCache[cacheKey] = thumb;
+                    return thumb;
+                }
+            }
+        } catch(e) {}
+        imageCache[cacheKey] = null;
+        return null;
+    }
+
     function openGame() {
         document.getElementById('ovGame').classList.add('open');
         document.getElementById('gameModeSelect').style.display = 'block';
@@ -967,6 +1033,12 @@
         return pool;
     }
 
+    function getOppositeUniverse() {
+        if (gameState.selectedUniverse === 'marvel') return 'dc';
+        if (gameState.selectedUniverse === 'dc') return 'marvel';
+        return null;
+    }
+
     function generateHand() {
         var pool = getFilteredPool();
         var available = pool.filter(c => !gameState.usedChars.has(c.name));
@@ -990,13 +1062,33 @@
     function renderHand() {
         var container = document.getElementById('gameHand');
         container.innerHTML = '';
-        gameState.hand.forEach(function(c, idx) {
+        gameState.hand.forEach(function(c) {
             var card = document.createElement('div');
             card.className = 'game-card';
-            card.innerHTML = '<div class="gc-name">' + c.name + '</div>' +
-                             '<div class="gc-uni">' + (c.uni === 'marvel' ? 'Marvel' : 'DC') + '</div>' +
-                             '<div class="gc-ov" style="color:var(--dim);font-size:.6rem;">⚡ Poder desconhecido</div>';
-            card.onclick = function() { chooseCard(idx); };
+            var avatar = document.createElement('div');
+            avatar.className = 'gc-avatar';
+            avatar.textContent = c.name.charAt(0).toUpperCase();
+            // Carrega imagem assincronamente
+            loadCardImage(c, avatar);
+
+            var nameDiv = document.createElement('div');
+            nameDiv.className = 'gc-name';
+            nameDiv.textContent = c.name;
+            var uniDiv = document.createElement('div');
+            uniDiv.className = 'gc-uni';
+            uniDiv.textContent = c.uni === 'marvel' ? 'Marvel' : 'DC';
+            var ovDiv = document.createElement('div');
+            ovDiv.className = 'gc-ov';
+            ovDiv.textContent = '⚡ Poder desconhecido';
+
+            card.appendChild(avatar);
+            card.appendChild(nameDiv);
+            card.appendChild(uniDiv);
+            card.appendChild(ovDiv);
+            card.onclick = function() {
+                var idx = gameState.hand.indexOf(c);
+                if (idx !== -1) chooseCard(idx);
+            };
             container.appendChild(card);
         });
     }
@@ -1071,14 +1163,20 @@
         if (gameState.timerId) { clearInterval(gameState.timerId); gameState.timerId = null; }
         document.getElementById('gameTimer').textContent = '⏱️ Time completo!';
         var enemyTeam = generateEnemyTeam();
-        // Mostra preview do time adversário
         var preview = document.getElementById('enemyPreview');
         preview.innerHTML = '<strong>⚔️ Time adversário:</strong> ' + enemyTeam.map(c => c.name).join(', ');
         startBattle(gameState.team, enemyTeam);
     }
 
     function generateEnemyTeam() {
-        var pool = getFilteredPool();
+        var pool;
+        if (gameState.mode === 'marvel_vs_dc') {
+            var oppUni = getOppositeUniverse();
+            if (!oppUni) oppUni = gameState.selectedUniverse === 'marvel' ? 'dc' : 'marvel';
+            pool = allChars.filter(c => c.uni === oppUni);
+        } else {
+            pool = getFilteredPool();
+        }
         var available = pool.filter(c => !gameState.usedChars.has(c.name));
         for (var i = available.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
@@ -1096,7 +1194,6 @@
         return enemy;
     }
 
-    // ===== BATALHA COM CONTAGEM REGRESSIVA E PREVIEW =====
     function startBattle(team1, team2) {
         document.getElementById('gamePlay').style.display = 'none';
         var resultDiv = document.getElementById('gameResult');
@@ -1158,10 +1255,10 @@
                         healed.hp = Math.min(healed.maxHp, healed.hp + healAmount);
                         addEvent('🩹 ' + atk.name + ' usa um poder de cura e restaura ' + healAmount + ' HP de ' + healed.name + '!', 'heal');
                     } else {
-                        doAttack(atk, def, fighters1, fighters2, addEvent);
+                        doAttack(atk, def, addEvent);
                     }
                 } else {
-                    doAttack(atk, def, fighters1, fighters2, addEvent);
+                    doAttack(atk, def, addEvent);
                 }
             }
 
@@ -1180,10 +1277,10 @@
                         healed2.hp = Math.min(healed2.maxHp, healed2.hp + healAmount2);
                         addEvent('🩹 ' + atk2.name + ' usa um poder de cura e restaura ' + healAmount2 + ' HP de ' + healed2.name + '!', 'heal');
                     } else {
-                        doAttack(atk2, def2, fighters2, fighters1, addEvent);
+                        doAttack(atk2, def2, addEvent);
                     }
                 } else {
-                    doAttack(atk2, def2, fighters2, fighters1, addEvent);
+                    doAttack(atk2, def2, addEvent);
                 }
             }
         }
@@ -1202,7 +1299,7 @@
                 feed.appendChild(p);
                 feed.scrollTop = feed.scrollHeight;
                 idxEvent++;
-                setTimeout(showNextEvent, 600);
+                setTimeout(showNextEvent, 800);
             } else {
                 var resultText = win ? '🏆 VITÓRIA! Você derrotou o time adversário!' : '💀 Derrota! Seu time foi eliminado.';
                 var cls = win ? 'win' : 'lose';
@@ -1217,10 +1314,10 @@
             }
         }
 
-        setTimeout(showNextEvent, 400);
+        setTimeout(showNextEvent, 600);
     }
 
-    function doAttack(attacker, defender, teamAtk, teamDef, addEvent) {
+    function doAttack(attacker, defender, addEvent) {
         var baseDamage = Math.round(attacker.overall * (0.3 + Math.random() * 0.4));
         var defenseFactor = defender.overall / 100;
         var damage = Math.max(1, Math.round(baseDamage * (1 - defenseFactor * 0.3)));
@@ -1264,7 +1361,9 @@
     }
 
     // ===== EVENTOS =====
-    document.getElementById('btnGame').addEventListener('click', openGame);
+    document.getElementById('btnGameBig').addEventListener('click', openGame);
+    // Mantém compatibilidade com o botão antigo (se alguém clicar)
+    document.getElementById('btnGame') && document.getElementById('btnGame').addEventListener('click', openGame);
 
     document.querySelectorAll('#gameModeSelect .btn[data-mode]').forEach(function(btn) {
         btn.addEventListener('click', function() {
@@ -1288,7 +1387,7 @@
         }
     });
 
-    // ===== RANKING E FILTROS (mantido) =====
+    // ===== RANKING E FILTROS =====
     var fUni = "all", fSrch = "", fMin = 0, fCR = new Set(), fSort = "score";
 
     var cfEl = document.getElementById("cf");
@@ -1322,30 +1421,6 @@
       else if (fSort === "crimes") list.sort(function(a,b){ return b.crimes.length - a.crimes.length; });
       else list.sort(function(a,b){ return b.score - a.score; });
       return list;
-    }
-
-    var imageCache = {};
-    async function fetchImageWiki(name, wiki) {
-        var cacheKey = name + "_" + wiki;
-        if (imageCache[cacheKey] !== undefined) return imageCache[cacheKey];
-        var apiUrl = `https://${wiki}.fandom.com/api.php?action=query&list=search&srsearch=${encodeURIComponent(name)}&format=json&origin=*`;
-        try {
-            var resp = await fetch(apiUrl);
-            var data = await resp.json();
-            if (data.query && data.query.search.length > 0) {
-                var pageId = data.query.search[0].pageid;
-                var imgApi = `https://${wiki}.fandom.com/api.php?action=query&prop=pageimages&pageids=${pageId}&format=json&pithumbsize=200&origin=*`;
-                var imgResp = await fetch(imgApi);
-                var imgData = await imgResp.json();
-                if (imgData.query && imgData.query.pages && imgData.query.pages[pageId] && imgData.query.pages[pageId].thumbnail) {
-                    var thumb = imgData.query.pages[pageId].thumbnail.source;
-                    imageCache[cacheKey] = thumb;
-                    return thumb;
-                }
-            }
-        } catch(e) {}
-        imageCache[cacheKey] = null;
-        return null;
     }
 
     var observer = new IntersectionObserver(function(entries) {
